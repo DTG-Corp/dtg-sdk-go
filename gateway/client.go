@@ -5,10 +5,10 @@ package gateway
 import (
 	context "context"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type Client struct {
@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) ListModels(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ModelList, error) {
+) (*dtgsdkgo.ModelList, error) {
 	response, err := c.WithRawResponse.ListModels(
 		ctx,
 		opts...,
@@ -55,11 +55,11 @@ func (c *Client) ListModels(
 
 // Example:
 //
-//	request := &dtgagentsdk.ChatCompletionRequest{
+//	request := &dtgsdkgo.ChatCompletionRequest{
 //	    Model: "model",
-//	    Messages: []*dtgagentsdk.ChatMessage{
-//	        &dtgagentsdk.ChatMessage{
-//	            Role: dtgagentsdk.ChatMessageRoleSystem,
+//	    Messages: []*dtgsdkgo.ChatMessage{
+//	        &dtgsdkgo.ChatMessage{
+//	            Role: dtgsdkgo.ChatMessageRoleSystem,
 //	            Content: "content",
 //	        },
 //	    },
@@ -70,9 +70,9 @@ func (c *Client) ListModels(
 //	)
 func (c *Client) CreateChatCompletion(
 	ctx context.Context,
-	request *dtgagentsdk.ChatCompletionRequest,
+	request *dtgsdkgo.ChatCompletionRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ChatCompletion, error) {
+) (*dtgsdkgo.ChatCompletion, error) {
 	response, err := c.WithRawResponse.CreateChatCompletion(
 		ctx,
 		request,
@@ -86,11 +86,11 @@ func (c *Client) CreateChatCompletion(
 
 // Example:
 //
-//	request := &dtgagentsdk.WebhookChatCompletionRequest{
+//	request := &dtgsdkgo.WebhookChatCompletionRequest{
 //	    AgentID: "agent_id",
-//	    Messages: []*dtgagentsdk.ChatMessage{
-//	        &dtgagentsdk.ChatMessage{
-//	            Role: dtgagentsdk.ChatMessageRoleSystem,
+//	    Messages: []*dtgsdkgo.ChatMessage{
+//	        &dtgsdkgo.ChatMessage{
+//	            Role: dtgsdkgo.ChatMessageRoleSystem,
 //	            Content: "content",
 //	        },
 //	    },
@@ -101,9 +101,9 @@ func (c *Client) CreateChatCompletion(
 //	)
 func (c *Client) CreateChatCompletionByAgentPath(
 	ctx context.Context,
-	request *dtgagentsdk.WebhookChatCompletionRequest,
+	request *dtgsdkgo.WebhookChatCompletionRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ChatCompletion, error) {
+) (*dtgsdkgo.ChatCompletion, error) {
 	response, err := c.WithRawResponse.CreateChatCompletionByAgentPath(
 		ctx,
 		request,

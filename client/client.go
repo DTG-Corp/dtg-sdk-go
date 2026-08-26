@@ -3,15 +3,15 @@
 package client
 
 import (
-	agents "github.com/DTG-Corp/dtg-agent-sdk/agents"
-	apikeys "github.com/DTG-Corp/dtg-agent-sdk/apikeys"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	gateway "github.com/DTG-Corp/dtg-agent-sdk/gateway"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	knowledge "github.com/DTG-Corp/dtg-agent-sdk/knowledge"
-	mcpservers "github.com/DTG-Corp/dtg-agent-sdk/mcpservers"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
-	organizations "github.com/DTG-Corp/dtg-agent-sdk/organizations"
+	agents "github.com/DTG-Corp/dtg-sdk-go/agents"
+	apikeys "github.com/DTG-Corp/dtg-sdk-go/apikeys"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	gateway "github.com/DTG-Corp/dtg-sdk-go/gateway"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	knowledge "github.com/DTG-Corp/dtg-sdk-go/knowledge"
+	mcpservers "github.com/DTG-Corp/dtg-sdk-go/mcpservers"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
+	organizations "github.com/DTG-Corp/dtg-sdk-go/organizations"
 )
 
 type Client struct {

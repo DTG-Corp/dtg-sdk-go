@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type RawClient struct {
@@ -35,7 +35,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) ListModels(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ModelList], error) {
+) (*core.Response[*dtgsdkgo.ModelList], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) ListModels(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ModelList
+	var response *dtgsdkgo.ModelList
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) ListModels(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ModelList]{
+	return &core.Response[*dtgsdkgo.ModelList]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,9 +74,9 @@ func (r *RawClient) ListModels(
 
 func (r *RawClient) CreateChatCompletion(
 	ctx context.Context,
-	request *dtgagentsdk.ChatCompletionRequest,
+	request *dtgsdkgo.ChatCompletionRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ChatCompletion], error) {
+) (*core.Response[*dtgsdkgo.ChatCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -89,7 +89,7 @@ func (r *RawClient) CreateChatCompletion(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.ChatCompletion
+	var response *dtgsdkgo.ChatCompletion
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -103,13 +103,13 @@ func (r *RawClient) CreateChatCompletion(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ChatCompletion]{
+	return &core.Response[*dtgsdkgo.ChatCompletion]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -118,9 +118,9 @@ func (r *RawClient) CreateChatCompletion(
 
 func (r *RawClient) CreateChatCompletionByAgentPath(
 	ctx context.Context,
-	request *dtgagentsdk.WebhookChatCompletionRequest,
+	request *dtgsdkgo.WebhookChatCompletionRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ChatCompletion], error) {
+) (*core.Response[*dtgsdkgo.ChatCompletion], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -136,7 +136,7 @@ func (r *RawClient) CreateChatCompletionByAgentPath(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.ChatCompletion
+	var response *dtgsdkgo.ChatCompletion
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -150,13 +150,13 @@ func (r *RawClient) CreateChatCompletionByAgentPath(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ChatCompletion]{
+	return &core.Response[*dtgsdkgo.ChatCompletion]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

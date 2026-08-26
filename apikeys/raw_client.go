@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type RawClient struct {
@@ -35,7 +35,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) ListAPIKeys(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ListAPIKeysResponse], error) {
+) (*core.Response[*dtgsdkgo.ListAPIKeysResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) ListAPIKeys(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ListAPIKeysResponse
+	var response *dtgsdkgo.ListAPIKeysResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) ListAPIKeys(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ListAPIKeysResponse]{
+	return &core.Response[*dtgsdkgo.ListAPIKeysResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,9 +74,9 @@ func (r *RawClient) ListAPIKeys(
 
 func (r *RawClient) CreateAPIKey(
 	ctx context.Context,
-	request *dtgagentsdk.APIKeyCreateRequest,
+	request *dtgsdkgo.APIKeyCreateRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.CreateAPIKeyResponse], error) {
+) (*core.Response[*dtgsdkgo.CreateAPIKeyResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -92,7 +92,7 @@ func (r *RawClient) CreateAPIKey(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.CreateAPIKeyResponse
+	var response *dtgsdkgo.CreateAPIKeyResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -111,7 +111,7 @@ func (r *RawClient) CreateAPIKey(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.CreateAPIKeyResponse]{
+	return &core.Response[*dtgsdkgo.CreateAPIKeyResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -120,9 +120,9 @@ func (r *RawClient) CreateAPIKey(
 
 func (r *RawClient) RevokeAPIKey(
 	ctx context.Context,
-	request *dtgagentsdk.RevokeAPIKeyRequest,
+	request *dtgsdkgo.RevokeAPIKeyRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.RevokeAPIKeyResponse], error) {
+) (*core.Response[*dtgsdkgo.RevokeAPIKeyResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -141,7 +141,7 @@ func (r *RawClient) RevokeAPIKey(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 
-	var response *dtgagentsdk.RevokeAPIKeyResponse
+	var response *dtgsdkgo.RevokeAPIKeyResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -154,13 +154,13 @@ func (r *RawClient) RevokeAPIKey(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.RevokeAPIKeyResponse]{
+	return &core.Response[*dtgsdkgo.RevokeAPIKeyResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

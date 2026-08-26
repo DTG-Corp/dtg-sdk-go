@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	client "github.com/DTG-Corp/dtg-agent-sdk/client"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	client "github.com/DTG-Corp/dtg-sdk-go/client"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -110,7 +110,7 @@ func TestKnowledgeCreateKnowledgeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.KnowledgeCreateRequest{
+	request := &dtgsdkgo.KnowledgeCreateRequest{
 		Title:   "title",
 		Content: "content",
 	}
@@ -137,7 +137,7 @@ func TestKnowledgeGetKnowledgeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.GetKnowledgeRequest{
+	request := &dtgsdkgo.GetKnowledgeRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Knowledge.GetKnowledge(
@@ -163,7 +163,7 @@ func TestKnowledgeDeleteKnowledgeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.DeleteKnowledgeRequest{
+	request := &dtgsdkgo.DeleteKnowledgeRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Knowledge.DeleteKnowledge(

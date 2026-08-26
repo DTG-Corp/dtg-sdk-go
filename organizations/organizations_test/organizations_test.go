@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	client "github.com/DTG-Corp/dtg-agent-sdk/client"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	client "github.com/DTG-Corp/dtg-sdk-go/client"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -88,7 +88,7 @@ func TestOrganizationsGetOrganizationWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.GetOrganizationRequest{
+	request := &dtgsdkgo.GetOrganizationRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Organizations.GetOrganization(
@@ -114,7 +114,7 @@ func TestOrganizationsListOrganizationMembersWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.ListOrganizationMembersRequest{
+	request := &dtgsdkgo.ListOrganizationMembersRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Organizations.ListOrganizationMembers(

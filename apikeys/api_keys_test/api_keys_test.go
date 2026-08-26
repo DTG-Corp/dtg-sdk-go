@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	client "github.com/DTG-Corp/dtg-agent-sdk/client"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	client "github.com/DTG-Corp/dtg-sdk-go/client"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -110,7 +110,7 @@ func TestAPIKeysCreateAPIKeyWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.APIKeyCreateRequest{
+	request := &dtgsdkgo.APIKeyCreateRequest{
 		Name: "name",
 	}
 	_, invocationErr := client.APIKeys.CreateAPIKey(
@@ -136,7 +136,7 @@ func TestAPIKeysRevokeAPIKeyWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.RevokeAPIKeyRequest{
+	request := &dtgsdkgo.RevokeAPIKeyRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.APIKeys.RevokeAPIKey(

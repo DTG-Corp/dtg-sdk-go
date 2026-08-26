@@ -5,10 +5,10 @@ package apikeys
 import (
 	context "context"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type Client struct {
@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) ListAPIKeys(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ListAPIKeysResponse, error) {
+) (*dtgsdkgo.ListAPIKeysResponse, error) {
 	response, err := c.WithRawResponse.ListAPIKeys(
 		ctx,
 		opts...,
@@ -55,7 +55,7 @@ func (c *Client) ListAPIKeys(
 
 // Example:
 //
-//	request := &dtgagentsdk.APIKeyCreateRequest{
+//	request := &dtgsdkgo.APIKeyCreateRequest{
 //	    Name: "name",
 //	}
 //	client.APIKeys.CreateAPIKey(
@@ -64,9 +64,9 @@ func (c *Client) ListAPIKeys(
 //	)
 func (c *Client) CreateAPIKey(
 	ctx context.Context,
-	request *dtgagentsdk.APIKeyCreateRequest,
+	request *dtgsdkgo.APIKeyCreateRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.CreateAPIKeyResponse, error) {
+) (*dtgsdkgo.CreateAPIKeyResponse, error) {
 	response, err := c.WithRawResponse.CreateAPIKey(
 		ctx,
 		request,
@@ -80,7 +80,7 @@ func (c *Client) CreateAPIKey(
 
 // Example:
 //
-//	request := &dtgagentsdk.RevokeAPIKeyRequest{
+//	request := &dtgsdkgo.RevokeAPIKeyRequest{
 //	    ID: "id",
 //	}
 //	client.APIKeys.RevokeAPIKey(
@@ -89,9 +89,9 @@ func (c *Client) CreateAPIKey(
 //	)
 func (c *Client) RevokeAPIKey(
 	ctx context.Context,
-	request *dtgagentsdk.RevokeAPIKeyRequest,
+	request *dtgsdkgo.RevokeAPIKeyRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.RevokeAPIKeyResponse, error) {
+) (*dtgsdkgo.RevokeAPIKeyResponse, error) {
 	response, err := c.WithRawResponse.RevokeAPIKey(
 		ctx,
 		request,

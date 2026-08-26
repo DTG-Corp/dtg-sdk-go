@@ -1,6 +1,6 @@
 # Dtgsoft Go Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2FDTG-Corp%2Fdtg-agent-sdk)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2FDTG-Corp%2Fdtg-sdk-go)
 
 The Dtgsoft Go library provides convenient access to the Dtgsoft APIs from Go.
 
@@ -20,7 +20,7 @@ The Dtgsoft Go library provides convenient access to the Dtgsoft APIs from Go.
 
 ## Reference
 
-A full reference for this library is available [here](https://github.com/DTG-Corp/dtg-agent-sdk/blob/HEAD/./reference.md).
+A full reference for this library is available [here](https://github.com/DTG-Corp/dtg-sdk-go/blob/HEAD/./reference.md).
 
 ## Usage
 
@@ -32,9 +32,9 @@ package example
 import (
     context "context"
 
-    dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-    client "github.com/DTG-Corp/dtg-agent-sdk/client"
-    option "github.com/DTG-Corp/dtg-agent-sdk/option"
+    dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+    client "github.com/DTG-Corp/dtg-sdk-go/client"
+    option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 func do() {
@@ -43,11 +43,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &dtgagentsdk.ChatCompletionRequest{
+    request := &dtgsdkgo.ChatCompletionRequest{
         Model: "model",
-        Messages: []*dtgagentsdk.ChatMessage{
-            &dtgagentsdk.ChatMessage{
-                Role: dtgagentsdk.ChatMessageRoleSystem,
+        Messages: []*dtgsdkgo.ChatMessage{
+            &dtgsdkgo.ChatMessage{
+                Role: dtgsdkgo.ChatMessageRoleSystem,
                 Content: "content",
             },
         },

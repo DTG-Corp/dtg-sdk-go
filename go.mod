@@ -1,4 +1,4 @@
-module github.com/DTG-Corp/dtg-agent-sdk
+module github.com/DTG-Corp/dtg-sdk-go
 
 go 1.21
 

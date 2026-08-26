@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	client "github.com/DTG-Corp/dtg-agent-sdk/client"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	client "github.com/DTG-Corp/dtg-sdk-go/client"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -110,7 +110,7 @@ func TestAgentsCreateAgentWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.AgentCreateRequest{
+	request := &dtgsdkgo.AgentCreateRequest{
 		DisplayName: "display_name",
 	}
 	_, invocationErr := client.Agents.CreateAgent(
@@ -136,7 +136,7 @@ func TestAgentsGetAgentWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.GetAgentRequest{
+	request := &dtgsdkgo.GetAgentRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.GetAgent(
@@ -162,7 +162,7 @@ func TestAgentsDeleteAgentWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.DeleteAgentRequest{
+	request := &dtgsdkgo.DeleteAgentRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.DeleteAgent(
@@ -188,7 +188,7 @@ func TestAgentsUpdateAgentWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.AgentUpdateRequest{
+	request := &dtgsdkgo.AgentUpdateRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.UpdateAgent(
@@ -214,7 +214,7 @@ func TestAgentsStartAgentWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.StartAgentRequest{
+	request := &dtgsdkgo.StartAgentRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.StartAgent(
@@ -240,7 +240,7 @@ func TestAgentsStopAgentWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.StopAgentRequest{
+	request := &dtgsdkgo.StopAgentRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.StopAgent(
@@ -266,7 +266,7 @@ func TestAgentsGetAgentChannelsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.GetAgentChannelsRequest{
+	request := &dtgsdkgo.GetAgentChannelsRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.GetAgentChannels(
@@ -292,7 +292,7 @@ func TestAgentsUpdateAgentChannelsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.UpdateAgentChannelsRequest{
+	request := &dtgsdkgo.UpdateAgentChannelsRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Agents.UpdateAgentChannels(

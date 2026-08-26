@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	client "github.com/DTG-Corp/dtg-agent-sdk/client"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	client "github.com/DTG-Corp/dtg-sdk-go/client"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -110,7 +110,7 @@ func TestMcpServersCreateMcpServerWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.McpServerCreateRequest{
+	request := &dtgsdkgo.McpServerCreateRequest{
 		Name: "name",
 	}
 	_, invocationErr := client.McpServers.CreateMcpServer(
@@ -136,7 +136,7 @@ func TestMcpServersListMcpServerToolsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.ListMcpServerToolsRequest{
+	request := &dtgsdkgo.ListMcpServerToolsRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.McpServers.ListMcpServerTools(
@@ -162,9 +162,9 @@ func TestMcpServersCreateMcpServerToolWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.McpServerToolCreateRequest{
+	request := &dtgsdkgo.McpServerToolCreateRequest{
 		ID:          "id",
-		Kind:        dtgagentsdk.McpServerToolCreateRequestKindRest,
+		Kind:        dtgsdkgo.McpServerToolCreateRequestKindRest,
 		Slug:        "slug",
 		DisplayName: "display_name",
 	}

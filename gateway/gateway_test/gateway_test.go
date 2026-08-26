@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	client "github.com/DTG-Corp/dtg-agent-sdk/client"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	client "github.com/DTG-Corp/dtg-sdk-go/client"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -110,11 +110,11 @@ func TestGatewayCreateChatCompletionWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.ChatCompletionRequest{
+	request := &dtgsdkgo.ChatCompletionRequest{
 		Model: "model",
-		Messages: []*dtgagentsdk.ChatMessage{
-			&dtgagentsdk.ChatMessage{
-				Role:    dtgagentsdk.ChatMessageRoleSystem,
+		Messages: []*dtgsdkgo.ChatMessage{
+			&dtgsdkgo.ChatMessage{
+				Role:    dtgsdkgo.ChatMessageRoleSystem,
 				Content: "content",
 			},
 		},
@@ -142,11 +142,11 @@ func TestGatewayCreateChatCompletionByAgentPathWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.WebhookChatCompletionRequest{
+	request := &dtgsdkgo.WebhookChatCompletionRequest{
 		AgentID: "agent_id",
-		Messages: []*dtgagentsdk.ChatMessage{
-			&dtgagentsdk.ChatMessage{
-				Role:    dtgagentsdk.ChatMessageRoleSystem,
+		Messages: []*dtgsdkgo.ChatMessage{
+			&dtgsdkgo.ChatMessage{
+				Role:    dtgsdkgo.ChatMessageRoleSystem,
 				Content: "content",
 			},
 		},

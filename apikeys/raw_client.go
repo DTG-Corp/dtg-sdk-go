@@ -40,7 +40,7 @@ func (r *RawClient) ListAPIKeys(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/api-keys"
 	headers := internal.MergeHeaders(
@@ -81,7 +81,7 @@ func (r *RawClient) CreateAPIKey(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/api-keys"
 	headers := internal.MergeHeaders(
@@ -127,7 +127,7 @@ func (r *RawClient) RevokeAPIKey(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/api-keys/%v",
@@ -154,6 +154,7 @@ func (r *RawClient) RevokeAPIKey(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {

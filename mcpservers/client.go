@@ -105,9 +105,11 @@ func (c *Client) ListMcpServerTools(
 
 // Example:
 //
-//	request := &dtgagentsdk.CreateMcpServerToolRequest{
+//	request := &dtgagentsdk.McpServerToolCreateRequest{
 //	    ID: "id",
-//	    Body: &dtgagentsdk.McpServerTool{},
+//	    Kind: dtgagentsdk.McpServerToolCreateRequestKindRest,
+//	    Slug: "slug",
+//	    DisplayName: "display_name",
 //	}
 //	client.McpServers.CreateMcpServerTool(
 //	    context.TODO(),
@@ -115,7 +117,7 @@ func (c *Client) ListMcpServerTools(
 //	)
 func (c *Client) CreateMcpServerTool(
 	ctx context.Context,
-	request *dtgagentsdk.CreateMcpServerToolRequest,
+	request *dtgagentsdk.McpServerToolCreateRequest,
 	opts ...option.RequestOption,
 ) (*dtgagentsdk.CreateMcpServerToolResponse, error) {
 	response, err := c.WithRawResponse.CreateMcpServerTool(

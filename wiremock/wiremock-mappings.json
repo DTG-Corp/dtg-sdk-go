@@ -64,6 +64,42 @@
       }
     },
     {
+      "id": "542a7f0e-7736-4422-af7a-6e5938c0749b",
+      "name": "Chat completion với agent id trên URL (không cần model=agent id trong body) - default",
+      "request": {
+        "urlPathTemplate": "/webhook/{agent_id}/v1/chat/completions",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "agent_id": {
+            "equalTo": "agent_id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"object\": \"object\",\n  \"created\": 1,\n  \"model\": \"model\",\n  \"choices\": [\n    {\n      \"key\": \"value\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 1,\n    \"completion_tokens\": 1,\n    \"total_tokens\": 1\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "542a7f0e-7736-4422-af7a-6e5938c0749b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "3c8801e7-c014-4b94-96f5-3409cc9617db",
       "name": "List agents in the key's organization - default",
       "request": {
@@ -77,7 +113,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"display_name\": \"display_name\",\n      \"status\": \"created\",\n      \"llm_provider\": \"llm_provider\",\n      \"llm_model\": \"llm_model\"\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"display_name\": \"display_name\",\n      \"status\": \"created\",\n      \"llm_provider\": \"llm_provider\",\n      \"llm_model\": \"llm_model\",\n      \"llm_base_url\": \"llm_base_url\",\n      \"knowledge_ids\": [\n        \"knowledge_ids\"\n      ],\n      \"enabled_tools\": [\n        \"enabled_tools\"\n      ],\n      \"mcp_dynamic_server_ids\": [\n        \"mcp_dynamic_server_ids\"\n      ],\n      \"mcp_dynamic_tool_filter\": {\n        \"key\": \"value\"\n      }\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -109,7 +145,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -145,7 +181,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -199,8 +235,8 @@
       }
     },
     {
-      "id": "d28f7ac2-3aaf-41b1-922c-8680634ac8ee",
-      "name": "Update an agent - default",
+      "id": "67ef6e2c-4ea2-4bf0-a170-83692a97ce25",
+      "name": "Update an agent (partial; omitted fields keep current values) - default",
       "request": {
         "urlPathTemplate": "/api/v1/agents/{id}",
         "method": "PATCH",
@@ -217,12 +253,12 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "d28f7ac2-3aaf-41b1-922c-8680634ac8ee",
+      "uuid": "67ef6e2c-4ea2-4bf0-a170-83692a97ce25",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -798,7 +834,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"mcp_server_id\": \"mcp_server_id\",\n      \"kind\": \"rest\",\n      \"slug\": \"slug\",\n      \"display_name\": \"display_name\",\n      \"description\": \"description\",\n      \"base_url\": \"base_url\",\n      \"auth_type\": \"none\",\n      \"auth_config\": {\n        \"key\": \"value\"\n      },\n      \"endpoints\": [\n        {\n          \"key\": \"value\"\n        }\n      ],\n      \"sort_order\": 1,\n      \"is_active\": true,\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"mcp_server_id\": \"mcp_server_id\",\n      \"kind\": \"rest\",\n      \"slug\": \"slug\",\n      \"display_name\": \"display_name\",\n      \"description\": \"description\",\n      \"base_url\": \"base_url\",\n      \"rest_resource_path\": \"rest_resource_path\",\n      \"auth_type\": \"none\",\n      \"endpoints\": [\n        {}\n      ],\n      \"sort_order\": 1,\n      \"is_active\": true,\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -834,7 +870,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"mcp_server_id\": \"mcp_server_id\",\n    \"kind\": \"rest\",\n    \"slug\": \"slug\",\n    \"display_name\": \"display_name\",\n    \"description\": \"description\",\n    \"base_url\": \"base_url\",\n    \"auth_type\": \"none\",\n    \"auth_config\": {\n      \"key\": \"value\"\n    },\n    \"endpoints\": [\n      {\n        \"key\": \"value\"\n      }\n    ],\n    \"sort_order\": 1,\n    \"is_active\": true,\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"mcp_server_id\": \"mcp_server_id\",\n    \"kind\": \"rest\",\n    \"slug\": \"slug\",\n    \"display_name\": \"display_name\",\n    \"description\": \"description\",\n    \"base_url\": \"base_url\",\n    \"rest_resource_path\": \"rest_resource_path\",\n    \"auth_type\": \"none\",\n    \"auth_config\": {\n      \"token\": \"token\",\n      \"header_name\": \"header_name\",\n      \"username\": \"username\",\n      \"password\": \"password\",\n      \"driver\": \"driver\",\n      \"dsn\": \"dsn\",\n      \"read_only\": true,\n      \"max_rows\": 1,\n      \"engine\": \"engine\",\n      \"host\": \"host\",\n      \"port\": 1,\n      \"database\": \"database\",\n      \"ssl_mode\": \"ssl_mode\",\n      \"extra_params\": \"extra_params\",\n      \"raw_dsn\": \"raw_dsn\",\n      \"auth_source\": \"auth_source\",\n      \"tls\": true,\n      \"db_index\": 1\n    },\n    \"endpoints\": [\n      {}\n    ],\n    \"definition\": {\n      \"max_timeout_ms\": 1,\n      \"max_response_kb\": 1,\n      \"schema_validate\": true,\n      \"allowed_hosts\": [\n        \"allowed_hosts\"\n      ]\n    },\n    \"sort_order\": 1,\n    \"is_active\": true,\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -853,6 +889,6 @@
     }
   ],
   "meta": {
-    "total": 25
+    "total": 26
   }
 }

@@ -41,7 +41,7 @@ func (r *RawClient) GetOrganization(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/organizations/%v",
@@ -64,6 +64,7 @@ func (r *RawClient) GetOrganization(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -85,7 +86,7 @@ func (r *RawClient) ListOrganizationMembers(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/organizations/%v/members",
@@ -108,6 +109,7 @@ func (r *RawClient) ListOrganizationMembers(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {

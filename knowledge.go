@@ -20,11 +20,12 @@ var (
 
 type KnowledgeCreateRequest struct {
 	// Idempotency key cho mutation (tránh double-submit).
-	IdempotencyKey *string                            `json:"-" url:"-"`
-	Title          string                             `json:"title" url:"-"`
-	Content        string                             `json:"content" url:"-"`
-	ContentType    *KnowledgeCreateRequestContentType `json:"content_type,omitempty" url:"-"`
-	Tags           []string                           `json:"tags,omitempty" url:"-"`
+	IdempotencyKey *string `json:"-" url:"-"`
+	Title          string  `json:"title" url:"-"`
+	// Tối đa 4 MiB
+	Content     string                             `json:"content" url:"-"`
+	ContentType *KnowledgeCreateRequestContentType `json:"content_type,omitempty" url:"-"`
+	Tags        []string                           `json:"tags,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

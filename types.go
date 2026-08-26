@@ -11,6 +11,468 @@ import (
 )
 
 var (
+	badRequestErrorBodyFieldStatus    = big.NewInt(1 << 0)
+	badRequestErrorBodyFieldCode      = big.NewInt(1 << 1)
+	badRequestErrorBodyFieldMessage   = big.NewInt(1 << 2)
+	badRequestErrorBodyFieldData      = big.NewInt(1 << 3)
+	badRequestErrorBodyFieldTraceID   = big.NewInt(1 << 4)
+	badRequestErrorBodyFieldTimestamp = big.NewInt(1 << 5)
+)
+
+type BadRequestErrorBody struct {
+	Status    *BadRequestErrorBodyStatus `json:"status,omitempty" url:"status,omitempty"`
+	Code      *BadRequestErrorBodyCode   `json:"code,omitempty" url:"code,omitempty"`
+	Message   string                     `json:"message" url:"message"`
+	Data      any                        `json:"data,omitempty" url:"data,omitempty"`
+	TraceID   string                     `json:"trace_id" url:"trace_id"`
+	Timestamp time.Time                  `json:"timestamp" url:"timestamp"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BadRequestErrorBody) GetStatus() *BadRequestErrorBodyStatus {
+	if b == nil {
+		return nil
+	}
+	return b.Status
+}
+
+func (b *BadRequestErrorBody) GetCode() *BadRequestErrorBodyCode {
+	if b == nil {
+		return nil
+	}
+	return b.Code
+}
+
+func (b *BadRequestErrorBody) GetMessage() string {
+	if b == nil {
+		return ""
+	}
+	return b.Message
+}
+
+func (b *BadRequestErrorBody) GetData() any {
+	if b == nil {
+		return nil
+	}
+	return b.Data
+}
+
+func (b *BadRequestErrorBody) GetTraceID() string {
+	if b == nil {
+		return ""
+	}
+	return b.TraceID
+}
+
+func (b *BadRequestErrorBody) GetTimestamp() time.Time {
+	if b == nil {
+		return time.Time{}
+	}
+	return b.Timestamp
+}
+
+func (b *BadRequestErrorBody) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BadRequestErrorBody) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadRequestErrorBody) SetStatus(status *BadRequestErrorBodyStatus) {
+	b.Status = status
+	b.require(badRequestErrorBodyFieldStatus)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadRequestErrorBody) SetCode(code *BadRequestErrorBodyCode) {
+	b.Code = code
+	b.require(badRequestErrorBodyFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadRequestErrorBody) SetMessage(message string) {
+	b.Message = message
+	b.require(badRequestErrorBodyFieldMessage)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadRequestErrorBody) SetData(data any) {
+	b.Data = data
+	b.require(badRequestErrorBodyFieldData)
+}
+
+// SetTraceID sets the TraceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadRequestErrorBody) SetTraceID(traceID string) {
+	b.TraceID = traceID
+	b.require(badRequestErrorBodyFieldTraceID)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadRequestErrorBody) SetTimestamp(timestamp time.Time) {
+	b.Timestamp = timestamp
+	b.require(badRequestErrorBodyFieldTimestamp)
+}
+
+func (b *BadRequestErrorBody) UnmarshalJSON(data []byte) error {
+	type embed BadRequestErrorBody
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*b),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*b = BadRequestErrorBody(unmarshaler.embed)
+	b.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BadRequestErrorBody) MarshalJSON() ([]byte, error) {
+	type embed BadRequestErrorBody
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*b),
+		Timestamp: internal.NewDateTime(b.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BadRequestErrorBody) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+type BadRequestErrorBodyCode string
+
+const (
+	BadRequestErrorBodyCodeUnauthorized       BadRequestErrorBodyCode = "unauthorized"
+	BadRequestErrorBodyCodeForbidden          BadRequestErrorBodyCode = "forbidden"
+	BadRequestErrorBodyCodeNotFound           BadRequestErrorBodyCode = "not_found"
+	BadRequestErrorBodyCodeInvalidRequest     BadRequestErrorBodyCode = "invalid_request"
+	BadRequestErrorBodyCodeRateLimited        BadRequestErrorBodyCode = "rate_limited"
+	BadRequestErrorBodyCodePayloadTooLarge    BadRequestErrorBodyCode = "payload_too_large"
+	BadRequestErrorBodyCodeServiceUnavailable BadRequestErrorBodyCode = "service_unavailable"
+	BadRequestErrorBodyCodeInternal           BadRequestErrorBodyCode = "internal"
+)
+
+func NewBadRequestErrorBodyCodeFromString(s string) (BadRequestErrorBodyCode, error) {
+	switch s {
+	case "unauthorized":
+		return BadRequestErrorBodyCodeUnauthorized, nil
+	case "forbidden":
+		return BadRequestErrorBodyCodeForbidden, nil
+	case "not_found":
+		return BadRequestErrorBodyCodeNotFound, nil
+	case "invalid_request":
+		return BadRequestErrorBodyCodeInvalidRequest, nil
+	case "rate_limited":
+		return BadRequestErrorBodyCodeRateLimited, nil
+	case "payload_too_large":
+		return BadRequestErrorBodyCodePayloadTooLarge, nil
+	case "service_unavailable":
+		return BadRequestErrorBodyCodeServiceUnavailable, nil
+	case "internal":
+		return BadRequestErrorBodyCodeInternal, nil
+	}
+	var t BadRequestErrorBodyCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BadRequestErrorBodyCode) Ptr() *BadRequestErrorBodyCode {
+	return &b
+}
+
+type BadRequestErrorBodyStatus string
+
+const (
+	BadRequestErrorBodyStatusError BadRequestErrorBodyStatus = "error"
+)
+
+func NewBadRequestErrorBodyStatusFromString(s string) (BadRequestErrorBodyStatus, error) {
+	switch s {
+	case "error":
+		return BadRequestErrorBodyStatusError, nil
+	}
+	var t BadRequestErrorBodyStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BadRequestErrorBodyStatus) Ptr() *BadRequestErrorBodyStatus {
+	return &b
+}
+
+var (
+	contentTooLargeErrorBodyFieldStatus    = big.NewInt(1 << 0)
+	contentTooLargeErrorBodyFieldCode      = big.NewInt(1 << 1)
+	contentTooLargeErrorBodyFieldMessage   = big.NewInt(1 << 2)
+	contentTooLargeErrorBodyFieldData      = big.NewInt(1 << 3)
+	contentTooLargeErrorBodyFieldTraceID   = big.NewInt(1 << 4)
+	contentTooLargeErrorBodyFieldTimestamp = big.NewInt(1 << 5)
+)
+
+type ContentTooLargeErrorBody struct {
+	Status    *ContentTooLargeErrorBodyStatus `json:"status,omitempty" url:"status,omitempty"`
+	Code      *ContentTooLargeErrorBodyCode   `json:"code,omitempty" url:"code,omitempty"`
+	Message   string                          `json:"message" url:"message"`
+	Data      any                             `json:"data,omitempty" url:"data,omitempty"`
+	TraceID   string                          `json:"trace_id" url:"trace_id"`
+	Timestamp time.Time                       `json:"timestamp" url:"timestamp"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ContentTooLargeErrorBody) GetStatus() *ContentTooLargeErrorBodyStatus {
+	if c == nil {
+		return nil
+	}
+	return c.Status
+}
+
+func (c *ContentTooLargeErrorBody) GetCode() *ContentTooLargeErrorBodyCode {
+	if c == nil {
+		return nil
+	}
+	return c.Code
+}
+
+func (c *ContentTooLargeErrorBody) GetMessage() string {
+	if c == nil {
+		return ""
+	}
+	return c.Message
+}
+
+func (c *ContentTooLargeErrorBody) GetData() any {
+	if c == nil {
+		return nil
+	}
+	return c.Data
+}
+
+func (c *ContentTooLargeErrorBody) GetTraceID() string {
+	if c == nil {
+		return ""
+	}
+	return c.TraceID
+}
+
+func (c *ContentTooLargeErrorBody) GetTimestamp() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.Timestamp
+}
+
+func (c *ContentTooLargeErrorBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ContentTooLargeErrorBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ContentTooLargeErrorBody) SetStatus(status *ContentTooLargeErrorBodyStatus) {
+	c.Status = status
+	c.require(contentTooLargeErrorBodyFieldStatus)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ContentTooLargeErrorBody) SetCode(code *ContentTooLargeErrorBodyCode) {
+	c.Code = code
+	c.require(contentTooLargeErrorBodyFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ContentTooLargeErrorBody) SetMessage(message string) {
+	c.Message = message
+	c.require(contentTooLargeErrorBodyFieldMessage)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ContentTooLargeErrorBody) SetData(data any) {
+	c.Data = data
+	c.require(contentTooLargeErrorBodyFieldData)
+}
+
+// SetTraceID sets the TraceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ContentTooLargeErrorBody) SetTraceID(traceID string) {
+	c.TraceID = traceID
+	c.require(contentTooLargeErrorBodyFieldTraceID)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ContentTooLargeErrorBody) SetTimestamp(timestamp time.Time) {
+	c.Timestamp = timestamp
+	c.require(contentTooLargeErrorBodyFieldTimestamp)
+}
+
+func (c *ContentTooLargeErrorBody) UnmarshalJSON(data []byte) error {
+	type embed ContentTooLargeErrorBody
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ContentTooLargeErrorBody(unmarshaler.embed)
+	c.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ContentTooLargeErrorBody) MarshalJSON() ([]byte, error) {
+	type embed ContentTooLargeErrorBody
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*c),
+		Timestamp: internal.NewDateTime(c.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ContentTooLargeErrorBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ContentTooLargeErrorBodyCode string
+
+const (
+	ContentTooLargeErrorBodyCodeUnauthorized       ContentTooLargeErrorBodyCode = "unauthorized"
+	ContentTooLargeErrorBodyCodeForbidden          ContentTooLargeErrorBodyCode = "forbidden"
+	ContentTooLargeErrorBodyCodeNotFound           ContentTooLargeErrorBodyCode = "not_found"
+	ContentTooLargeErrorBodyCodeInvalidRequest     ContentTooLargeErrorBodyCode = "invalid_request"
+	ContentTooLargeErrorBodyCodeRateLimited        ContentTooLargeErrorBodyCode = "rate_limited"
+	ContentTooLargeErrorBodyCodePayloadTooLarge    ContentTooLargeErrorBodyCode = "payload_too_large"
+	ContentTooLargeErrorBodyCodeServiceUnavailable ContentTooLargeErrorBodyCode = "service_unavailable"
+	ContentTooLargeErrorBodyCodeInternal           ContentTooLargeErrorBodyCode = "internal"
+)
+
+func NewContentTooLargeErrorBodyCodeFromString(s string) (ContentTooLargeErrorBodyCode, error) {
+	switch s {
+	case "unauthorized":
+		return ContentTooLargeErrorBodyCodeUnauthorized, nil
+	case "forbidden":
+		return ContentTooLargeErrorBodyCodeForbidden, nil
+	case "not_found":
+		return ContentTooLargeErrorBodyCodeNotFound, nil
+	case "invalid_request":
+		return ContentTooLargeErrorBodyCodeInvalidRequest, nil
+	case "rate_limited":
+		return ContentTooLargeErrorBodyCodeRateLimited, nil
+	case "payload_too_large":
+		return ContentTooLargeErrorBodyCodePayloadTooLarge, nil
+	case "service_unavailable":
+		return ContentTooLargeErrorBodyCodeServiceUnavailable, nil
+	case "internal":
+		return ContentTooLargeErrorBodyCodeInternal, nil
+	}
+	var t ContentTooLargeErrorBodyCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ContentTooLargeErrorBodyCode) Ptr() *ContentTooLargeErrorBodyCode {
+	return &c
+}
+
+type ContentTooLargeErrorBodyStatus string
+
+const (
+	ContentTooLargeErrorBodyStatusError ContentTooLargeErrorBodyStatus = "error"
+)
+
+func NewContentTooLargeErrorBodyStatusFromString(s string) (ContentTooLargeErrorBodyStatus, error) {
+	switch s {
+	case "error":
+		return ContentTooLargeErrorBodyStatusError, nil
+	}
+	var t ContentTooLargeErrorBodyStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ContentTooLargeErrorBodyStatus) Ptr() *ContentTooLargeErrorBodyStatus {
+	return &c
+}
+
+var (
 	envelopeFieldStatus    = big.NewInt(1 << 0)
 	envelopeFieldCode      = big.NewInt(1 << 1)
 	envelopeFieldMessage   = big.NewInt(1 << 2)
@@ -202,6 +664,237 @@ func NewEnvelopeStatusFromString(s string) (EnvelopeStatus, error) {
 
 func (e EnvelopeStatus) Ptr() *EnvelopeStatus {
 	return &e
+}
+
+var (
+	forbiddenErrorBodyFieldStatus    = big.NewInt(1 << 0)
+	forbiddenErrorBodyFieldCode      = big.NewInt(1 << 1)
+	forbiddenErrorBodyFieldMessage   = big.NewInt(1 << 2)
+	forbiddenErrorBodyFieldData      = big.NewInt(1 << 3)
+	forbiddenErrorBodyFieldTraceID   = big.NewInt(1 << 4)
+	forbiddenErrorBodyFieldTimestamp = big.NewInt(1 << 5)
+)
+
+type ForbiddenErrorBody struct {
+	Status    *ForbiddenErrorBodyStatus `json:"status,omitempty" url:"status,omitempty"`
+	Code      *ForbiddenErrorBodyCode   `json:"code,omitempty" url:"code,omitempty"`
+	Message   string                    `json:"message" url:"message"`
+	Data      any                       `json:"data,omitempty" url:"data,omitempty"`
+	TraceID   string                    `json:"trace_id" url:"trace_id"`
+	Timestamp time.Time                 `json:"timestamp" url:"timestamp"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *ForbiddenErrorBody) GetStatus() *ForbiddenErrorBodyStatus {
+	if f == nil {
+		return nil
+	}
+	return f.Status
+}
+
+func (f *ForbiddenErrorBody) GetCode() *ForbiddenErrorBodyCode {
+	if f == nil {
+		return nil
+	}
+	return f.Code
+}
+
+func (f *ForbiddenErrorBody) GetMessage() string {
+	if f == nil {
+		return ""
+	}
+	return f.Message
+}
+
+func (f *ForbiddenErrorBody) GetData() any {
+	if f == nil {
+		return nil
+	}
+	return f.Data
+}
+
+func (f *ForbiddenErrorBody) GetTraceID() string {
+	if f == nil {
+		return ""
+	}
+	return f.TraceID
+}
+
+func (f *ForbiddenErrorBody) GetTimestamp() time.Time {
+	if f == nil {
+		return time.Time{}
+	}
+	return f.Timestamp
+}
+
+func (f *ForbiddenErrorBody) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *ForbiddenErrorBody) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForbiddenErrorBody) SetStatus(status *ForbiddenErrorBodyStatus) {
+	f.Status = status
+	f.require(forbiddenErrorBodyFieldStatus)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForbiddenErrorBody) SetCode(code *ForbiddenErrorBodyCode) {
+	f.Code = code
+	f.require(forbiddenErrorBodyFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForbiddenErrorBody) SetMessage(message string) {
+	f.Message = message
+	f.require(forbiddenErrorBodyFieldMessage)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForbiddenErrorBody) SetData(data any) {
+	f.Data = data
+	f.require(forbiddenErrorBodyFieldData)
+}
+
+// SetTraceID sets the TraceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForbiddenErrorBody) SetTraceID(traceID string) {
+	f.TraceID = traceID
+	f.require(forbiddenErrorBodyFieldTraceID)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *ForbiddenErrorBody) SetTimestamp(timestamp time.Time) {
+	f.Timestamp = timestamp
+	f.require(forbiddenErrorBodyFieldTimestamp)
+}
+
+func (f *ForbiddenErrorBody) UnmarshalJSON(data []byte) error {
+	type embed ForbiddenErrorBody
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = ForbiddenErrorBody(unmarshaler.embed)
+	f.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *ForbiddenErrorBody) MarshalJSON() ([]byte, error) {
+	type embed ForbiddenErrorBody
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*f),
+		Timestamp: internal.NewDateTime(f.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *ForbiddenErrorBody) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type ForbiddenErrorBodyCode string
+
+const (
+	ForbiddenErrorBodyCodeUnauthorized       ForbiddenErrorBodyCode = "unauthorized"
+	ForbiddenErrorBodyCodeForbidden          ForbiddenErrorBodyCode = "forbidden"
+	ForbiddenErrorBodyCodeNotFound           ForbiddenErrorBodyCode = "not_found"
+	ForbiddenErrorBodyCodeInvalidRequest     ForbiddenErrorBodyCode = "invalid_request"
+	ForbiddenErrorBodyCodeRateLimited        ForbiddenErrorBodyCode = "rate_limited"
+	ForbiddenErrorBodyCodePayloadTooLarge    ForbiddenErrorBodyCode = "payload_too_large"
+	ForbiddenErrorBodyCodeServiceUnavailable ForbiddenErrorBodyCode = "service_unavailable"
+	ForbiddenErrorBodyCodeInternal           ForbiddenErrorBodyCode = "internal"
+)
+
+func NewForbiddenErrorBodyCodeFromString(s string) (ForbiddenErrorBodyCode, error) {
+	switch s {
+	case "unauthorized":
+		return ForbiddenErrorBodyCodeUnauthorized, nil
+	case "forbidden":
+		return ForbiddenErrorBodyCodeForbidden, nil
+	case "not_found":
+		return ForbiddenErrorBodyCodeNotFound, nil
+	case "invalid_request":
+		return ForbiddenErrorBodyCodeInvalidRequest, nil
+	case "rate_limited":
+		return ForbiddenErrorBodyCodeRateLimited, nil
+	case "payload_too_large":
+		return ForbiddenErrorBodyCodePayloadTooLarge, nil
+	case "service_unavailable":
+		return ForbiddenErrorBodyCodeServiceUnavailable, nil
+	case "internal":
+		return ForbiddenErrorBodyCodeInternal, nil
+	}
+	var t ForbiddenErrorBodyCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f ForbiddenErrorBodyCode) Ptr() *ForbiddenErrorBodyCode {
+	return &f
+}
+
+type ForbiddenErrorBodyStatus string
+
+const (
+	ForbiddenErrorBodyStatusError ForbiddenErrorBodyStatus = "error"
+)
+
+func NewForbiddenErrorBodyStatusFromString(s string) (ForbiddenErrorBodyStatus, error) {
+	switch s {
+	case "error":
+		return ForbiddenErrorBodyStatusError, nil
+	}
+	var t ForbiddenErrorBodyStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f ForbiddenErrorBodyStatus) Ptr() *ForbiddenErrorBodyStatus {
+	return &f
 }
 
 var (
@@ -421,6 +1114,237 @@ func (m *ModelList) String() string {
 }
 
 var (
+	notFoundErrorBodyFieldStatus    = big.NewInt(1 << 0)
+	notFoundErrorBodyFieldCode      = big.NewInt(1 << 1)
+	notFoundErrorBodyFieldMessage   = big.NewInt(1 << 2)
+	notFoundErrorBodyFieldData      = big.NewInt(1 << 3)
+	notFoundErrorBodyFieldTraceID   = big.NewInt(1 << 4)
+	notFoundErrorBodyFieldTimestamp = big.NewInt(1 << 5)
+)
+
+type NotFoundErrorBody struct {
+	Status    *NotFoundErrorBodyStatus `json:"status,omitempty" url:"status,omitempty"`
+	Code      *NotFoundErrorBodyCode   `json:"code,omitempty" url:"code,omitempty"`
+	Message   string                   `json:"message" url:"message"`
+	Data      any                      `json:"data,omitempty" url:"data,omitempty"`
+	TraceID   string                   `json:"trace_id" url:"trace_id"`
+	Timestamp time.Time                `json:"timestamp" url:"timestamp"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NotFoundErrorBody) GetStatus() *NotFoundErrorBodyStatus {
+	if n == nil {
+		return nil
+	}
+	return n.Status
+}
+
+func (n *NotFoundErrorBody) GetCode() *NotFoundErrorBodyCode {
+	if n == nil {
+		return nil
+	}
+	return n.Code
+}
+
+func (n *NotFoundErrorBody) GetMessage() string {
+	if n == nil {
+		return ""
+	}
+	return n.Message
+}
+
+func (n *NotFoundErrorBody) GetData() any {
+	if n == nil {
+		return nil
+	}
+	return n.Data
+}
+
+func (n *NotFoundErrorBody) GetTraceID() string {
+	if n == nil {
+		return ""
+	}
+	return n.TraceID
+}
+
+func (n *NotFoundErrorBody) GetTimestamp() time.Time {
+	if n == nil {
+		return time.Time{}
+	}
+	return n.Timestamp
+}
+
+func (n *NotFoundErrorBody) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NotFoundErrorBody) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundErrorBody) SetStatus(status *NotFoundErrorBodyStatus) {
+	n.Status = status
+	n.require(notFoundErrorBodyFieldStatus)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundErrorBody) SetCode(code *NotFoundErrorBodyCode) {
+	n.Code = code
+	n.require(notFoundErrorBodyFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundErrorBody) SetMessage(message string) {
+	n.Message = message
+	n.require(notFoundErrorBodyFieldMessage)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundErrorBody) SetData(data any) {
+	n.Data = data
+	n.require(notFoundErrorBodyFieldData)
+}
+
+// SetTraceID sets the TraceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundErrorBody) SetTraceID(traceID string) {
+	n.TraceID = traceID
+	n.require(notFoundErrorBodyFieldTraceID)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundErrorBody) SetTimestamp(timestamp time.Time) {
+	n.Timestamp = timestamp
+	n.require(notFoundErrorBodyFieldTimestamp)
+}
+
+func (n *NotFoundErrorBody) UnmarshalJSON(data []byte) error {
+	type embed NotFoundErrorBody
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*n),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*n = NotFoundErrorBody(unmarshaler.embed)
+	n.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NotFoundErrorBody) MarshalJSON() ([]byte, error) {
+	type embed NotFoundErrorBody
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*n),
+		Timestamp: internal.NewDateTime(n.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NotFoundErrorBody) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+type NotFoundErrorBodyCode string
+
+const (
+	NotFoundErrorBodyCodeUnauthorized       NotFoundErrorBodyCode = "unauthorized"
+	NotFoundErrorBodyCodeForbidden          NotFoundErrorBodyCode = "forbidden"
+	NotFoundErrorBodyCodeNotFound           NotFoundErrorBodyCode = "not_found"
+	NotFoundErrorBodyCodeInvalidRequest     NotFoundErrorBodyCode = "invalid_request"
+	NotFoundErrorBodyCodeRateLimited        NotFoundErrorBodyCode = "rate_limited"
+	NotFoundErrorBodyCodePayloadTooLarge    NotFoundErrorBodyCode = "payload_too_large"
+	NotFoundErrorBodyCodeServiceUnavailable NotFoundErrorBodyCode = "service_unavailable"
+	NotFoundErrorBodyCodeInternal           NotFoundErrorBodyCode = "internal"
+)
+
+func NewNotFoundErrorBodyCodeFromString(s string) (NotFoundErrorBodyCode, error) {
+	switch s {
+	case "unauthorized":
+		return NotFoundErrorBodyCodeUnauthorized, nil
+	case "forbidden":
+		return NotFoundErrorBodyCodeForbidden, nil
+	case "not_found":
+		return NotFoundErrorBodyCodeNotFound, nil
+	case "invalid_request":
+		return NotFoundErrorBodyCodeInvalidRequest, nil
+	case "rate_limited":
+		return NotFoundErrorBodyCodeRateLimited, nil
+	case "payload_too_large":
+		return NotFoundErrorBodyCodePayloadTooLarge, nil
+	case "service_unavailable":
+		return NotFoundErrorBodyCodeServiceUnavailable, nil
+	case "internal":
+		return NotFoundErrorBodyCodeInternal, nil
+	}
+	var t NotFoundErrorBodyCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (n NotFoundErrorBodyCode) Ptr() *NotFoundErrorBodyCode {
+	return &n
+}
+
+type NotFoundErrorBodyStatus string
+
+const (
+	NotFoundErrorBodyStatusError NotFoundErrorBodyStatus = "error"
+)
+
+func NewNotFoundErrorBodyStatusFromString(s string) (NotFoundErrorBodyStatus, error) {
+	switch s {
+	case "error":
+		return NotFoundErrorBodyStatusError, nil
+	}
+	var t NotFoundErrorBodyStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (n NotFoundErrorBodyStatus) Ptr() *NotFoundErrorBodyStatus {
+	return &n
+}
+
+var (
 	okResponseFieldRevoked = big.NewInt(1 << 0)
 	okResponseFieldDeleted = big.NewInt(1 << 1)
 	okResponseFieldStarted = big.NewInt(1 << 2)
@@ -550,4 +1474,667 @@ func (o *OkResponse) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+// Lỗi dạng OpenAI-compatible từ gateway `/v1/*` và `/webhook/*`.
+var (
+	openAiCompatErrorFieldError = big.NewInt(1 << 0)
+)
+
+type OpenAiCompatError struct {
+	Error *OpenAiCompatErrorError `json:"error,omitempty" url:"error,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OpenAiCompatError) GetError() *OpenAiCompatErrorError {
+	if o == nil {
+		return nil
+	}
+	return o.Error
+}
+
+func (o *OpenAiCompatError) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OpenAiCompatError) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetError sets the Error field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OpenAiCompatError) SetError(error_ *OpenAiCompatErrorError) {
+	o.Error = error_
+	o.require(openAiCompatErrorFieldError)
+}
+
+func (o *OpenAiCompatError) UnmarshalJSON(data []byte) error {
+	type unmarshaler OpenAiCompatError
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OpenAiCompatError(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OpenAiCompatError) MarshalJSON() ([]byte, error) {
+	type embed OpenAiCompatError
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OpenAiCompatError) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	openAiCompatErrorErrorFieldMessage = big.NewInt(1 << 0)
+	openAiCompatErrorErrorFieldType    = big.NewInt(1 << 1)
+	openAiCompatErrorErrorFieldCode    = big.NewInt(1 << 2)
+)
+
+type OpenAiCompatErrorError struct {
+	Message *string `json:"message,omitempty" url:"message,omitempty"`
+	Type    *string `json:"type,omitempty" url:"type,omitempty"`
+	Code    *string `json:"code,omitempty" url:"code,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OpenAiCompatErrorError) GetMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Message
+}
+
+func (o *OpenAiCompatErrorError) GetType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *OpenAiCompatErrorError) GetCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Code
+}
+
+func (o *OpenAiCompatErrorError) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OpenAiCompatErrorError) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OpenAiCompatErrorError) SetMessage(message *string) {
+	o.Message = message
+	o.require(openAiCompatErrorErrorFieldMessage)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OpenAiCompatErrorError) SetType(type_ *string) {
+	o.Type = type_
+	o.require(openAiCompatErrorErrorFieldType)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OpenAiCompatErrorError) SetCode(code *string) {
+	o.Code = code
+	o.require(openAiCompatErrorErrorFieldCode)
+}
+
+func (o *OpenAiCompatErrorError) UnmarshalJSON(data []byte) error {
+	type unmarshaler OpenAiCompatErrorError
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OpenAiCompatErrorError(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OpenAiCompatErrorError) MarshalJSON() ([]byte, error) {
+	type embed OpenAiCompatErrorError
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OpenAiCompatErrorError) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	tooManyRequestsErrorBodyFieldStatus    = big.NewInt(1 << 0)
+	tooManyRequestsErrorBodyFieldCode      = big.NewInt(1 << 1)
+	tooManyRequestsErrorBodyFieldMessage   = big.NewInt(1 << 2)
+	tooManyRequestsErrorBodyFieldData      = big.NewInt(1 << 3)
+	tooManyRequestsErrorBodyFieldTraceID   = big.NewInt(1 << 4)
+	tooManyRequestsErrorBodyFieldTimestamp = big.NewInt(1 << 5)
+)
+
+type TooManyRequestsErrorBody struct {
+	Status    *TooManyRequestsErrorBodyStatus `json:"status,omitempty" url:"status,omitempty"`
+	Code      *TooManyRequestsErrorBodyCode   `json:"code,omitempty" url:"code,omitempty"`
+	Message   string                          `json:"message" url:"message"`
+	Data      any                             `json:"data,omitempty" url:"data,omitempty"`
+	TraceID   string                          `json:"trace_id" url:"trace_id"`
+	Timestamp time.Time                       `json:"timestamp" url:"timestamp"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TooManyRequestsErrorBody) GetStatus() *TooManyRequestsErrorBodyStatus {
+	if t == nil {
+		return nil
+	}
+	return t.Status
+}
+
+func (t *TooManyRequestsErrorBody) GetCode() *TooManyRequestsErrorBodyCode {
+	if t == nil {
+		return nil
+	}
+	return t.Code
+}
+
+func (t *TooManyRequestsErrorBody) GetMessage() string {
+	if t == nil {
+		return ""
+	}
+	return t.Message
+}
+
+func (t *TooManyRequestsErrorBody) GetData() any {
+	if t == nil {
+		return nil
+	}
+	return t.Data
+}
+
+func (t *TooManyRequestsErrorBody) GetTraceID() string {
+	if t == nil {
+		return ""
+	}
+	return t.TraceID
+}
+
+func (t *TooManyRequestsErrorBody) GetTimestamp() time.Time {
+	if t == nil {
+		return time.Time{}
+	}
+	return t.Timestamp
+}
+
+func (t *TooManyRequestsErrorBody) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TooManyRequestsErrorBody) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TooManyRequestsErrorBody) SetStatus(status *TooManyRequestsErrorBodyStatus) {
+	t.Status = status
+	t.require(tooManyRequestsErrorBodyFieldStatus)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TooManyRequestsErrorBody) SetCode(code *TooManyRequestsErrorBodyCode) {
+	t.Code = code
+	t.require(tooManyRequestsErrorBodyFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TooManyRequestsErrorBody) SetMessage(message string) {
+	t.Message = message
+	t.require(tooManyRequestsErrorBodyFieldMessage)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TooManyRequestsErrorBody) SetData(data any) {
+	t.Data = data
+	t.require(tooManyRequestsErrorBodyFieldData)
+}
+
+// SetTraceID sets the TraceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TooManyRequestsErrorBody) SetTraceID(traceID string) {
+	t.TraceID = traceID
+	t.require(tooManyRequestsErrorBodyFieldTraceID)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TooManyRequestsErrorBody) SetTimestamp(timestamp time.Time) {
+	t.Timestamp = timestamp
+	t.require(tooManyRequestsErrorBodyFieldTimestamp)
+}
+
+func (t *TooManyRequestsErrorBody) UnmarshalJSON(data []byte) error {
+	type embed TooManyRequestsErrorBody
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*t),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*t = TooManyRequestsErrorBody(unmarshaler.embed)
+	t.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TooManyRequestsErrorBody) MarshalJSON() ([]byte, error) {
+	type embed TooManyRequestsErrorBody
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*t),
+		Timestamp: internal.NewDateTime(t.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TooManyRequestsErrorBody) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type TooManyRequestsErrorBodyCode string
+
+const (
+	TooManyRequestsErrorBodyCodeUnauthorized       TooManyRequestsErrorBodyCode = "unauthorized"
+	TooManyRequestsErrorBodyCodeForbidden          TooManyRequestsErrorBodyCode = "forbidden"
+	TooManyRequestsErrorBodyCodeNotFound           TooManyRequestsErrorBodyCode = "not_found"
+	TooManyRequestsErrorBodyCodeInvalidRequest     TooManyRequestsErrorBodyCode = "invalid_request"
+	TooManyRequestsErrorBodyCodeRateLimited        TooManyRequestsErrorBodyCode = "rate_limited"
+	TooManyRequestsErrorBodyCodePayloadTooLarge    TooManyRequestsErrorBodyCode = "payload_too_large"
+	TooManyRequestsErrorBodyCodeServiceUnavailable TooManyRequestsErrorBodyCode = "service_unavailable"
+	TooManyRequestsErrorBodyCodeInternal           TooManyRequestsErrorBodyCode = "internal"
+)
+
+func NewTooManyRequestsErrorBodyCodeFromString(s string) (TooManyRequestsErrorBodyCode, error) {
+	switch s {
+	case "unauthorized":
+		return TooManyRequestsErrorBodyCodeUnauthorized, nil
+	case "forbidden":
+		return TooManyRequestsErrorBodyCodeForbidden, nil
+	case "not_found":
+		return TooManyRequestsErrorBodyCodeNotFound, nil
+	case "invalid_request":
+		return TooManyRequestsErrorBodyCodeInvalidRequest, nil
+	case "rate_limited":
+		return TooManyRequestsErrorBodyCodeRateLimited, nil
+	case "payload_too_large":
+		return TooManyRequestsErrorBodyCodePayloadTooLarge, nil
+	case "service_unavailable":
+		return TooManyRequestsErrorBodyCodeServiceUnavailable, nil
+	case "internal":
+		return TooManyRequestsErrorBodyCodeInternal, nil
+	}
+	var t TooManyRequestsErrorBodyCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (t TooManyRequestsErrorBodyCode) Ptr() *TooManyRequestsErrorBodyCode {
+	return &t
+}
+
+type TooManyRequestsErrorBodyStatus string
+
+const (
+	TooManyRequestsErrorBodyStatusError TooManyRequestsErrorBodyStatus = "error"
+)
+
+func NewTooManyRequestsErrorBodyStatusFromString(s string) (TooManyRequestsErrorBodyStatus, error) {
+	switch s {
+	case "error":
+		return TooManyRequestsErrorBodyStatusError, nil
+	}
+	var t TooManyRequestsErrorBodyStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (t TooManyRequestsErrorBodyStatus) Ptr() *TooManyRequestsErrorBodyStatus {
+	return &t
+}
+
+var (
+	unauthorizedErrorBodyFieldStatus    = big.NewInt(1 << 0)
+	unauthorizedErrorBodyFieldCode      = big.NewInt(1 << 1)
+	unauthorizedErrorBodyFieldMessage   = big.NewInt(1 << 2)
+	unauthorizedErrorBodyFieldData      = big.NewInt(1 << 3)
+	unauthorizedErrorBodyFieldTraceID   = big.NewInt(1 << 4)
+	unauthorizedErrorBodyFieldTimestamp = big.NewInt(1 << 5)
+)
+
+type UnauthorizedErrorBody struct {
+	Status    *UnauthorizedErrorBodyStatus `json:"status,omitempty" url:"status,omitempty"`
+	Code      *UnauthorizedErrorBodyCode   `json:"code,omitempty" url:"code,omitempty"`
+	Message   string                       `json:"message" url:"message"`
+	Data      any                          `json:"data,omitempty" url:"data,omitempty"`
+	TraceID   string                       `json:"trace_id" url:"trace_id"`
+	Timestamp time.Time                    `json:"timestamp" url:"timestamp"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UnauthorizedErrorBody) GetStatus() *UnauthorizedErrorBodyStatus {
+	if u == nil {
+		return nil
+	}
+	return u.Status
+}
+
+func (u *UnauthorizedErrorBody) GetCode() *UnauthorizedErrorBodyCode {
+	if u == nil {
+		return nil
+	}
+	return u.Code
+}
+
+func (u *UnauthorizedErrorBody) GetMessage() string {
+	if u == nil {
+		return ""
+	}
+	return u.Message
+}
+
+func (u *UnauthorizedErrorBody) GetData() any {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UnauthorizedErrorBody) GetTraceID() string {
+	if u == nil {
+		return ""
+	}
+	return u.TraceID
+}
+
+func (u *UnauthorizedErrorBody) GetTimestamp() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.Timestamp
+}
+
+func (u *UnauthorizedErrorBody) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnauthorizedErrorBody) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnauthorizedErrorBody) SetStatus(status *UnauthorizedErrorBodyStatus) {
+	u.Status = status
+	u.require(unauthorizedErrorBodyFieldStatus)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnauthorizedErrorBody) SetCode(code *UnauthorizedErrorBodyCode) {
+	u.Code = code
+	u.require(unauthorizedErrorBodyFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnauthorizedErrorBody) SetMessage(message string) {
+	u.Message = message
+	u.require(unauthorizedErrorBodyFieldMessage)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnauthorizedErrorBody) SetData(data any) {
+	u.Data = data
+	u.require(unauthorizedErrorBodyFieldData)
+}
+
+// SetTraceID sets the TraceID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnauthorizedErrorBody) SetTraceID(traceID string) {
+	u.TraceID = traceID
+	u.require(unauthorizedErrorBodyFieldTraceID)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnauthorizedErrorBody) SetTimestamp(timestamp time.Time) {
+	u.Timestamp = timestamp
+	u.require(unauthorizedErrorBodyFieldTimestamp)
+}
+
+func (u *UnauthorizedErrorBody) UnmarshalJSON(data []byte) error {
+	type embed UnauthorizedErrorBody
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UnauthorizedErrorBody(unmarshaler.embed)
+	u.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnauthorizedErrorBody) MarshalJSON() ([]byte, error) {
+	type embed UnauthorizedErrorBody
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*u),
+		Timestamp: internal.NewDateTime(u.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UnauthorizedErrorBody) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UnauthorizedErrorBodyCode string
+
+const (
+	UnauthorizedErrorBodyCodeUnauthorized       UnauthorizedErrorBodyCode = "unauthorized"
+	UnauthorizedErrorBodyCodeForbidden          UnauthorizedErrorBodyCode = "forbidden"
+	UnauthorizedErrorBodyCodeNotFound           UnauthorizedErrorBodyCode = "not_found"
+	UnauthorizedErrorBodyCodeInvalidRequest     UnauthorizedErrorBodyCode = "invalid_request"
+	UnauthorizedErrorBodyCodeRateLimited        UnauthorizedErrorBodyCode = "rate_limited"
+	UnauthorizedErrorBodyCodePayloadTooLarge    UnauthorizedErrorBodyCode = "payload_too_large"
+	UnauthorizedErrorBodyCodeServiceUnavailable UnauthorizedErrorBodyCode = "service_unavailable"
+	UnauthorizedErrorBodyCodeInternal           UnauthorizedErrorBodyCode = "internal"
+)
+
+func NewUnauthorizedErrorBodyCodeFromString(s string) (UnauthorizedErrorBodyCode, error) {
+	switch s {
+	case "unauthorized":
+		return UnauthorizedErrorBodyCodeUnauthorized, nil
+	case "forbidden":
+		return UnauthorizedErrorBodyCodeForbidden, nil
+	case "not_found":
+		return UnauthorizedErrorBodyCodeNotFound, nil
+	case "invalid_request":
+		return UnauthorizedErrorBodyCodeInvalidRequest, nil
+	case "rate_limited":
+		return UnauthorizedErrorBodyCodeRateLimited, nil
+	case "payload_too_large":
+		return UnauthorizedErrorBodyCodePayloadTooLarge, nil
+	case "service_unavailable":
+		return UnauthorizedErrorBodyCodeServiceUnavailable, nil
+	case "internal":
+		return UnauthorizedErrorBodyCodeInternal, nil
+	}
+	var t UnauthorizedErrorBodyCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UnauthorizedErrorBodyCode) Ptr() *UnauthorizedErrorBodyCode {
+	return &u
+}
+
+type UnauthorizedErrorBodyStatus string
+
+const (
+	UnauthorizedErrorBodyStatusError UnauthorizedErrorBodyStatus = "error"
+)
+
+func NewUnauthorizedErrorBodyStatusFromString(s string) (UnauthorizedErrorBodyStatus, error) {
+	switch s {
+	case "error":
+		return UnauthorizedErrorBodyStatusError, nil
+	}
+	var t UnauthorizedErrorBodyStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UnauthorizedErrorBodyStatus) Ptr() *UnauthorizedErrorBodyStatus {
+	return &u
 }

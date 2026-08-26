@@ -40,7 +40,7 @@ func (r *RawClient) ListAgents(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/agents"
 	headers := internal.MergeHeaders(
@@ -60,6 +60,7 @@ func (r *RawClient) ListAgents(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -81,7 +82,7 @@ func (r *RawClient) CreateAgent(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/agents"
 	headers := internal.MergeHeaders(
@@ -106,6 +107,7 @@ func (r *RawClient) CreateAgent(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -127,7 +129,7 @@ func (r *RawClient) GetAgent(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v",
@@ -150,6 +152,7 @@ func (r *RawClient) GetAgent(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -171,7 +174,7 @@ func (r *RawClient) DeleteAgent(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v",
@@ -198,6 +201,7 @@ func (r *RawClient) DeleteAgent(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -219,7 +223,7 @@ func (r *RawClient) UpdateAgent(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v",
@@ -247,6 +251,7 @@ func (r *RawClient) UpdateAgent(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -268,7 +273,7 @@ func (r *RawClient) StartAgent(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v/start",
@@ -316,7 +321,7 @@ func (r *RawClient) StopAgent(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v/stop",
@@ -364,7 +369,7 @@ func (r *RawClient) GetAgentChannels(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v/channels",
@@ -408,7 +413,7 @@ func (r *RawClient) UpdateAgentChannels(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/agents/%v/channels",
@@ -456,7 +461,7 @@ func (r *RawClient) ListAgentModels(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/models"
 	headers := internal.MergeHeaders(

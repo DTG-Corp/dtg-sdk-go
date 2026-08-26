@@ -130,3 +130,35 @@ func TestGatewayCreateChatCompletionWithWireMock(
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestGatewayCreateChatCompletionWithWireMock", "POST", "/v1/chat/completions", nil, 1)
 }
+
+func TestGatewayCreateChatCompletionByAgentPathWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &dtgagentsdk.WebhookChatCompletionRequest{
+		AgentID: "agent_id",
+		Messages: []*dtgagentsdk.ChatMessage{
+			&dtgagentsdk.ChatMessage{
+				Role:    dtgagentsdk.ChatMessageRoleSystem,
+				Content: "content",
+			},
+		},
+	}
+	_, invocationErr := client.Gateway.CreateChatCompletionByAgentPath(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGatewayCreateChatCompletionByAgentPathWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestGatewayCreateChatCompletionByAgentPathWithWireMock", "POST", "/webhook/agent_id/v1/chat/completions", nil, 1)
+}

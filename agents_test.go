@@ -59,6 +59,38 @@ func TestSettersAgentCreateRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetKnowledgeIDs", func(t *testing.T) {
+		obj := &AgentCreateRequest{}
+		var fernTestValueKnowledgeIDs []string
+		obj.SetKnowledgeIDs(fernTestValueKnowledgeIDs)
+		assert.Equal(t, fernTestValueKnowledgeIDs, obj.KnowledgeIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnabledTools", func(t *testing.T) {
+		obj := &AgentCreateRequest{}
+		var fernTestValueEnabledTools []string
+		obj.SetEnabledTools(fernTestValueEnabledTools)
+		assert.Equal(t, fernTestValueEnabledTools, obj.EnabledTools)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMcpDynamicServerIDs", func(t *testing.T) {
+		obj := &AgentCreateRequest{}
+		var fernTestValueMcpDynamicServerIDs []string
+		obj.SetMcpDynamicServerIDs(fernTestValueMcpDynamicServerIDs)
+		assert.Equal(t, fernTestValueMcpDynamicServerIDs, obj.McpDynamicServerIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMcpDynamicToolFilter", func(t *testing.T) {
+		obj := &AgentCreateRequest{}
+		var fernTestValueMcpDynamicToolFilter map[string]any
+		obj.SetMcpDynamicToolFilter(fernTestValueMcpDynamicToolFilter)
+		assert.Equal(t, fernTestValueMcpDynamicToolFilter, obj.McpDynamicToolFilter)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestSettersMarkExplicitAgentCreateRequest(t *testing.T) {
@@ -225,6 +257,130 @@ func TestSettersMarkExplicitAgentCreateRequest(t *testing.T) {
 
 		// Act
 		obj.SetLlmAPIKey(fernTestValueLlmAPIKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetKnowledgeIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentCreateRequest{}
+		var fernTestValueKnowledgeIDs []string
+
+		// Act
+		obj.SetKnowledgeIDs(fernTestValueKnowledgeIDs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnabledTools_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentCreateRequest{}
+		var fernTestValueEnabledTools []string
+
+		// Act
+		obj.SetEnabledTools(fernTestValueEnabledTools)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMcpDynamicServerIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentCreateRequest{}
+		var fernTestValueMcpDynamicServerIDs []string
+
+		// Act
+		obj.SetMcpDynamicServerIDs(fernTestValueMcpDynamicServerIDs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMcpDynamicToolFilter_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentCreateRequest{}
+		var fernTestValueMcpDynamicToolFilter map[string]any
+
+		// Act
+		obj.SetMcpDynamicToolFilter(fernTestValueMcpDynamicToolFilter)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -633,6 +789,46 @@ func TestSettersAgent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetLlmBaseURL", func(t *testing.T) {
+		obj := &Agent{}
+		var fernTestValueLlmBaseURL *string
+		obj.SetLlmBaseURL(fernTestValueLlmBaseURL)
+		assert.Equal(t, fernTestValueLlmBaseURL, obj.LlmBaseURL)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetKnowledgeIDs", func(t *testing.T) {
+		obj := &Agent{}
+		var fernTestValueKnowledgeIDs []string
+		obj.SetKnowledgeIDs(fernTestValueKnowledgeIDs)
+		assert.Equal(t, fernTestValueKnowledgeIDs, obj.KnowledgeIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnabledTools", func(t *testing.T) {
+		obj := &Agent{}
+		var fernTestValueEnabledTools []string
+		obj.SetEnabledTools(fernTestValueEnabledTools)
+		assert.Equal(t, fernTestValueEnabledTools, obj.EnabledTools)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMcpDynamicServerIDs", func(t *testing.T) {
+		obj := &Agent{}
+		var fernTestValueMcpDynamicServerIDs []string
+		obj.SetMcpDynamicServerIDs(fernTestValueMcpDynamicServerIDs)
+		assert.Equal(t, fernTestValueMcpDynamicServerIDs, obj.McpDynamicServerIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMcpDynamicToolFilter", func(t *testing.T) {
+		obj := &Agent{}
+		var fernTestValueMcpDynamicToolFilter map[string]any
+		obj.SetMcpDynamicToolFilter(fernTestValueMcpDynamicToolFilter)
+		assert.Equal(t, fernTestValueMcpDynamicToolFilter, obj.McpDynamicToolFilter)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersAgent(t *testing.T) {
@@ -771,6 +967,171 @@ func TestGettersAgent(t *testing.T) {
 		_ = obj.GetLlmModel() // Should return zero value
 	})
 
+	t.Run("GetLlmBaseURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var expected *string
+		obj.LlmBaseURL = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetLlmBaseURL(), "getter should return the property value")
+	})
+
+	t.Run("GetLlmBaseURL_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		obj.LlmBaseURL = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetLlmBaseURL(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetLlmBaseURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Agent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLlmBaseURL() // Should return zero value
+	})
+
+	t.Run("GetKnowledgeIDs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var expected []string
+		obj.KnowledgeIDs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetKnowledgeIDs(), "getter should return the property value")
+	})
+
+	t.Run("GetKnowledgeIDs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		obj.KnowledgeIDs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetKnowledgeIDs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetKnowledgeIDs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Agent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKnowledgeIDs() // Should return zero value
+	})
+
+	t.Run("GetEnabledTools", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var expected []string
+		obj.EnabledTools = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEnabledTools(), "getter should return the property value")
+	})
+
+	t.Run("GetEnabledTools_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		obj.EnabledTools = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetEnabledTools(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetEnabledTools_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Agent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnabledTools() // Should return zero value
+	})
+
+	t.Run("GetMcpDynamicServerIDs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var expected []string
+		obj.McpDynamicServerIDs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMcpDynamicServerIDs(), "getter should return the property value")
+	})
+
+	t.Run("GetMcpDynamicServerIDs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		obj.McpDynamicServerIDs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetMcpDynamicServerIDs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetMcpDynamicServerIDs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Agent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMcpDynamicServerIDs() // Should return zero value
+	})
+
+	t.Run("GetMcpDynamicToolFilter", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var expected map[string]any
+		obj.McpDynamicToolFilter = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMcpDynamicToolFilter(), "getter should return the property value")
+	})
+
+	t.Run("GetMcpDynamicToolFilter_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		obj.McpDynamicToolFilter = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetMcpDynamicToolFilter(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetMcpDynamicToolFilter_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Agent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMcpDynamicToolFilter() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitAgent(t *testing.T) {
@@ -906,6 +1267,161 @@ func TestSettersMarkExplicitAgent(t *testing.T) {
 
 		// Act
 		obj.SetLlmModel(fernTestValueLlmModel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLlmBaseURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var fernTestValueLlmBaseURL *string
+
+		// Act
+		obj.SetLlmBaseURL(fernTestValueLlmBaseURL)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetKnowledgeIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var fernTestValueKnowledgeIDs []string
+
+		// Act
+		obj.SetKnowledgeIDs(fernTestValueKnowledgeIDs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnabledTools_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var fernTestValueEnabledTools []string
+
+		// Act
+		obj.SetEnabledTools(fernTestValueEnabledTools)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMcpDynamicServerIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var fernTestValueMcpDynamicServerIDs []string
+
+		// Act
+		obj.SetMcpDynamicServerIDs(fernTestValueMcpDynamicServerIDs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMcpDynamicToolFilter_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var fernTestValueMcpDynamicToolFilter map[string]any
+
+		// Act
+		obj.SetMcpDynamicToolFilter(fernTestValueMcpDynamicToolFilter)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4650,6 +5166,38 @@ func TestSettersAgentUpdateRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetKnowledgeIDs", func(t *testing.T) {
+		obj := &AgentUpdateRequest{}
+		var fernTestValueKnowledgeIDs []string
+		obj.SetKnowledgeIDs(fernTestValueKnowledgeIDs)
+		assert.Equal(t, fernTestValueKnowledgeIDs, obj.KnowledgeIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnabledTools", func(t *testing.T) {
+		obj := &AgentUpdateRequest{}
+		var fernTestValueEnabledTools []string
+		obj.SetEnabledTools(fernTestValueEnabledTools)
+		assert.Equal(t, fernTestValueEnabledTools, obj.EnabledTools)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMcpDynamicServerIDs", func(t *testing.T) {
+		obj := &AgentUpdateRequest{}
+		var fernTestValueMcpDynamicServerIDs []string
+		obj.SetMcpDynamicServerIDs(fernTestValueMcpDynamicServerIDs)
+		assert.Equal(t, fernTestValueMcpDynamicServerIDs, obj.McpDynamicServerIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMcpDynamicToolFilter", func(t *testing.T) {
+		obj := &AgentUpdateRequest{}
+		var fernTestValueMcpDynamicToolFilter map[string]any
+		obj.SetMcpDynamicToolFilter(fernTestValueMcpDynamicToolFilter)
+		assert.Equal(t, fernTestValueMcpDynamicToolFilter, obj.McpDynamicToolFilter)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestSettersMarkExplicitAgentUpdateRequest(t *testing.T) {
@@ -4847,6 +5395,130 @@ func TestSettersMarkExplicitAgentUpdateRequest(t *testing.T) {
 
 		// Act
 		obj.SetLlmAPIKey(fernTestValueLlmAPIKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetKnowledgeIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentUpdateRequest{}
+		var fernTestValueKnowledgeIDs []string
+
+		// Act
+		obj.SetKnowledgeIDs(fernTestValueKnowledgeIDs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnabledTools_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentUpdateRequest{}
+		var fernTestValueEnabledTools []string
+
+		// Act
+		obj.SetEnabledTools(fernTestValueEnabledTools)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMcpDynamicServerIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentUpdateRequest{}
+		var fernTestValueMcpDynamicServerIDs []string
+
+		// Act
+		obj.SetMcpDynamicServerIDs(fernTestValueMcpDynamicServerIDs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMcpDynamicToolFilter_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentUpdateRequest{}
+		var fernTestValueMcpDynamicToolFilter map[string]any
+
+		// Act
+		obj.SetMcpDynamicToolFilter(fernTestValueMcpDynamicToolFilter)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -9,5 +9,5 @@ package api
 var Environments = struct {
 	Production string
 }{
-	Production: "https://agents.dtgsoft.vn",
+	Production: "https://api.like.ai.vn",
 }

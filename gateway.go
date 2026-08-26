@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
 	big "math/big"
 )
 

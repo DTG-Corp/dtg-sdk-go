@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/DTG-Corp/dtg-agent-sdk/core"
+	"github.com/DTG-Corp/dtg-sdk-go/core"
 )
 
 // ErrorCodes maps HTTP status codes to error constructors.

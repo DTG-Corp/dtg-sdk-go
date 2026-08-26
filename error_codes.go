@@ -3,8 +3,8 @@
 package api
 
 import (
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
 )
 
 var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{

@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type RawClient struct {
@@ -35,7 +35,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) ListMcpServers(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ListMcpServersResponse], error) {
+) (*core.Response[*dtgsdkgo.ListMcpServersResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) ListMcpServers(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ListMcpServersResponse
+	var response *dtgsdkgo.ListMcpServersResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) ListMcpServers(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ListMcpServersResponse]{
+	return &core.Response[*dtgsdkgo.ListMcpServersResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,9 +74,9 @@ func (r *RawClient) ListMcpServers(
 
 func (r *RawClient) CreateMcpServer(
 	ctx context.Context,
-	request *dtgagentsdk.McpServerCreateRequest,
+	request *dtgsdkgo.McpServerCreateRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.CreateMcpServerResponse], error) {
+) (*core.Response[*dtgsdkgo.CreateMcpServerResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -92,7 +92,7 @@ func (r *RawClient) CreateMcpServer(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.CreateMcpServerResponse
+	var response *dtgsdkgo.CreateMcpServerResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -111,7 +111,7 @@ func (r *RawClient) CreateMcpServer(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.CreateMcpServerResponse]{
+	return &core.Response[*dtgsdkgo.CreateMcpServerResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -120,9 +120,9 @@ func (r *RawClient) CreateMcpServer(
 
 func (r *RawClient) ListMcpServerTools(
 	ctx context.Context,
-	request *dtgagentsdk.ListMcpServerToolsRequest,
+	request *dtgsdkgo.ListMcpServerToolsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ListMcpServerToolsResponse], error) {
+) (*core.Response[*dtgsdkgo.ListMcpServerToolsResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -137,7 +137,7 @@ func (r *RawClient) ListMcpServerTools(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ListMcpServerToolsResponse
+	var response *dtgsdkgo.ListMcpServerToolsResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -155,7 +155,7 @@ func (r *RawClient) ListMcpServerTools(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ListMcpServerToolsResponse]{
+	return &core.Response[*dtgsdkgo.ListMcpServerToolsResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -164,9 +164,9 @@ func (r *RawClient) ListMcpServerTools(
 
 func (r *RawClient) CreateMcpServerTool(
 	ctx context.Context,
-	request *dtgagentsdk.McpServerToolCreateRequest,
+	request *dtgsdkgo.McpServerToolCreateRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.CreateMcpServerToolResponse], error) {
+) (*core.Response[*dtgsdkgo.CreateMcpServerToolResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -185,7 +185,7 @@ func (r *RawClient) CreateMcpServerTool(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.CreateMcpServerToolResponse
+	var response *dtgsdkgo.CreateMcpServerToolResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -199,13 +199,13 @@ func (r *RawClient) CreateMcpServerTool(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.CreateMcpServerToolResponse]{
+	return &core.Response[*dtgsdkgo.CreateMcpServerToolResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

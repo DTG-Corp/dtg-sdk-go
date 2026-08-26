@@ -1,6 +1,6 @@
 # Reference
 ## gateway
-<details><summary><code>client.Gateway.ListModels() -> *dtgagentsdk.ModelList</code></summary>
+<details><summary><code>client.Gateway.ListModels() -> *dtgsdkgo.ModelList</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ client.Gateway.ListModels(
 </dl>
 </details>
 
-<details><summary><code>client.Gateway.CreateChatCompletion(request) -> *dtgagentsdk.ChatCompletion</code></summary>
+<details><summary><code>client.Gateway.CreateChatCompletion(request) -> *dtgsdkgo.ChatCompletion</code></summary>
 <dl>
 <dd>
 
@@ -40,11 +40,11 @@ client.Gateway.ListModels(
 <dd>
 
 ```go
-request := &dtgagentsdk.ChatCompletionRequest{
+request := &dtgsdkgo.ChatCompletionRequest{
     Model: "model",
-    Messages: []*dtgagentsdk.ChatMessage{
-        &dtgagentsdk.ChatMessage{
-            Role: dtgagentsdk.ChatMessageRoleSystem,
+    Messages: []*dtgsdkgo.ChatMessage{
+        &dtgsdkgo.ChatMessage{
+            Role: dtgsdkgo.ChatMessageRoleSystem,
             Content: "content",
         },
     },
@@ -75,7 +75,7 @@ client.Gateway.CreateChatCompletion(
 <dl>
 <dd>
 
-**messages:** `[]*dtgagentsdk.ChatMessage` 
+**messages:** `[]*dtgsdkgo.ChatMessage` 
     
 </dd>
 </dl>
@@ -119,7 +119,7 @@ client.Gateway.CreateChatCompletion(
 </dl>
 </details>
 
-<details><summary><code>client.Gateway.CreateChatCompletionByAgentPath(AgentID, request) -> *dtgagentsdk.ChatCompletion</code></summary>
+<details><summary><code>client.Gateway.CreateChatCompletionByAgentPath(AgentID, request) -> *dtgsdkgo.ChatCompletion</code></summary>
 <dl>
 <dd>
 
@@ -132,11 +132,11 @@ client.Gateway.CreateChatCompletion(
 <dd>
 
 ```go
-request := &dtgagentsdk.WebhookChatCompletionRequest{
+request := &dtgsdkgo.WebhookChatCompletionRequest{
     AgentID: "agent_id",
-    Messages: []*dtgagentsdk.ChatMessage{
-        &dtgagentsdk.ChatMessage{
-            Role: dtgagentsdk.ChatMessageRoleSystem,
+    Messages: []*dtgsdkgo.ChatMessage{
+        &dtgsdkgo.ChatMessage{
+            Role: dtgsdkgo.ChatMessageRoleSystem,
             Content: "content",
         },
     },
@@ -175,7 +175,7 @@ client.Gateway.CreateChatCompletionByAgentPath(
 <dl>
 <dd>
 
-**messages:** `[]*dtgagentsdk.ChatMessage` 
+**messages:** `[]*dtgsdkgo.ChatMessage` 
     
 </dd>
 </dl>
@@ -220,7 +220,7 @@ client.Gateway.CreateChatCompletionByAgentPath(
 </details>
 
 ## agents
-<details><summary><code>client.Agents.ListAgents() -> *dtgagentsdk.ListAgentsResponse</code></summary>
+<details><summary><code>client.Agents.ListAgents() -> *dtgsdkgo.ListAgentsResponse</code></summary>
 <dl>
 <dd>
 
@@ -247,7 +247,7 @@ client.Agents.ListAgents(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.CreateAgent(request) -> *dtgagentsdk.CreateAgentResponse</code></summary>
+<details><summary><code>client.Agents.CreateAgent(request) -> *dtgsdkgo.CreateAgentResponse</code></summary>
 <dl>
 <dd>
 
@@ -260,7 +260,7 @@ client.Agents.ListAgents(
 <dd>
 
 ```go
-request := &dtgagentsdk.AgentCreateRequest{
+request := &dtgsdkgo.AgentCreateRequest{
     DisplayName: "display_name",
 }
 client.Agents.CreateAgent(
@@ -365,7 +365,7 @@ client.Agents.CreateAgent(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.GetAgent(ID) -> *dtgagentsdk.GetAgentResponse</code></summary>
+<details><summary><code>client.Agents.GetAgent(ID) -> *dtgsdkgo.GetAgentResponse</code></summary>
 <dl>
 <dd>
 
@@ -378,7 +378,7 @@ client.Agents.CreateAgent(
 <dd>
 
 ```go
-request := &dtgagentsdk.GetAgentRequest{
+request := &dtgsdkgo.GetAgentRequest{
     ID: "id",
 }
 client.Agents.GetAgent(
@@ -411,7 +411,7 @@ client.Agents.GetAgent(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.DeleteAgent(ID) -> *dtgagentsdk.DeleteAgentResponse</code></summary>
+<details><summary><code>client.Agents.DeleteAgent(ID) -> *dtgsdkgo.DeleteAgentResponse</code></summary>
 <dl>
 <dd>
 
@@ -424,7 +424,7 @@ client.Agents.GetAgent(
 <dd>
 
 ```go
-request := &dtgagentsdk.DeleteAgentRequest{
+request := &dtgsdkgo.DeleteAgentRequest{
     ID: "id",
 }
 client.Agents.DeleteAgent(
@@ -465,7 +465,7 @@ client.Agents.DeleteAgent(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.UpdateAgent(ID, request) -> *dtgagentsdk.UpdateAgentResponse</code></summary>
+<details><summary><code>client.Agents.UpdateAgent(ID, request) -> *dtgsdkgo.UpdateAgentResponse</code></summary>
 <dl>
 <dd>
 
@@ -478,7 +478,7 @@ client.Agents.DeleteAgent(
 <dd>
 
 ```go
-request := &dtgagentsdk.AgentUpdateRequest{
+request := &dtgsdkgo.AgentUpdateRequest{
     ID: "id",
 }
 client.Agents.UpdateAgent(
@@ -591,7 +591,7 @@ client.Agents.UpdateAgent(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.StartAgent(ID) -> *dtgagentsdk.StartAgentResponse</code></summary>
+<details><summary><code>client.Agents.StartAgent(ID) -> *dtgsdkgo.StartAgentResponse</code></summary>
 <dl>
 <dd>
 
@@ -604,7 +604,7 @@ client.Agents.UpdateAgent(
 <dd>
 
 ```go
-request := &dtgagentsdk.StartAgentRequest{
+request := &dtgsdkgo.StartAgentRequest{
     ID: "id",
 }
 client.Agents.StartAgent(
@@ -645,7 +645,7 @@ client.Agents.StartAgent(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.StopAgent(ID) -> *dtgagentsdk.StopAgentResponse</code></summary>
+<details><summary><code>client.Agents.StopAgent(ID) -> *dtgsdkgo.StopAgentResponse</code></summary>
 <dl>
 <dd>
 
@@ -658,7 +658,7 @@ client.Agents.StartAgent(
 <dd>
 
 ```go
-request := &dtgagentsdk.StopAgentRequest{
+request := &dtgsdkgo.StopAgentRequest{
     ID: "id",
 }
 client.Agents.StopAgent(
@@ -699,7 +699,7 @@ client.Agents.StopAgent(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.GetAgentChannels(ID) -> *dtgagentsdk.GetAgentChannelsResponse</code></summary>
+<details><summary><code>client.Agents.GetAgentChannels(ID) -> *dtgsdkgo.GetAgentChannelsResponse</code></summary>
 <dl>
 <dd>
 
@@ -712,7 +712,7 @@ client.Agents.StopAgent(
 <dd>
 
 ```go
-request := &dtgagentsdk.GetAgentChannelsRequest{
+request := &dtgsdkgo.GetAgentChannelsRequest{
     ID: "id",
 }
 client.Agents.GetAgentChannels(
@@ -745,7 +745,7 @@ client.Agents.GetAgentChannels(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.UpdateAgentChannels(ID, request) -> *dtgagentsdk.UpdateAgentChannelsResponse</code></summary>
+<details><summary><code>client.Agents.UpdateAgentChannels(ID, request) -> *dtgsdkgo.UpdateAgentChannelsResponse</code></summary>
 <dl>
 <dd>
 
@@ -758,7 +758,7 @@ client.Agents.GetAgentChannels(
 <dd>
 
 ```go
-request := &dtgagentsdk.UpdateAgentChannelsRequest{
+request := &dtgsdkgo.UpdateAgentChannelsRequest{
     ID: "id",
 }
 client.Agents.UpdateAgentChannels(
@@ -795,7 +795,7 @@ client.Agents.UpdateAgentChannels(
 <dl>
 <dd>
 
-**channels:** `[]*dtgagentsdk.ChannelConfig` 
+**channels:** `[]*dtgsdkgo.ChannelConfig` 
     
 </dd>
 </dl>
@@ -807,7 +807,7 @@ client.Agents.UpdateAgentChannels(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.ListAgentModels() -> *dtgagentsdk.ModelList</code></summary>
+<details><summary><code>client.Agents.ListAgentModels() -> *dtgsdkgo.ModelList</code></summary>
 <dl>
 <dd>
 
@@ -835,7 +835,7 @@ client.Agents.ListAgentModels(
 </details>
 
 ## api-keys
-<details><summary><code>client.APIKeys.ListAPIKeys() -> *dtgagentsdk.ListAPIKeysResponse</code></summary>
+<details><summary><code>client.APIKeys.ListAPIKeys() -> *dtgsdkgo.ListAPIKeysResponse</code></summary>
 <dl>
 <dd>
 
@@ -862,7 +862,7 @@ client.APIKeys.ListAPIKeys(
 </dl>
 </details>
 
-<details><summary><code>client.APIKeys.CreateAPIKey(request) -> *dtgagentsdk.CreateAPIKeyResponse</code></summary>
+<details><summary><code>client.APIKeys.CreateAPIKey(request) -> *dtgsdkgo.CreateAPIKeyResponse</code></summary>
 <dl>
 <dd>
 
@@ -875,7 +875,7 @@ client.APIKeys.ListAPIKeys(
 <dd>
 
 ```go
-request := &dtgagentsdk.APIKeyCreateRequest{
+request := &dtgsdkgo.APIKeyCreateRequest{
     Name: "name",
 }
 client.APIKeys.CreateAPIKey(
@@ -916,7 +916,7 @@ client.APIKeys.CreateAPIKey(
 </dl>
 </details>
 
-<details><summary><code>client.APIKeys.RevokeAPIKey(ID) -> *dtgagentsdk.RevokeAPIKeyResponse</code></summary>
+<details><summary><code>client.APIKeys.RevokeAPIKey(ID) -> *dtgsdkgo.RevokeAPIKeyResponse</code></summary>
 <dl>
 <dd>
 
@@ -929,7 +929,7 @@ client.APIKeys.CreateAPIKey(
 <dd>
 
 ```go
-request := &dtgagentsdk.RevokeAPIKeyRequest{
+request := &dtgsdkgo.RevokeAPIKeyRequest{
     ID: "id",
 }
 client.APIKeys.RevokeAPIKey(
@@ -971,7 +971,7 @@ client.APIKeys.RevokeAPIKey(
 </details>
 
 ## organizations
-<details><summary><code>client.Organizations.GetOrganization(ID) -> *dtgagentsdk.GetOrganizationResponse</code></summary>
+<details><summary><code>client.Organizations.GetOrganization(ID) -> *dtgsdkgo.GetOrganizationResponse</code></summary>
 <dl>
 <dd>
 
@@ -984,7 +984,7 @@ client.APIKeys.RevokeAPIKey(
 <dd>
 
 ```go
-request := &dtgagentsdk.GetOrganizationRequest{
+request := &dtgsdkgo.GetOrganizationRequest{
     ID: "id",
 }
 client.Organizations.GetOrganization(
@@ -1017,7 +1017,7 @@ client.Organizations.GetOrganization(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.ListOrganizationMembers(ID) -> *dtgagentsdk.ListOrganizationMembersResponse</code></summary>
+<details><summary><code>client.Organizations.ListOrganizationMembers(ID) -> *dtgsdkgo.ListOrganizationMembersResponse</code></summary>
 <dl>
 <dd>
 
@@ -1030,7 +1030,7 @@ client.Organizations.GetOrganization(
 <dd>
 
 ```go
-request := &dtgagentsdk.ListOrganizationMembersRequest{
+request := &dtgsdkgo.ListOrganizationMembersRequest{
     ID: "id",
 }
 client.Organizations.ListOrganizationMembers(
@@ -1064,7 +1064,7 @@ client.Organizations.ListOrganizationMembers(
 </details>
 
 ## knowledge
-<details><summary><code>client.Knowledge.ListKnowledge() -> *dtgagentsdk.ListKnowledgeResponse</code></summary>
+<details><summary><code>client.Knowledge.ListKnowledge() -> *dtgsdkgo.ListKnowledgeResponse</code></summary>
 <dl>
 <dd>
 
@@ -1091,7 +1091,7 @@ client.Knowledge.ListKnowledge(
 </dl>
 </details>
 
-<details><summary><code>client.Knowledge.CreateKnowledge(request) -> *dtgagentsdk.CreateKnowledgeResponse</code></summary>
+<details><summary><code>client.Knowledge.CreateKnowledge(request) -> *dtgsdkgo.CreateKnowledgeResponse</code></summary>
 <dl>
 <dd>
 
@@ -1104,7 +1104,7 @@ client.Knowledge.ListKnowledge(
 <dd>
 
 ```go
-request := &dtgagentsdk.KnowledgeCreateRequest{
+request := &dtgsdkgo.KnowledgeCreateRequest{
     Title: "title",
     Content: "content",
 }
@@ -1150,7 +1150,7 @@ client.Knowledge.CreateKnowledge(
 <dl>
 <dd>
 
-**contentType:** `*dtgagentsdk.KnowledgeCreateRequestContentType` 
+**contentType:** `*dtgsdkgo.KnowledgeCreateRequestContentType` 
     
 </dd>
 </dl>
@@ -1170,7 +1170,7 @@ client.Knowledge.CreateKnowledge(
 </dl>
 </details>
 
-<details><summary><code>client.Knowledge.GetKnowledge(ID) -> *dtgagentsdk.GetKnowledgeResponse</code></summary>
+<details><summary><code>client.Knowledge.GetKnowledge(ID) -> *dtgsdkgo.GetKnowledgeResponse</code></summary>
 <dl>
 <dd>
 
@@ -1183,7 +1183,7 @@ client.Knowledge.CreateKnowledge(
 <dd>
 
 ```go
-request := &dtgagentsdk.GetKnowledgeRequest{
+request := &dtgsdkgo.GetKnowledgeRequest{
     ID: "id",
 }
 client.Knowledge.GetKnowledge(
@@ -1216,7 +1216,7 @@ client.Knowledge.GetKnowledge(
 </dl>
 </details>
 
-<details><summary><code>client.Knowledge.DeleteKnowledge(ID) -> *dtgagentsdk.DeleteKnowledgeResponse</code></summary>
+<details><summary><code>client.Knowledge.DeleteKnowledge(ID) -> *dtgsdkgo.DeleteKnowledgeResponse</code></summary>
 <dl>
 <dd>
 
@@ -1229,7 +1229,7 @@ client.Knowledge.GetKnowledge(
 <dd>
 
 ```go
-request := &dtgagentsdk.DeleteKnowledgeRequest{
+request := &dtgsdkgo.DeleteKnowledgeRequest{
     ID: "id",
 }
 client.Knowledge.DeleteKnowledge(
@@ -1271,7 +1271,7 @@ client.Knowledge.DeleteKnowledge(
 </details>
 
 ## mcp-servers
-<details><summary><code>client.McpServers.ListMcpServers() -> *dtgagentsdk.ListMcpServersResponse</code></summary>
+<details><summary><code>client.McpServers.ListMcpServers() -> *dtgsdkgo.ListMcpServersResponse</code></summary>
 <dl>
 <dd>
 
@@ -1298,7 +1298,7 @@ client.McpServers.ListMcpServers(
 </dl>
 </details>
 
-<details><summary><code>client.McpServers.CreateMcpServer(request) -> *dtgagentsdk.CreateMcpServerResponse</code></summary>
+<details><summary><code>client.McpServers.CreateMcpServer(request) -> *dtgsdkgo.CreateMcpServerResponse</code></summary>
 <dl>
 <dd>
 
@@ -1311,7 +1311,7 @@ client.McpServers.ListMcpServers(
 <dd>
 
 ```go
-request := &dtgagentsdk.McpServerCreateRequest{
+request := &dtgsdkgo.McpServerCreateRequest{
     Name: "name",
 }
 client.McpServers.CreateMcpServer(
@@ -1360,7 +1360,7 @@ client.McpServers.CreateMcpServer(
 </dl>
 </details>
 
-<details><summary><code>client.McpServers.ListMcpServerTools(ID) -> *dtgagentsdk.ListMcpServerToolsResponse</code></summary>
+<details><summary><code>client.McpServers.ListMcpServerTools(ID) -> *dtgsdkgo.ListMcpServerToolsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1373,7 +1373,7 @@ client.McpServers.CreateMcpServer(
 <dd>
 
 ```go
-request := &dtgagentsdk.ListMcpServerToolsRequest{
+request := &dtgsdkgo.ListMcpServerToolsRequest{
     ID: "id",
 }
 client.McpServers.ListMcpServerTools(
@@ -1406,7 +1406,7 @@ client.McpServers.ListMcpServerTools(
 </dl>
 </details>
 
-<details><summary><code>client.McpServers.CreateMcpServerTool(ID, request) -> *dtgagentsdk.CreateMcpServerToolResponse</code></summary>
+<details><summary><code>client.McpServers.CreateMcpServerTool(ID, request) -> *dtgsdkgo.CreateMcpServerToolResponse</code></summary>
 <dl>
 <dd>
 
@@ -1419,9 +1419,9 @@ client.McpServers.ListMcpServerTools(
 <dd>
 
 ```go
-request := &dtgagentsdk.McpServerToolCreateRequest{
+request := &dtgsdkgo.McpServerToolCreateRequest{
     ID: "id",
-    Kind: dtgagentsdk.McpServerToolCreateRequestKindRest,
+    Kind: dtgsdkgo.McpServerToolCreateRequestKindRest,
     Slug: "slug",
     DisplayName: "display_name",
 }
@@ -1459,7 +1459,7 @@ client.McpServers.CreateMcpServerTool(
 <dl>
 <dd>
 
-**kind:** `*dtgagentsdk.McpServerToolCreateRequestKind` 
+**kind:** `*dtgsdkgo.McpServerToolCreateRequestKind` 
     
 </dd>
 </dl>
@@ -1507,7 +1507,7 @@ client.McpServers.CreateMcpServerTool(
 <dl>
 <dd>
 
-**authType:** `*dtgagentsdk.McpServerToolCreateRequestAuthType` 
+**authType:** `*dtgsdkgo.McpServerToolCreateRequestAuthType` 
     
 </dd>
 </dl>
@@ -1515,7 +1515,7 @@ client.McpServers.CreateMcpServerTool(
 <dl>
 <dd>
 
-**authConfig:** `*dtgagentsdk.McpAuthConfig` 
+**authConfig:** `*dtgsdkgo.McpAuthConfig` 
     
 </dd>
 </dl>
@@ -1523,7 +1523,7 @@ client.McpServers.CreateMcpServerTool(
 <dl>
 <dd>
 
-**endpoints:** `[]*dtgagentsdk.McpEndpoint` 
+**endpoints:** `[]*dtgsdkgo.McpEndpoint` 
     
 </dd>
 </dl>
@@ -1531,7 +1531,7 @@ client.McpServers.CreateMcpServerTool(
 <dl>
 <dd>
 
-**definition:** `*dtgagentsdk.McpToolDefinition` 
+**definition:** `*dtgsdkgo.McpToolDefinition` 
     
 </dd>
 </dl>

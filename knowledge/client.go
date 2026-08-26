@@ -5,10 +5,10 @@ package knowledge
 import (
 	context "context"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type Client struct {
@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) ListKnowledge(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ListKnowledgeResponse, error) {
+) (*dtgsdkgo.ListKnowledgeResponse, error) {
 	response, err := c.WithRawResponse.ListKnowledge(
 		ctx,
 		opts...,
@@ -55,7 +55,7 @@ func (c *Client) ListKnowledge(
 
 // Example:
 //
-//	request := &dtgagentsdk.KnowledgeCreateRequest{
+//	request := &dtgsdkgo.KnowledgeCreateRequest{
 //	    Title: "title",
 //	    Content: "content",
 //	}
@@ -65,9 +65,9 @@ func (c *Client) ListKnowledge(
 //	)
 func (c *Client) CreateKnowledge(
 	ctx context.Context,
-	request *dtgagentsdk.KnowledgeCreateRequest,
+	request *dtgsdkgo.KnowledgeCreateRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.CreateKnowledgeResponse, error) {
+) (*dtgsdkgo.CreateKnowledgeResponse, error) {
 	response, err := c.WithRawResponse.CreateKnowledge(
 		ctx,
 		request,
@@ -81,7 +81,7 @@ func (c *Client) CreateKnowledge(
 
 // Example:
 //
-//	request := &dtgagentsdk.GetKnowledgeRequest{
+//	request := &dtgsdkgo.GetKnowledgeRequest{
 //	    ID: "id",
 //	}
 //	client.Knowledge.GetKnowledge(
@@ -90,9 +90,9 @@ func (c *Client) CreateKnowledge(
 //	)
 func (c *Client) GetKnowledge(
 	ctx context.Context,
-	request *dtgagentsdk.GetKnowledgeRequest,
+	request *dtgsdkgo.GetKnowledgeRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.GetKnowledgeResponse, error) {
+) (*dtgsdkgo.GetKnowledgeResponse, error) {
 	response, err := c.WithRawResponse.GetKnowledge(
 		ctx,
 		request,
@@ -106,7 +106,7 @@ func (c *Client) GetKnowledge(
 
 // Example:
 //
-//	request := &dtgagentsdk.DeleteKnowledgeRequest{
+//	request := &dtgsdkgo.DeleteKnowledgeRequest{
 //	    ID: "id",
 //	}
 //	client.Knowledge.DeleteKnowledge(
@@ -115,9 +115,9 @@ func (c *Client) GetKnowledge(
 //	)
 func (c *Client) DeleteKnowledge(
 	ctx context.Context,
-	request *dtgagentsdk.DeleteKnowledgeRequest,
+	request *dtgsdkgo.DeleteKnowledgeRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.DeleteKnowledgeResponse, error) {
+) (*dtgsdkgo.DeleteKnowledgeResponse, error) {
 	response, err := c.WithRawResponse.DeleteKnowledge(
 		ctx,
 		request,

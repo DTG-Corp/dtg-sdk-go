@@ -4,7 +4,7 @@ package api
 
 import (
 	json "encoding/json"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
 )
 
 // Lỗi admin API (envelope chuẩn)

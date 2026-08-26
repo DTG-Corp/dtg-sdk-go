@@ -5,10 +5,10 @@ package mcpservers
 import (
 	context "context"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type Client struct {
@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) ListMcpServers(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ListMcpServersResponse, error) {
+) (*dtgsdkgo.ListMcpServersResponse, error) {
 	response, err := c.WithRawResponse.ListMcpServers(
 		ctx,
 		opts...,
@@ -55,7 +55,7 @@ func (c *Client) ListMcpServers(
 
 // Example:
 //
-//	request := &dtgagentsdk.McpServerCreateRequest{
+//	request := &dtgsdkgo.McpServerCreateRequest{
 //	    Name: "name",
 //	}
 //	client.McpServers.CreateMcpServer(
@@ -64,9 +64,9 @@ func (c *Client) ListMcpServers(
 //	)
 func (c *Client) CreateMcpServer(
 	ctx context.Context,
-	request *dtgagentsdk.McpServerCreateRequest,
+	request *dtgsdkgo.McpServerCreateRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.CreateMcpServerResponse, error) {
+) (*dtgsdkgo.CreateMcpServerResponse, error) {
 	response, err := c.WithRawResponse.CreateMcpServer(
 		ctx,
 		request,
@@ -80,7 +80,7 @@ func (c *Client) CreateMcpServer(
 
 // Example:
 //
-//	request := &dtgagentsdk.ListMcpServerToolsRequest{
+//	request := &dtgsdkgo.ListMcpServerToolsRequest{
 //	    ID: "id",
 //	}
 //	client.McpServers.ListMcpServerTools(
@@ -89,9 +89,9 @@ func (c *Client) CreateMcpServer(
 //	)
 func (c *Client) ListMcpServerTools(
 	ctx context.Context,
-	request *dtgagentsdk.ListMcpServerToolsRequest,
+	request *dtgsdkgo.ListMcpServerToolsRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ListMcpServerToolsResponse, error) {
+) (*dtgsdkgo.ListMcpServerToolsResponse, error) {
 	response, err := c.WithRawResponse.ListMcpServerTools(
 		ctx,
 		request,
@@ -105,9 +105,9 @@ func (c *Client) ListMcpServerTools(
 
 // Example:
 //
-//	request := &dtgagentsdk.McpServerToolCreateRequest{
+//	request := &dtgsdkgo.McpServerToolCreateRequest{
 //	    ID: "id",
-//	    Kind: dtgagentsdk.McpServerToolCreateRequestKindRest,
+//	    Kind: dtgsdkgo.McpServerToolCreateRequestKindRest,
 //	    Slug: "slug",
 //	    DisplayName: "display_name",
 //	}
@@ -117,9 +117,9 @@ func (c *Client) ListMcpServerTools(
 //	)
 func (c *Client) CreateMcpServerTool(
 	ctx context.Context,
-	request *dtgagentsdk.McpServerToolCreateRequest,
+	request *dtgsdkgo.McpServerToolCreateRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.CreateMcpServerToolResponse, error) {
+) (*dtgsdkgo.CreateMcpServerToolResponse, error) {
 	response, err := c.WithRawResponse.CreateMcpServerTool(
 		ctx,
 		request,

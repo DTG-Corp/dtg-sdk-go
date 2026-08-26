@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type RawClient struct {
@@ -34,9 +34,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetOrganization(
 	ctx context.Context,
-	request *dtgagentsdk.GetOrganizationRequest,
+	request *dtgsdkgo.GetOrganizationRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.GetOrganizationResponse], error) {
+) (*core.Response[*dtgsdkgo.GetOrganizationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -51,7 +51,7 @@ func (r *RawClient) GetOrganization(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.GetOrganizationResponse
+	var response *dtgsdkgo.GetOrganizationResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -64,13 +64,13 @@ func (r *RawClient) GetOrganization(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.GetOrganizationResponse]{
+	return &core.Response[*dtgsdkgo.GetOrganizationResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -79,9 +79,9 @@ func (r *RawClient) GetOrganization(
 
 func (r *RawClient) ListOrganizationMembers(
 	ctx context.Context,
-	request *dtgagentsdk.ListOrganizationMembersRequest,
+	request *dtgsdkgo.ListOrganizationMembersRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ListOrganizationMembersResponse], error) {
+) (*core.Response[*dtgsdkgo.ListOrganizationMembersResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -96,7 +96,7 @@ func (r *RawClient) ListOrganizationMembers(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ListOrganizationMembersResponse
+	var response *dtgsdkgo.ListOrganizationMembersResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -109,13 +109,13 @@ func (r *RawClient) ListOrganizationMembers(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ListOrganizationMembersResponse]{
+	return &core.Response[*dtgsdkgo.ListOrganizationMembersResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

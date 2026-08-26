@@ -5,10 +5,10 @@ package organizations
 import (
 	context "context"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type Client struct {
@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	request := &dtgagentsdk.GetOrganizationRequest{
+//	request := &dtgsdkgo.GetOrganizationRequest{
 //	    ID: "id",
 //	}
 //	client.Organizations.GetOrganization(
@@ -45,9 +45,9 @@ func NewClient(options *core.RequestOptions) *Client {
 //	)
 func (c *Client) GetOrganization(
 	ctx context.Context,
-	request *dtgagentsdk.GetOrganizationRequest,
+	request *dtgsdkgo.GetOrganizationRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.GetOrganizationResponse, error) {
+) (*dtgsdkgo.GetOrganizationResponse, error) {
 	response, err := c.WithRawResponse.GetOrganization(
 		ctx,
 		request,
@@ -61,7 +61,7 @@ func (c *Client) GetOrganization(
 
 // Example:
 //
-//	request := &dtgagentsdk.ListOrganizationMembersRequest{
+//	request := &dtgsdkgo.ListOrganizationMembersRequest{
 //	    ID: "id",
 //	}
 //	client.Organizations.ListOrganizationMembers(
@@ -70,9 +70,9 @@ func (c *Client) GetOrganization(
 //	)
 func (c *Client) ListOrganizationMembers(
 	ctx context.Context,
-	request *dtgagentsdk.ListOrganizationMembersRequest,
+	request *dtgsdkgo.ListOrganizationMembersRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ListOrganizationMembersResponse, error) {
+) (*dtgsdkgo.ListOrganizationMembersResponse, error) {
 	response, err := c.WithRawResponse.ListOrganizationMembers(
 		ctx,
 		request,

@@ -5,10 +5,10 @@ package agents
 import (
 	context "context"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type Client struct {
@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) ListAgents(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ListAgentsResponse, error) {
+) (*dtgsdkgo.ListAgentsResponse, error) {
 	response, err := c.WithRawResponse.ListAgents(
 		ctx,
 		opts...,
@@ -55,7 +55,7 @@ func (c *Client) ListAgents(
 
 // Example:
 //
-//	request := &dtgagentsdk.AgentCreateRequest{
+//	request := &dtgsdkgo.AgentCreateRequest{
 //	    DisplayName: "display_name",
 //	}
 //	client.Agents.CreateAgent(
@@ -64,9 +64,9 @@ func (c *Client) ListAgents(
 //	)
 func (c *Client) CreateAgent(
 	ctx context.Context,
-	request *dtgagentsdk.AgentCreateRequest,
+	request *dtgsdkgo.AgentCreateRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.CreateAgentResponse, error) {
+) (*dtgsdkgo.CreateAgentResponse, error) {
 	response, err := c.WithRawResponse.CreateAgent(
 		ctx,
 		request,
@@ -80,7 +80,7 @@ func (c *Client) CreateAgent(
 
 // Example:
 //
-//	request := &dtgagentsdk.GetAgentRequest{
+//	request := &dtgsdkgo.GetAgentRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.GetAgent(
@@ -89,9 +89,9 @@ func (c *Client) CreateAgent(
 //	)
 func (c *Client) GetAgent(
 	ctx context.Context,
-	request *dtgagentsdk.GetAgentRequest,
+	request *dtgsdkgo.GetAgentRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.GetAgentResponse, error) {
+) (*dtgsdkgo.GetAgentResponse, error) {
 	response, err := c.WithRawResponse.GetAgent(
 		ctx,
 		request,
@@ -105,7 +105,7 @@ func (c *Client) GetAgent(
 
 // Example:
 //
-//	request := &dtgagentsdk.DeleteAgentRequest{
+//	request := &dtgsdkgo.DeleteAgentRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.DeleteAgent(
@@ -114,9 +114,9 @@ func (c *Client) GetAgent(
 //	)
 func (c *Client) DeleteAgent(
 	ctx context.Context,
-	request *dtgagentsdk.DeleteAgentRequest,
+	request *dtgsdkgo.DeleteAgentRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.DeleteAgentResponse, error) {
+) (*dtgsdkgo.DeleteAgentResponse, error) {
 	response, err := c.WithRawResponse.DeleteAgent(
 		ctx,
 		request,
@@ -130,7 +130,7 @@ func (c *Client) DeleteAgent(
 
 // Example:
 //
-//	request := &dtgagentsdk.AgentUpdateRequest{
+//	request := &dtgsdkgo.AgentUpdateRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.UpdateAgent(
@@ -139,9 +139,9 @@ func (c *Client) DeleteAgent(
 //	)
 func (c *Client) UpdateAgent(
 	ctx context.Context,
-	request *dtgagentsdk.AgentUpdateRequest,
+	request *dtgsdkgo.AgentUpdateRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.UpdateAgentResponse, error) {
+) (*dtgsdkgo.UpdateAgentResponse, error) {
 	response, err := c.WithRawResponse.UpdateAgent(
 		ctx,
 		request,
@@ -155,7 +155,7 @@ func (c *Client) UpdateAgent(
 
 // Example:
 //
-//	request := &dtgagentsdk.StartAgentRequest{
+//	request := &dtgsdkgo.StartAgentRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.StartAgent(
@@ -164,9 +164,9 @@ func (c *Client) UpdateAgent(
 //	)
 func (c *Client) StartAgent(
 	ctx context.Context,
-	request *dtgagentsdk.StartAgentRequest,
+	request *dtgsdkgo.StartAgentRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.StartAgentResponse, error) {
+) (*dtgsdkgo.StartAgentResponse, error) {
 	response, err := c.WithRawResponse.StartAgent(
 		ctx,
 		request,
@@ -180,7 +180,7 @@ func (c *Client) StartAgent(
 
 // Example:
 //
-//	request := &dtgagentsdk.StopAgentRequest{
+//	request := &dtgsdkgo.StopAgentRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.StopAgent(
@@ -189,9 +189,9 @@ func (c *Client) StartAgent(
 //	)
 func (c *Client) StopAgent(
 	ctx context.Context,
-	request *dtgagentsdk.StopAgentRequest,
+	request *dtgsdkgo.StopAgentRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.StopAgentResponse, error) {
+) (*dtgsdkgo.StopAgentResponse, error) {
 	response, err := c.WithRawResponse.StopAgent(
 		ctx,
 		request,
@@ -205,7 +205,7 @@ func (c *Client) StopAgent(
 
 // Example:
 //
-//	request := &dtgagentsdk.GetAgentChannelsRequest{
+//	request := &dtgsdkgo.GetAgentChannelsRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.GetAgentChannels(
@@ -214,9 +214,9 @@ func (c *Client) StopAgent(
 //	)
 func (c *Client) GetAgentChannels(
 	ctx context.Context,
-	request *dtgagentsdk.GetAgentChannelsRequest,
+	request *dtgsdkgo.GetAgentChannelsRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.GetAgentChannelsResponse, error) {
+) (*dtgsdkgo.GetAgentChannelsResponse, error) {
 	response, err := c.WithRawResponse.GetAgentChannels(
 		ctx,
 		request,
@@ -230,7 +230,7 @@ func (c *Client) GetAgentChannels(
 
 // Example:
 //
-//	request := &dtgagentsdk.UpdateAgentChannelsRequest{
+//	request := &dtgsdkgo.UpdateAgentChannelsRequest{
 //	    ID: "id",
 //	}
 //	client.Agents.UpdateAgentChannels(
@@ -239,9 +239,9 @@ func (c *Client) GetAgentChannels(
 //	)
 func (c *Client) UpdateAgentChannels(
 	ctx context.Context,
-	request *dtgagentsdk.UpdateAgentChannelsRequest,
+	request *dtgsdkgo.UpdateAgentChannelsRequest,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.UpdateAgentChannelsResponse, error) {
+) (*dtgsdkgo.UpdateAgentChannelsResponse, error) {
 	response, err := c.WithRawResponse.UpdateAgentChannels(
 		ctx,
 		request,
@@ -261,7 +261,7 @@ func (c *Client) UpdateAgentChannels(
 func (c *Client) ListAgentModels(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*dtgagentsdk.ModelList, error) {
+) (*dtgsdkgo.ModelList, error) {
 	response, err := c.WithRawResponse.ListAgentModels(
 		ctx,
 		opts...,

@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type RawClient struct {
@@ -35,7 +35,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) ListKnowledge(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ListKnowledgeResponse], error) {
+) (*core.Response[*dtgsdkgo.ListKnowledgeResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) ListKnowledge(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ListKnowledgeResponse
+	var response *dtgsdkgo.ListKnowledgeResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) ListKnowledge(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ListKnowledgeResponse]{
+	return &core.Response[*dtgsdkgo.ListKnowledgeResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,9 +74,9 @@ func (r *RawClient) ListKnowledge(
 
 func (r *RawClient) CreateKnowledge(
 	ctx context.Context,
-	request *dtgagentsdk.KnowledgeCreateRequest,
+	request *dtgsdkgo.KnowledgeCreateRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.CreateKnowledgeResponse], error) {
+) (*core.Response[*dtgsdkgo.CreateKnowledgeResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -92,7 +92,7 @@ func (r *RawClient) CreateKnowledge(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.CreateKnowledgeResponse
+	var response *dtgsdkgo.CreateKnowledgeResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -111,7 +111,7 @@ func (r *RawClient) CreateKnowledge(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.CreateKnowledgeResponse]{
+	return &core.Response[*dtgsdkgo.CreateKnowledgeResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -120,9 +120,9 @@ func (r *RawClient) CreateKnowledge(
 
 func (r *RawClient) GetKnowledge(
 	ctx context.Context,
-	request *dtgagentsdk.GetKnowledgeRequest,
+	request *dtgsdkgo.GetKnowledgeRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.GetKnowledgeResponse], error) {
+) (*core.Response[*dtgsdkgo.GetKnowledgeResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -137,7 +137,7 @@ func (r *RawClient) GetKnowledge(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.GetKnowledgeResponse
+	var response *dtgsdkgo.GetKnowledgeResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -150,13 +150,13 @@ func (r *RawClient) GetKnowledge(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.GetKnowledgeResponse]{
+	return &core.Response[*dtgsdkgo.GetKnowledgeResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -165,9 +165,9 @@ func (r *RawClient) GetKnowledge(
 
 func (r *RawClient) DeleteKnowledge(
 	ctx context.Context,
-	request *dtgagentsdk.DeleteKnowledgeRequest,
+	request *dtgsdkgo.DeleteKnowledgeRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.DeleteKnowledgeResponse], error) {
+) (*core.Response[*dtgsdkgo.DeleteKnowledgeResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -186,7 +186,7 @@ func (r *RawClient) DeleteKnowledge(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 
-	var response *dtgagentsdk.DeleteKnowledgeResponse
+	var response *dtgsdkgo.DeleteKnowledgeResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -199,13 +199,13 @@ func (r *RawClient) DeleteKnowledge(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.DeleteKnowledgeResponse]{
+	return &core.Response[*dtgsdkgo.DeleteKnowledgeResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

@@ -15,7 +15,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/DTG-Corp/dtg-agent-sdk/core"
+	"github.com/DTG-Corp/dtg-sdk-go/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

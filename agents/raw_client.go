@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	dtgagentsdk "github.com/DTG-Corp/dtg-agent-sdk"
-	core "github.com/DTG-Corp/dtg-agent-sdk/core"
-	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
-	option "github.com/DTG-Corp/dtg-agent-sdk/option"
+	dtgsdkgo "github.com/DTG-Corp/dtg-sdk-go"
+	core "github.com/DTG-Corp/dtg-sdk-go/core"
+	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
+	option "github.com/DTG-Corp/dtg-sdk-go/option"
 )
 
 type RawClient struct {
@@ -35,7 +35,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) ListAgents(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ListAgentsResponse], error) {
+) (*core.Response[*dtgsdkgo.ListAgentsResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) ListAgents(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ListAgentsResponse
+	var response *dtgsdkgo.ListAgentsResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -60,13 +60,13 @@ func (r *RawClient) ListAgents(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ListAgentsResponse]{
+	return &core.Response[*dtgsdkgo.ListAgentsResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -75,9 +75,9 @@ func (r *RawClient) ListAgents(
 
 func (r *RawClient) CreateAgent(
 	ctx context.Context,
-	request *dtgagentsdk.AgentCreateRequest,
+	request *dtgsdkgo.AgentCreateRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.CreateAgentResponse], error) {
+) (*core.Response[*dtgsdkgo.CreateAgentResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -93,7 +93,7 @@ func (r *RawClient) CreateAgent(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.CreateAgentResponse
+	var response *dtgsdkgo.CreateAgentResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -107,13 +107,13 @@ func (r *RawClient) CreateAgent(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.CreateAgentResponse]{
+	return &core.Response[*dtgsdkgo.CreateAgentResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -122,9 +122,9 @@ func (r *RawClient) CreateAgent(
 
 func (r *RawClient) GetAgent(
 	ctx context.Context,
-	request *dtgagentsdk.GetAgentRequest,
+	request *dtgsdkgo.GetAgentRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.GetAgentResponse], error) {
+) (*core.Response[*dtgsdkgo.GetAgentResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -139,7 +139,7 @@ func (r *RawClient) GetAgent(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.GetAgentResponse
+	var response *dtgsdkgo.GetAgentResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -152,13 +152,13 @@ func (r *RawClient) GetAgent(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.GetAgentResponse]{
+	return &core.Response[*dtgsdkgo.GetAgentResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -167,9 +167,9 @@ func (r *RawClient) GetAgent(
 
 func (r *RawClient) DeleteAgent(
 	ctx context.Context,
-	request *dtgagentsdk.DeleteAgentRequest,
+	request *dtgsdkgo.DeleteAgentRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.DeleteAgentResponse], error) {
+) (*core.Response[*dtgsdkgo.DeleteAgentResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -188,7 +188,7 @@ func (r *RawClient) DeleteAgent(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 
-	var response *dtgagentsdk.DeleteAgentResponse
+	var response *dtgsdkgo.DeleteAgentResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -201,13 +201,13 @@ func (r *RawClient) DeleteAgent(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.DeleteAgentResponse]{
+	return &core.Response[*dtgsdkgo.DeleteAgentResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -216,9 +216,9 @@ func (r *RawClient) DeleteAgent(
 
 func (r *RawClient) UpdateAgent(
 	ctx context.Context,
-	request *dtgagentsdk.AgentUpdateRequest,
+	request *dtgsdkgo.AgentUpdateRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.UpdateAgentResponse], error) {
+) (*core.Response[*dtgsdkgo.UpdateAgentResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -237,7 +237,7 @@ func (r *RawClient) UpdateAgent(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.UpdateAgentResponse
+	var response *dtgsdkgo.UpdateAgentResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -251,13 +251,13 @@ func (r *RawClient) UpdateAgent(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(dtgsdkgo.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.UpdateAgentResponse]{
+	return &core.Response[*dtgsdkgo.UpdateAgentResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -266,9 +266,9 @@ func (r *RawClient) UpdateAgent(
 
 func (r *RawClient) StartAgent(
 	ctx context.Context,
-	request *dtgagentsdk.StartAgentRequest,
+	request *dtgsdkgo.StartAgentRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.StartAgentResponse], error) {
+) (*core.Response[*dtgsdkgo.StartAgentResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -287,7 +287,7 @@ func (r *RawClient) StartAgent(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 
-	var response *dtgagentsdk.StartAgentResponse
+	var response *dtgsdkgo.StartAgentResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -305,7 +305,7 @@ func (r *RawClient) StartAgent(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.StartAgentResponse]{
+	return &core.Response[*dtgsdkgo.StartAgentResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -314,9 +314,9 @@ func (r *RawClient) StartAgent(
 
 func (r *RawClient) StopAgent(
 	ctx context.Context,
-	request *dtgagentsdk.StopAgentRequest,
+	request *dtgsdkgo.StopAgentRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.StopAgentResponse], error) {
+) (*core.Response[*dtgsdkgo.StopAgentResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -335,7 +335,7 @@ func (r *RawClient) StopAgent(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 
-	var response *dtgagentsdk.StopAgentResponse
+	var response *dtgsdkgo.StopAgentResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -353,7 +353,7 @@ func (r *RawClient) StopAgent(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.StopAgentResponse]{
+	return &core.Response[*dtgsdkgo.StopAgentResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -362,9 +362,9 @@ func (r *RawClient) StopAgent(
 
 func (r *RawClient) GetAgentChannels(
 	ctx context.Context,
-	request *dtgagentsdk.GetAgentChannelsRequest,
+	request *dtgsdkgo.GetAgentChannelsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.GetAgentChannelsResponse], error) {
+) (*core.Response[*dtgsdkgo.GetAgentChannelsResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -379,7 +379,7 @@ func (r *RawClient) GetAgentChannels(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.GetAgentChannelsResponse
+	var response *dtgsdkgo.GetAgentChannelsResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -397,7 +397,7 @@ func (r *RawClient) GetAgentChannels(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.GetAgentChannelsResponse]{
+	return &core.Response[*dtgsdkgo.GetAgentChannelsResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -406,9 +406,9 @@ func (r *RawClient) GetAgentChannels(
 
 func (r *RawClient) UpdateAgentChannels(
 	ctx context.Context,
-	request *dtgagentsdk.UpdateAgentChannelsRequest,
+	request *dtgsdkgo.UpdateAgentChannelsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.UpdateAgentChannelsResponse], error) {
+) (*core.Response[*dtgsdkgo.UpdateAgentChannelsResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -427,7 +427,7 @@ func (r *RawClient) UpdateAgentChannels(
 		headers.Add("Idempotency-Key", *request.IdempotencyKey)
 	}
 	headers.Add("Content-Type", "application/json")
-	var response *dtgagentsdk.UpdateAgentChannelsResponse
+	var response *dtgsdkgo.UpdateAgentChannelsResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -446,7 +446,7 @@ func (r *RawClient) UpdateAgentChannels(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.UpdateAgentChannelsResponse]{
+	return &core.Response[*dtgsdkgo.UpdateAgentChannelsResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -456,7 +456,7 @@ func (r *RawClient) UpdateAgentChannels(
 func (r *RawClient) ListAgentModels(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*dtgagentsdk.ModelList], error) {
+) (*core.Response[*dtgsdkgo.ModelList], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -468,7 +468,7 @@ func (r *RawClient) ListAgentModels(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *dtgagentsdk.ModelList
+	var response *dtgsdkgo.ModelList
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -486,7 +486,7 @@ func (r *RawClient) ListAgentModels(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*dtgagentsdk.ModelList]{
+	return &core.Response[*dtgsdkgo.ModelList]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

@@ -83,3 +83,34 @@ func (c *Client) CreateChatCompletion(
 	}
 	return response.Body, nil
 }
+
+// Example:
+//
+//	request := &dtgagentsdk.WebhookChatCompletionRequest{
+//	    AgentID: "agent_id",
+//	    Messages: []*dtgagentsdk.ChatMessage{
+//	        &dtgagentsdk.ChatMessage{
+//	            Role: dtgagentsdk.ChatMessageRoleSystem,
+//	            Content: "content",
+//	        },
+//	    },
+//	}
+//	client.Gateway.CreateChatCompletionByAgentPath(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) CreateChatCompletionByAgentPath(
+	ctx context.Context,
+	request *dtgagentsdk.WebhookChatCompletionRequest,
+	opts ...option.RequestOption,
+) (*dtgagentsdk.ChatCompletion, error) {
+	response, err := c.WithRawResponse.CreateChatCompletionByAgentPath(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

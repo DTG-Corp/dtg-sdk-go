@@ -67,23 +67,7 @@ client.Gateway.CreateChatCompletion(
 <dl>
 <dd>
 
-**hermesSessionID:** `*string` — Session tùy chỉnh phía client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hermesThreadID:** `*string` — Thread tùy chỉnh phía client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model:** `string` — ID của agent (UUID).
+**model:** `string` — ID của agent (UUID) trên gateway `/v1/chat/completions`.
     
 </dd>
 </dl>
@@ -115,7 +99,7 @@ client.Gateway.CreateChatCompletion(
 <dl>
 <dd>
 
-**sessionID:** `*string` 
+**sessionID:** `*string` — Session ID tùy chỉnh phía client (được orchestrator namespace theo user để chống xung đột).
     
 </dd>
 </dl>
@@ -123,7 +107,107 @@ client.Gateway.CreateChatCompletion(
 <dl>
 <dd>
 
-**threadID:** `*string` 
+**threadID:** `*string` — Thread ID con trong session (tùy chỉnh phía client, namespace theo user).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Gateway.CreateChatCompletionByAgentPath(AgentID, request) -> *dtgagentsdk.ChatCompletion</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &dtgagentsdk.WebhookChatCompletionRequest{
+    AgentID: "agent_id",
+    Messages: []*dtgagentsdk.ChatMessage{
+        &dtgagentsdk.ChatMessage{
+            Role: dtgagentsdk.ChatMessageRoleSystem,
+            Content: "content",
+        },
+    },
+}
+client.Gateway.CreateChatCompletionByAgentPath(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentID:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model:** `*string` — Tuỳ chọn; agent đã xác định bởi path.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messages:** `[]*dtgagentsdk.ChatMessage` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**temperature:** `*float64` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sessionID:** `*string` — Session ID tùy chỉnh phía client (được orchestrator namespace theo user để chống xung đột).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**threadID:** `*string` — Thread ID con trong session (tùy chỉnh phía client, namespace theo user).
     
 </dd>
 </dl>
@@ -238,6 +322,38 @@ client.Agents.CreateAgent(
 <dd>
 
 **llmAPIKey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**knowledgeIDs:** `[]string` — UUID các knowledge item gắn agent (điền vào dtg_knowledge_ids).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabledTools:** `[]string` — ID tool từ catalog (dtg_enabled_tools), vd knowledge_rag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mcpDynamicServerIDs:** `[]string` — UUID MCP server động (apimcp) gắn agent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mcpDynamicToolFilter:** `map[string]any` — Filter tool expose cho agent (Dai Agent) theo từng MCP server động (khóa = UUID server).
     
 </dd>
 </dl>
@@ -432,6 +548,38 @@ client.Agents.UpdateAgent(
 <dd>
 
 **llmAPIKey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**knowledgeIDs:** `[]string` — Omit/null = giữ nguyên; [] = xoá.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabledTools:** `[]string` — Omit/null = giữ nguyên; [] = xoá.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mcpDynamicServerIDs:** `[]string` — Omit/null = giữ nguyên; [] = xoá.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mcpDynamicToolFilter:** `map[string]any` — Omit/null = giữ nguyên; {} = xoá.
     
 </dd>
 </dl>
@@ -994,7 +1142,7 @@ client.Knowledge.CreateKnowledge(
 <dl>
 <dd>
 
-**content:** `string` 
+**content:** `string` — Tối đa 4 MiB
     
 </dd>
 </dl>
@@ -1271,9 +1419,11 @@ client.McpServers.ListMcpServerTools(
 <dd>
 
 ```go
-request := &dtgagentsdk.CreateMcpServerToolRequest{
+request := &dtgagentsdk.McpServerToolCreateRequest{
     ID: "id",
-    Body: &dtgagentsdk.McpServerTool{},
+    Kind: dtgagentsdk.McpServerToolCreateRequestKindRest,
+    Slug: "slug",
+    DisplayName: "display_name",
 }
 client.McpServers.CreateMcpServerTool(
     context.TODO(),
@@ -1309,7 +1459,95 @@ client.McpServers.CreateMcpServerTool(
 <dl>
 <dd>
 
-**request:** `*dtgagentsdk.McpServerTool` 
+**kind:** `*dtgagentsdk.McpServerToolCreateRequestKind` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**displayName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**baseURL:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**restResourcePath:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authType:** `*dtgagentsdk.McpServerToolCreateRequestAuthType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authConfig:** `*dtgagentsdk.McpAuthConfig` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**endpoints:** `[]*dtgagentsdk.McpEndpoint` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**definition:** `*dtgagentsdk.McpToolDefinition` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sortOrder:** `*int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isActive:** `*bool` 
     
 </dd>
 </dl>

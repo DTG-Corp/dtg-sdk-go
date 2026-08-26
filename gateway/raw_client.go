@@ -40,7 +40,7 @@ func (r *RawClient) ListModels(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/v1/models"
 	headers := internal.MergeHeaders(
@@ -81,19 +81,13 @@ func (r *RawClient) CreateChatCompletion(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/v1/chat/completions"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	if request.HermesSessionID != nil {
-		headers.Add("X-Hermes-Session-Id", *request.HermesSessionID)
-	}
-	if request.HermesThreadID != nil {
-		headers.Add("X-Hermes-Thread-Id", *request.HermesThreadID)
-	}
 	headers.Add("Content-Type", "application/json")
 	var response *dtgagentsdk.ChatCompletion
 	raw, err := r.caller.Call(
@@ -109,6 +103,54 @@ func (r *RawClient) CreateChatCompletion(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*dtgagentsdk.ChatCompletion]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) CreateChatCompletionByAgentPath(
+	ctx context.Context,
+	request *dtgagentsdk.WebhookChatCompletionRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*dtgagentsdk.ChatCompletion], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://api.like.ai.vn",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/webhook/%v/v1/chat/completions",
+		request.AgentID,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response *dtgagentsdk.ChatCompletion
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {

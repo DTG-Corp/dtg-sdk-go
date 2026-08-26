@@ -162,9 +162,11 @@ func TestMcpServersCreateMcpServerToolWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &dtgagentsdk.CreateMcpServerToolRequest{
-		ID:   "id",
-		Body: &dtgagentsdk.McpServerTool{},
+	request := &dtgagentsdk.McpServerToolCreateRequest{
+		ID:          "id",
+		Kind:        dtgagentsdk.McpServerToolCreateRequestKindRest,
+		Slug:        "slug",
+		DisplayName: "display_name",
 	}
 	_, invocationErr := client.McpServers.CreateMcpServerTool(
 		context.TODO(),

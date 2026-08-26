@@ -10,28 +10,24 @@ import (
 )
 
 var (
-	chatCompletionRequestFieldHermesSessionID = big.NewInt(1 << 0)
-	chatCompletionRequestFieldHermesThreadID  = big.NewInt(1 << 1)
-	chatCompletionRequestFieldModel           = big.NewInt(1 << 2)
-	chatCompletionRequestFieldMessages        = big.NewInt(1 << 3)
-	chatCompletionRequestFieldTemperature     = big.NewInt(1 << 4)
-	chatCompletionRequestFieldStream          = big.NewInt(1 << 5)
-	chatCompletionRequestFieldSessionID       = big.NewInt(1 << 6)
-	chatCompletionRequestFieldThreadID        = big.NewInt(1 << 7)
+	chatCompletionRequestFieldModel       = big.NewInt(1 << 0)
+	chatCompletionRequestFieldMessages    = big.NewInt(1 << 1)
+	chatCompletionRequestFieldTemperature = big.NewInt(1 << 2)
+	chatCompletionRequestFieldStream      = big.NewInt(1 << 3)
+	chatCompletionRequestFieldSessionID   = big.NewInt(1 << 4)
+	chatCompletionRequestFieldThreadID    = big.NewInt(1 << 5)
 )
 
 type ChatCompletionRequest struct {
-	// Session tùy chỉnh phía client.
-	HermesSessionID *string `json:"-" url:"-"`
-	// Thread tùy chỉnh phía client.
-	HermesThreadID *string `json:"-" url:"-"`
-	// ID của agent (UUID).
+	// ID của agent (UUID) trên gateway `/v1/chat/completions`.
 	Model       string         `json:"model" url:"-"`
 	Messages    []*ChatMessage `json:"messages" url:"-"`
 	Temperature *float64       `json:"temperature,omitempty" url:"-"`
 	Stream      *bool          `json:"stream,omitempty" url:"-"`
-	SessionID   *string        `json:"session_id,omitempty" url:"-"`
-	ThreadID    *string        `json:"thread_id,omitempty" url:"-"`
+	// Session ID tùy chỉnh phía client (được orchestrator namespace theo user để chống xung đột).
+	SessionID *string `json:"session_id,omitempty" url:"-"`
+	// Thread ID con trong session (tùy chỉnh phía client, namespace theo user).
+	ThreadID *string `json:"thread_id,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -42,20 +38,6 @@ func (c *ChatCompletionRequest) require(field *big.Int) {
 		c.explicitFields = big.NewInt(0)
 	}
 	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetHermesSessionID sets the HermesSessionID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ChatCompletionRequest) SetHermesSessionID(hermesSessionID *string) {
-	c.HermesSessionID = hermesSessionID
-	c.require(chatCompletionRequestFieldHermesSessionID)
-}
-
-// SetHermesThreadID sets the HermesThreadID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ChatCompletionRequest) SetHermesThreadID(hermesThreadID *string) {
-	c.HermesThreadID = hermesThreadID
-	c.require(chatCompletionRequestFieldHermesThreadID)
 }
 
 // SetModel sets the Model field and marks it as non-optional;
@@ -118,6 +100,109 @@ func (c *ChatCompletionRequest) MarshalJSON() ([]byte, error) {
 		embed: embed(*c),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	webhookChatCompletionRequestFieldAgentID     = big.NewInt(1 << 0)
+	webhookChatCompletionRequestFieldModel       = big.NewInt(1 << 1)
+	webhookChatCompletionRequestFieldMessages    = big.NewInt(1 << 2)
+	webhookChatCompletionRequestFieldTemperature = big.NewInt(1 << 3)
+	webhookChatCompletionRequestFieldStream      = big.NewInt(1 << 4)
+	webhookChatCompletionRequestFieldSessionID   = big.NewInt(1 << 5)
+	webhookChatCompletionRequestFieldThreadID    = big.NewInt(1 << 6)
+)
+
+type WebhookChatCompletionRequest struct {
+	AgentID string `json:"-" url:"-"`
+	// Tuỳ chọn; agent đã xác định bởi path.
+	Model       *string        `json:"model,omitempty" url:"-"`
+	Messages    []*ChatMessage `json:"messages" url:"-"`
+	Temperature *float64       `json:"temperature,omitempty" url:"-"`
+	Stream      *bool          `json:"stream,omitempty" url:"-"`
+	// Session ID tùy chỉnh phía client (được orchestrator namespace theo user để chống xung đột).
+	SessionID *string `json:"session_id,omitempty" url:"-"`
+	// Thread ID con trong session (tùy chỉnh phía client, namespace theo user).
+	ThreadID *string `json:"thread_id,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (w *WebhookChatCompletionRequest) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetAgentID(agentID string) {
+	w.AgentID = agentID
+	w.require(webhookChatCompletionRequestFieldAgentID)
+}
+
+// SetModel sets the Model field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetModel(model *string) {
+	w.Model = model
+	w.require(webhookChatCompletionRequestFieldModel)
+}
+
+// SetMessages sets the Messages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetMessages(messages []*ChatMessage) {
+	w.Messages = messages
+	w.require(webhookChatCompletionRequestFieldMessages)
+}
+
+// SetTemperature sets the Temperature field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetTemperature(temperature *float64) {
+	w.Temperature = temperature
+	w.require(webhookChatCompletionRequestFieldTemperature)
+}
+
+// SetStream sets the Stream field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetStream(stream *bool) {
+	w.Stream = stream
+	w.require(webhookChatCompletionRequestFieldStream)
+}
+
+// SetSessionID sets the SessionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetSessionID(sessionID *string) {
+	w.SessionID = sessionID
+	w.require(webhookChatCompletionRequestFieldSessionID)
+}
+
+// SetThreadID sets the ThreadID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WebhookChatCompletionRequest) SetThreadID(threadID *string) {
+	w.ThreadID = threadID
+	w.require(webhookChatCompletionRequestFieldThreadID)
+}
+
+func (w *WebhookChatCompletionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler WebhookChatCompletionRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*w = WebhookChatCompletionRequest(body)
+	return nil
+}
+
+func (w *WebhookChatCompletionRequest) MarshalJSON() ([]byte, error) {
+	type embed WebhookChatCompletionRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 

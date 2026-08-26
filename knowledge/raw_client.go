@@ -40,7 +40,7 @@ func (r *RawClient) ListKnowledge(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/knowledge"
 	headers := internal.MergeHeaders(
@@ -81,7 +81,7 @@ func (r *RawClient) CreateKnowledge(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/knowledge"
 	headers := internal.MergeHeaders(
@@ -127,7 +127,7 @@ func (r *RawClient) GetKnowledge(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/knowledge/%v",
@@ -150,6 +150,7 @@ func (r *RawClient) GetKnowledge(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -171,7 +172,7 @@ func (r *RawClient) DeleteKnowledge(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/knowledge/%v",
@@ -198,6 +199,7 @@ func (r *RawClient) DeleteKnowledge(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {

@@ -11,12 +11,16 @@ import (
 )
 
 var (
-	agentCreateRequestFieldIdempotencyKey = big.NewInt(1 << 0)
-	agentCreateRequestFieldDisplayName    = big.NewInt(1 << 1)
-	agentCreateRequestFieldLlmProvider    = big.NewInt(1 << 2)
-	agentCreateRequestFieldLlmModel       = big.NewInt(1 << 3)
-	agentCreateRequestFieldLlmBaseURL     = big.NewInt(1 << 4)
-	agentCreateRequestFieldLlmAPIKey      = big.NewInt(1 << 5)
+	agentCreateRequestFieldIdempotencyKey       = big.NewInt(1 << 0)
+	agentCreateRequestFieldDisplayName          = big.NewInt(1 << 1)
+	agentCreateRequestFieldLlmProvider          = big.NewInt(1 << 2)
+	agentCreateRequestFieldLlmModel             = big.NewInt(1 << 3)
+	agentCreateRequestFieldLlmBaseURL           = big.NewInt(1 << 4)
+	agentCreateRequestFieldLlmAPIKey            = big.NewInt(1 << 5)
+	agentCreateRequestFieldKnowledgeIDs         = big.NewInt(1 << 6)
+	agentCreateRequestFieldEnabledTools         = big.NewInt(1 << 7)
+	agentCreateRequestFieldMcpDynamicServerIDs  = big.NewInt(1 << 8)
+	agentCreateRequestFieldMcpDynamicToolFilter = big.NewInt(1 << 9)
 )
 
 type AgentCreateRequest struct {
@@ -27,6 +31,14 @@ type AgentCreateRequest struct {
 	LlmModel       *string `json:"llm_model,omitempty" url:"-"`
 	LlmBaseURL     *string `json:"llm_base_url,omitempty" url:"-"`
 	LlmAPIKey      *string `json:"llm_api_key,omitempty" url:"-"`
+	// UUID các knowledge item gắn agent (điền vào dtg_knowledge_ids).
+	KnowledgeIDs []string `json:"knowledge_ids,omitempty" url:"-"`
+	// ID tool từ catalog (dtg_enabled_tools), vd knowledge_rag.
+	EnabledTools []string `json:"enabled_tools,omitempty" url:"-"`
+	// UUID MCP server động (apimcp) gắn agent.
+	McpDynamicServerIDs []string `json:"mcp_dynamic_server_ids,omitempty" url:"-"`
+	// Filter tool expose cho agent (Dai Agent) theo từng MCP server động (khóa = UUID server).
+	McpDynamicToolFilter map[string]any `json:"mcp_dynamic_tool_filter,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -79,6 +91,34 @@ func (a *AgentCreateRequest) SetLlmBaseURL(llmBaseURL *string) {
 func (a *AgentCreateRequest) SetLlmAPIKey(llmAPIKey *string) {
 	a.LlmAPIKey = llmAPIKey
 	a.require(agentCreateRequestFieldLlmAPIKey)
+}
+
+// SetKnowledgeIDs sets the KnowledgeIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentCreateRequest) SetKnowledgeIDs(knowledgeIDs []string) {
+	a.KnowledgeIDs = knowledgeIDs
+	a.require(agentCreateRequestFieldKnowledgeIDs)
+}
+
+// SetEnabledTools sets the EnabledTools field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentCreateRequest) SetEnabledTools(enabledTools []string) {
+	a.EnabledTools = enabledTools
+	a.require(agentCreateRequestFieldEnabledTools)
+}
+
+// SetMcpDynamicServerIDs sets the McpDynamicServerIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentCreateRequest) SetMcpDynamicServerIDs(mcpDynamicServerIDs []string) {
+	a.McpDynamicServerIDs = mcpDynamicServerIDs
+	a.require(agentCreateRequestFieldMcpDynamicServerIDs)
+}
+
+// SetMcpDynamicToolFilter sets the McpDynamicToolFilter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentCreateRequest) SetMcpDynamicToolFilter(mcpDynamicToolFilter map[string]any) {
+	a.McpDynamicToolFilter = mcpDynamicToolFilter
+	a.require(agentCreateRequestFieldMcpDynamicToolFilter)
 }
 
 func (a *AgentCreateRequest) UnmarshalJSON(data []byte) error {
@@ -258,19 +298,29 @@ func (s *StopAgentRequest) SetID(id string) {
 }
 
 var (
-	agentFieldID          = big.NewInt(1 << 0)
-	agentFieldDisplayName = big.NewInt(1 << 1)
-	agentFieldStatus      = big.NewInt(1 << 2)
-	agentFieldLlmProvider = big.NewInt(1 << 3)
-	agentFieldLlmModel    = big.NewInt(1 << 4)
+	agentFieldID                   = big.NewInt(1 << 0)
+	agentFieldDisplayName          = big.NewInt(1 << 1)
+	agentFieldStatus               = big.NewInt(1 << 2)
+	agentFieldLlmProvider          = big.NewInt(1 << 3)
+	agentFieldLlmModel             = big.NewInt(1 << 4)
+	agentFieldLlmBaseURL           = big.NewInt(1 << 5)
+	agentFieldKnowledgeIDs         = big.NewInt(1 << 6)
+	agentFieldEnabledTools         = big.NewInt(1 << 7)
+	agentFieldMcpDynamicServerIDs  = big.NewInt(1 << 8)
+	agentFieldMcpDynamicToolFilter = big.NewInt(1 << 9)
 )
 
 type Agent struct {
-	ID          string      `json:"id" url:"id"`
-	DisplayName string      `json:"display_name" url:"display_name"`
-	Status      AgentStatus `json:"status" url:"status"`
-	LlmProvider *string     `json:"llm_provider,omitempty" url:"llm_provider,omitempty"`
-	LlmModel    *string     `json:"llm_model,omitempty" url:"llm_model,omitempty"`
+	ID                   string         `json:"id" url:"id"`
+	DisplayName          string         `json:"display_name" url:"display_name"`
+	Status               AgentStatus    `json:"status" url:"status"`
+	LlmProvider          *string        `json:"llm_provider,omitempty" url:"llm_provider,omitempty"`
+	LlmModel             *string        `json:"llm_model,omitempty" url:"llm_model,omitempty"`
+	LlmBaseURL           *string        `json:"llm_base_url,omitempty" url:"llm_base_url,omitempty"`
+	KnowledgeIDs         []string       `json:"knowledge_ids,omitempty" url:"knowledge_ids,omitempty"`
+	EnabledTools         []string       `json:"enabled_tools,omitempty" url:"enabled_tools,omitempty"`
+	McpDynamicServerIDs  []string       `json:"mcp_dynamic_server_ids,omitempty" url:"mcp_dynamic_server_ids,omitempty"`
+	McpDynamicToolFilter map[string]any `json:"mcp_dynamic_tool_filter,omitempty" url:"mcp_dynamic_tool_filter,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -312,6 +362,41 @@ func (a *Agent) GetLlmModel() *string {
 		return nil
 	}
 	return a.LlmModel
+}
+
+func (a *Agent) GetLlmBaseURL() *string {
+	if a == nil {
+		return nil
+	}
+	return a.LlmBaseURL
+}
+
+func (a *Agent) GetKnowledgeIDs() []string {
+	if a == nil {
+		return nil
+	}
+	return a.KnowledgeIDs
+}
+
+func (a *Agent) GetEnabledTools() []string {
+	if a == nil {
+		return nil
+	}
+	return a.EnabledTools
+}
+
+func (a *Agent) GetMcpDynamicServerIDs() []string {
+	if a == nil {
+		return nil
+	}
+	return a.McpDynamicServerIDs
+}
+
+func (a *Agent) GetMcpDynamicToolFilter() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.McpDynamicToolFilter
 }
 
 func (a *Agent) GetExtraProperties() map[string]interface{} {
@@ -361,6 +446,41 @@ func (a *Agent) SetLlmProvider(llmProvider *string) {
 func (a *Agent) SetLlmModel(llmModel *string) {
 	a.LlmModel = llmModel
 	a.require(agentFieldLlmModel)
+}
+
+// SetLlmBaseURL sets the LlmBaseURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Agent) SetLlmBaseURL(llmBaseURL *string) {
+	a.LlmBaseURL = llmBaseURL
+	a.require(agentFieldLlmBaseURL)
+}
+
+// SetKnowledgeIDs sets the KnowledgeIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Agent) SetKnowledgeIDs(knowledgeIDs []string) {
+	a.KnowledgeIDs = knowledgeIDs
+	a.require(agentFieldKnowledgeIDs)
+}
+
+// SetEnabledTools sets the EnabledTools field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Agent) SetEnabledTools(enabledTools []string) {
+	a.EnabledTools = enabledTools
+	a.require(agentFieldEnabledTools)
+}
+
+// SetMcpDynamicServerIDs sets the McpDynamicServerIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Agent) SetMcpDynamicServerIDs(mcpDynamicServerIDs []string) {
+	a.McpDynamicServerIDs = mcpDynamicServerIDs
+	a.require(agentFieldMcpDynamicServerIDs)
+}
+
+// SetMcpDynamicToolFilter sets the McpDynamicToolFilter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Agent) SetMcpDynamicToolFilter(mcpDynamicToolFilter map[string]any) {
+	a.McpDynamicToolFilter = mcpDynamicToolFilter
+	a.require(agentFieldMcpDynamicToolFilter)
 }
 
 func (a *Agent) UnmarshalJSON(data []byte) error {
@@ -2167,13 +2287,17 @@ func (u *UpdateAgentResponse) String() string {
 }
 
 var (
-	agentUpdateRequestFieldIdempotencyKey = big.NewInt(1 << 0)
-	agentUpdateRequestFieldID             = big.NewInt(1 << 1)
-	agentUpdateRequestFieldDisplayName    = big.NewInt(1 << 2)
-	agentUpdateRequestFieldLlmProvider    = big.NewInt(1 << 3)
-	agentUpdateRequestFieldLlmModel       = big.NewInt(1 << 4)
-	agentUpdateRequestFieldLlmBaseURL     = big.NewInt(1 << 5)
-	agentUpdateRequestFieldLlmAPIKey      = big.NewInt(1 << 6)
+	agentUpdateRequestFieldIdempotencyKey       = big.NewInt(1 << 0)
+	agentUpdateRequestFieldID                   = big.NewInt(1 << 1)
+	agentUpdateRequestFieldDisplayName          = big.NewInt(1 << 2)
+	agentUpdateRequestFieldLlmProvider          = big.NewInt(1 << 3)
+	agentUpdateRequestFieldLlmModel             = big.NewInt(1 << 4)
+	agentUpdateRequestFieldLlmBaseURL           = big.NewInt(1 << 5)
+	agentUpdateRequestFieldLlmAPIKey            = big.NewInt(1 << 6)
+	agentUpdateRequestFieldKnowledgeIDs         = big.NewInt(1 << 7)
+	agentUpdateRequestFieldEnabledTools         = big.NewInt(1 << 8)
+	agentUpdateRequestFieldMcpDynamicServerIDs  = big.NewInt(1 << 9)
+	agentUpdateRequestFieldMcpDynamicToolFilter = big.NewInt(1 << 10)
 )
 
 type AgentUpdateRequest struct {
@@ -2185,6 +2309,14 @@ type AgentUpdateRequest struct {
 	LlmModel       *string `json:"llm_model,omitempty" url:"-"`
 	LlmBaseURL     *string `json:"llm_base_url,omitempty" url:"-"`
 	LlmAPIKey      *string `json:"llm_api_key,omitempty" url:"-"`
+	// Omit/null = giữ nguyên; [] = xoá.
+	KnowledgeIDs []string `json:"knowledge_ids,omitempty" url:"-"`
+	// Omit/null = giữ nguyên; [] = xoá.
+	EnabledTools []string `json:"enabled_tools,omitempty" url:"-"`
+	// Omit/null = giữ nguyên; [] = xoá.
+	McpDynamicServerIDs []string `json:"mcp_dynamic_server_ids,omitempty" url:"-"`
+	// Omit/null = giữ nguyên; {} = xoá.
+	McpDynamicToolFilter map[string]any `json:"mcp_dynamic_tool_filter,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2244,6 +2376,34 @@ func (a *AgentUpdateRequest) SetLlmBaseURL(llmBaseURL *string) {
 func (a *AgentUpdateRequest) SetLlmAPIKey(llmAPIKey *string) {
 	a.LlmAPIKey = llmAPIKey
 	a.require(agentUpdateRequestFieldLlmAPIKey)
+}
+
+// SetKnowledgeIDs sets the KnowledgeIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentUpdateRequest) SetKnowledgeIDs(knowledgeIDs []string) {
+	a.KnowledgeIDs = knowledgeIDs
+	a.require(agentUpdateRequestFieldKnowledgeIDs)
+}
+
+// SetEnabledTools sets the EnabledTools field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentUpdateRequest) SetEnabledTools(enabledTools []string) {
+	a.EnabledTools = enabledTools
+	a.require(agentUpdateRequestFieldEnabledTools)
+}
+
+// SetMcpDynamicServerIDs sets the McpDynamicServerIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentUpdateRequest) SetMcpDynamicServerIDs(mcpDynamicServerIDs []string) {
+	a.McpDynamicServerIDs = mcpDynamicServerIDs
+	a.require(agentUpdateRequestFieldMcpDynamicServerIDs)
+}
+
+// SetMcpDynamicToolFilter sets the McpDynamicToolFilter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentUpdateRequest) SetMcpDynamicToolFilter(mcpDynamicToolFilter map[string]any) {
+	a.McpDynamicToolFilter = mcpDynamicToolFilter
+	a.require(agentUpdateRequestFieldMcpDynamicToolFilter)
 }
 
 func (a *AgentUpdateRequest) UnmarshalJSON(data []byte) error {

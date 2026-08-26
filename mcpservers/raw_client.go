@@ -40,7 +40,7 @@ func (r *RawClient) ListMcpServers(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/mcp-servers"
 	headers := internal.MergeHeaders(
@@ -81,7 +81,7 @@ func (r *RawClient) CreateMcpServer(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := baseURL + "/api/v1/mcp-servers"
 	headers := internal.MergeHeaders(
@@ -127,7 +127,7 @@ func (r *RawClient) ListMcpServerTools(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/mcp-servers/%v/tools",
@@ -164,14 +164,14 @@ func (r *RawClient) ListMcpServerTools(
 
 func (r *RawClient) CreateMcpServerTool(
 	ctx context.Context,
-	request *dtgagentsdk.CreateMcpServerToolRequest,
+	request *dtgagentsdk.McpServerToolCreateRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*dtgagentsdk.CreateMcpServerToolResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://agents.dtgsoft.vn",
+		"https://api.like.ai.vn",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/v1/mcp-servers/%v/tools",
@@ -199,6 +199,7 @@ func (r *RawClient) CreateMcpServerTool(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(dtgagentsdk.ErrorCodes),
 		},
 	)
 	if err != nil {

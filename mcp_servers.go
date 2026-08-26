@@ -76,52 +76,167 @@ func (m *McpServerCreateRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createMcpServerToolRequestFieldIdempotencyKey = big.NewInt(1 << 0)
-	createMcpServerToolRequestFieldID             = big.NewInt(1 << 1)
+	mcpServerToolCreateRequestFieldIdempotencyKey   = big.NewInt(1 << 0)
+	mcpServerToolCreateRequestFieldID               = big.NewInt(1 << 1)
+	mcpServerToolCreateRequestFieldKind             = big.NewInt(1 << 2)
+	mcpServerToolCreateRequestFieldSlug             = big.NewInt(1 << 3)
+	mcpServerToolCreateRequestFieldDisplayName      = big.NewInt(1 << 4)
+	mcpServerToolCreateRequestFieldDescription      = big.NewInt(1 << 5)
+	mcpServerToolCreateRequestFieldBaseURL          = big.NewInt(1 << 6)
+	mcpServerToolCreateRequestFieldRestResourcePath = big.NewInt(1 << 7)
+	mcpServerToolCreateRequestFieldAuthType         = big.NewInt(1 << 8)
+	mcpServerToolCreateRequestFieldAuthConfig       = big.NewInt(1 << 9)
+	mcpServerToolCreateRequestFieldEndpoints        = big.NewInt(1 << 10)
+	mcpServerToolCreateRequestFieldDefinition       = big.NewInt(1 << 11)
+	mcpServerToolCreateRequestFieldSortOrder        = big.NewInt(1 << 12)
+	mcpServerToolCreateRequestFieldIsActive         = big.NewInt(1 << 13)
 )
 
-type CreateMcpServerToolRequest struct {
+type McpServerToolCreateRequest struct {
 	// Idempotency key cho mutation (tránh double-submit).
-	IdempotencyKey *string        `json:"-" url:"-"`
-	ID             string         `json:"-" url:"-"`
-	Body           *McpServerTool `json:"-" url:"-"`
+	IdempotencyKey   *string                             `json:"-" url:"-"`
+	ID               string                              `json:"-" url:"-"`
+	Kind             McpServerToolCreateRequestKind      `json:"kind" url:"-"`
+	Slug             string                              `json:"slug" url:"-"`
+	DisplayName      string                              `json:"display_name" url:"-"`
+	Description      *string                             `json:"description,omitempty" url:"-"`
+	BaseURL          *string                             `json:"base_url,omitempty" url:"-"`
+	RestResourcePath *string                             `json:"rest_resource_path,omitempty" url:"-"`
+	AuthType         *McpServerToolCreateRequestAuthType `json:"auth_type,omitempty" url:"-"`
+	AuthConfig       *McpAuthConfig                      `json:"auth_config,omitempty" url:"-"`
+	Endpoints        []*McpEndpoint                      `json:"endpoints,omitempty" url:"-"`
+	Definition       *McpToolDefinition                  `json:"definition,omitempty" url:"-"`
+	SortOrder        *int                                `json:"sort_order,omitempty" url:"-"`
+	IsActive         *bool                               `json:"is_active,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateMcpServerToolRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+func (m *McpServerToolCreateRequest) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	m.explicitFields.Or(m.explicitFields, field)
 }
 
 // SetIdempotencyKey sets the IdempotencyKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateMcpServerToolRequest) SetIdempotencyKey(idempotencyKey *string) {
-	c.IdempotencyKey = idempotencyKey
-	c.require(createMcpServerToolRequestFieldIdempotencyKey)
+func (m *McpServerToolCreateRequest) SetIdempotencyKey(idempotencyKey *string) {
+	m.IdempotencyKey = idempotencyKey
+	m.require(mcpServerToolCreateRequestFieldIdempotencyKey)
 }
 
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateMcpServerToolRequest) SetID(id string) {
-	c.ID = id
-	c.require(createMcpServerToolRequestFieldID)
+func (m *McpServerToolCreateRequest) SetID(id string) {
+	m.ID = id
+	m.require(mcpServerToolCreateRequestFieldID)
 }
 
-func (c *CreateMcpServerToolRequest) UnmarshalJSON(data []byte) error {
-	body := new(McpServerTool)
+// SetKind sets the Kind field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetKind(kind McpServerToolCreateRequestKind) {
+	m.Kind = kind
+	m.require(mcpServerToolCreateRequestFieldKind)
+}
+
+// SetSlug sets the Slug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetSlug(slug string) {
+	m.Slug = slug
+	m.require(mcpServerToolCreateRequestFieldSlug)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetDisplayName(displayName string) {
+	m.DisplayName = displayName
+	m.require(mcpServerToolCreateRequestFieldDisplayName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetDescription(description *string) {
+	m.Description = description
+	m.require(mcpServerToolCreateRequestFieldDescription)
+}
+
+// SetBaseURL sets the BaseURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetBaseURL(baseURL *string) {
+	m.BaseURL = baseURL
+	m.require(mcpServerToolCreateRequestFieldBaseURL)
+}
+
+// SetRestResourcePath sets the RestResourcePath field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetRestResourcePath(restResourcePath *string) {
+	m.RestResourcePath = restResourcePath
+	m.require(mcpServerToolCreateRequestFieldRestResourcePath)
+}
+
+// SetAuthType sets the AuthType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetAuthType(authType *McpServerToolCreateRequestAuthType) {
+	m.AuthType = authType
+	m.require(mcpServerToolCreateRequestFieldAuthType)
+}
+
+// SetAuthConfig sets the AuthConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetAuthConfig(authConfig *McpAuthConfig) {
+	m.AuthConfig = authConfig
+	m.require(mcpServerToolCreateRequestFieldAuthConfig)
+}
+
+// SetEndpoints sets the Endpoints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetEndpoints(endpoints []*McpEndpoint) {
+	m.Endpoints = endpoints
+	m.require(mcpServerToolCreateRequestFieldEndpoints)
+}
+
+// SetDefinition sets the Definition field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetDefinition(definition *McpToolDefinition) {
+	m.Definition = definition
+	m.require(mcpServerToolCreateRequestFieldDefinition)
+}
+
+// SetSortOrder sets the SortOrder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetSortOrder(sortOrder *int) {
+	m.SortOrder = sortOrder
+	m.require(mcpServerToolCreateRequestFieldSortOrder)
+}
+
+// SetIsActive sets the IsActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerToolCreateRequest) SetIsActive(isActive *bool) {
+	m.IsActive = isActive
+	m.require(mcpServerToolCreateRequestFieldIsActive)
+}
+
+func (m *McpServerToolCreateRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler McpServerToolCreateRequest
+	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	c.Body = body
+	*m = McpServerToolCreateRequest(body)
 	return nil
 }
 
-func (c *CreateMcpServerToolRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(c.Body)
+func (m *McpServerToolCreateRequest) MarshalJSON() ([]byte, error) {
+	type embed McpServerToolCreateRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -147,6 +262,864 @@ func (l *ListMcpServerToolsRequest) require(field *big.Int) {
 func (l *ListMcpServerToolsRequest) SetID(id string) {
 	l.ID = id
 	l.require(listMcpServerToolsRequestFieldID)
+}
+
+// Thông tin xác thực / kết nối DB. Khi tạo tool có thể gửi secret (token, password, dsn).
+// Response list/get chỉ trả field đã redact (không phơi token/password/dsn).
+var (
+	mcpAuthConfigFieldToken       = big.NewInt(1 << 0)
+	mcpAuthConfigFieldHeaderName  = big.NewInt(1 << 1)
+	mcpAuthConfigFieldUsername    = big.NewInt(1 << 2)
+	mcpAuthConfigFieldPassword    = big.NewInt(1 << 3)
+	mcpAuthConfigFieldDriver      = big.NewInt(1 << 4)
+	mcpAuthConfigFieldDsn         = big.NewInt(1 << 5)
+	mcpAuthConfigFieldReadOnly    = big.NewInt(1 << 6)
+	mcpAuthConfigFieldMaxRows     = big.NewInt(1 << 7)
+	mcpAuthConfigFieldEngine      = big.NewInt(1 << 8)
+	mcpAuthConfigFieldHost        = big.NewInt(1 << 9)
+	mcpAuthConfigFieldPort        = big.NewInt(1 << 10)
+	mcpAuthConfigFieldDatabase    = big.NewInt(1 << 11)
+	mcpAuthConfigFieldSslMode     = big.NewInt(1 << 12)
+	mcpAuthConfigFieldExtraParams = big.NewInt(1 << 13)
+	mcpAuthConfigFieldRawDsn      = big.NewInt(1 << 14)
+	mcpAuthConfigFieldAuthSource  = big.NewInt(1 << 15)
+	mcpAuthConfigFieldTLS         = big.NewInt(1 << 16)
+	mcpAuthConfigFieldDbIndex     = big.NewInt(1 << 17)
+)
+
+type McpAuthConfig struct {
+	Token       *string `json:"token,omitempty" url:"token,omitempty"`
+	HeaderName  *string `json:"header_name,omitempty" url:"header_name,omitempty"`
+	Username    *string `json:"username,omitempty" url:"username,omitempty"`
+	Password    *string `json:"password,omitempty" url:"password,omitempty"`
+	Driver      *string `json:"driver,omitempty" url:"driver,omitempty"`
+	Dsn         *string `json:"dsn,omitempty" url:"dsn,omitempty"`
+	ReadOnly    *bool   `json:"read_only,omitempty" url:"read_only,omitempty"`
+	MaxRows     *int    `json:"max_rows,omitempty" url:"max_rows,omitempty"`
+	Engine      *string `json:"engine,omitempty" url:"engine,omitempty"`
+	Host        *string `json:"host,omitempty" url:"host,omitempty"`
+	Port        *int    `json:"port,omitempty" url:"port,omitempty"`
+	Database    *string `json:"database,omitempty" url:"database,omitempty"`
+	SslMode     *string `json:"ssl_mode,omitempty" url:"ssl_mode,omitempty"`
+	ExtraParams *string `json:"extra_params,omitempty" url:"extra_params,omitempty"`
+	RawDsn      *string `json:"raw_dsn,omitempty" url:"raw_dsn,omitempty"`
+	AuthSource  *string `json:"auth_source,omitempty" url:"auth_source,omitempty"`
+	TLS         *bool   `json:"tls,omitempty" url:"tls,omitempty"`
+	DbIndex     *int    `json:"db_index,omitempty" url:"db_index,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *McpAuthConfig) GetToken() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Token
+}
+
+func (m *McpAuthConfig) GetHeaderName() *string {
+	if m == nil {
+		return nil
+	}
+	return m.HeaderName
+}
+
+func (m *McpAuthConfig) GetUsername() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Username
+}
+
+func (m *McpAuthConfig) GetPassword() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Password
+}
+
+func (m *McpAuthConfig) GetDriver() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Driver
+}
+
+func (m *McpAuthConfig) GetDsn() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Dsn
+}
+
+func (m *McpAuthConfig) GetReadOnly() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.ReadOnly
+}
+
+func (m *McpAuthConfig) GetMaxRows() *int {
+	if m == nil {
+		return nil
+	}
+	return m.MaxRows
+}
+
+func (m *McpAuthConfig) GetEngine() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Engine
+}
+
+func (m *McpAuthConfig) GetHost() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Host
+}
+
+func (m *McpAuthConfig) GetPort() *int {
+	if m == nil {
+		return nil
+	}
+	return m.Port
+}
+
+func (m *McpAuthConfig) GetDatabase() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Database
+}
+
+func (m *McpAuthConfig) GetSslMode() *string {
+	if m == nil {
+		return nil
+	}
+	return m.SslMode
+}
+
+func (m *McpAuthConfig) GetExtraParams() *string {
+	if m == nil {
+		return nil
+	}
+	return m.ExtraParams
+}
+
+func (m *McpAuthConfig) GetRawDsn() *string {
+	if m == nil {
+		return nil
+	}
+	return m.RawDsn
+}
+
+func (m *McpAuthConfig) GetAuthSource() *string {
+	if m == nil {
+		return nil
+	}
+	return m.AuthSource
+}
+
+func (m *McpAuthConfig) GetTLS() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.TLS
+}
+
+func (m *McpAuthConfig) GetDbIndex() *int {
+	if m == nil {
+		return nil
+	}
+	return m.DbIndex
+}
+
+func (m *McpAuthConfig) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *McpAuthConfig) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetToken sets the Token field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetToken(token *string) {
+	m.Token = token
+	m.require(mcpAuthConfigFieldToken)
+}
+
+// SetHeaderName sets the HeaderName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetHeaderName(headerName *string) {
+	m.HeaderName = headerName
+	m.require(mcpAuthConfigFieldHeaderName)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetUsername(username *string) {
+	m.Username = username
+	m.require(mcpAuthConfigFieldUsername)
+}
+
+// SetPassword sets the Password field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetPassword(password *string) {
+	m.Password = password
+	m.require(mcpAuthConfigFieldPassword)
+}
+
+// SetDriver sets the Driver field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetDriver(driver *string) {
+	m.Driver = driver
+	m.require(mcpAuthConfigFieldDriver)
+}
+
+// SetDsn sets the Dsn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetDsn(dsn *string) {
+	m.Dsn = dsn
+	m.require(mcpAuthConfigFieldDsn)
+}
+
+// SetReadOnly sets the ReadOnly field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetReadOnly(readOnly *bool) {
+	m.ReadOnly = readOnly
+	m.require(mcpAuthConfigFieldReadOnly)
+}
+
+// SetMaxRows sets the MaxRows field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetMaxRows(maxRows *int) {
+	m.MaxRows = maxRows
+	m.require(mcpAuthConfigFieldMaxRows)
+}
+
+// SetEngine sets the Engine field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetEngine(engine *string) {
+	m.Engine = engine
+	m.require(mcpAuthConfigFieldEngine)
+}
+
+// SetHost sets the Host field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetHost(host *string) {
+	m.Host = host
+	m.require(mcpAuthConfigFieldHost)
+}
+
+// SetPort sets the Port field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetPort(port *int) {
+	m.Port = port
+	m.require(mcpAuthConfigFieldPort)
+}
+
+// SetDatabase sets the Database field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetDatabase(database *string) {
+	m.Database = database
+	m.require(mcpAuthConfigFieldDatabase)
+}
+
+// SetSslMode sets the SslMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetSslMode(sslMode *string) {
+	m.SslMode = sslMode
+	m.require(mcpAuthConfigFieldSslMode)
+}
+
+// SetExtraParams sets the ExtraParams field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetExtraParams(extraParams *string) {
+	m.ExtraParams = extraParams
+	m.require(mcpAuthConfigFieldExtraParams)
+}
+
+// SetRawDsn sets the RawDsn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetRawDsn(rawDsn *string) {
+	m.RawDsn = rawDsn
+	m.require(mcpAuthConfigFieldRawDsn)
+}
+
+// SetAuthSource sets the AuthSource field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetAuthSource(authSource *string) {
+	m.AuthSource = authSource
+	m.require(mcpAuthConfigFieldAuthSource)
+}
+
+// SetTLS sets the TLS field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetTLS(tls *bool) {
+	m.TLS = tls
+	m.require(mcpAuthConfigFieldTLS)
+}
+
+// SetDbIndex sets the DbIndex field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpAuthConfig) SetDbIndex(dbIndex *int) {
+	m.DbIndex = dbIndex
+	m.require(mcpAuthConfigFieldDbIndex)
+}
+
+func (m *McpAuthConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler McpAuthConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = McpAuthConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *McpAuthConfig) MarshalJSON() ([]byte, error) {
+	type embed McpAuthConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *McpAuthConfig) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+var (
+	mcpEndpointFieldMethod       = big.NewInt(1 << 0)
+	mcpEndpointFieldPath         = big.NewInt(1 << 1)
+	mcpEndpointFieldName         = big.NewInt(1 << 2)
+	mcpEndpointFieldDescription  = big.NewInt(1 << 3)
+	mcpEndpointFieldParams       = big.NewInt(1 << 4)
+	mcpEndpointFieldBodySchema   = big.NewInt(1 << 5)
+	mcpEndpointFieldSQLTemplate  = big.NewInt(1 << 6)
+	mcpEndpointFieldMongoOp      = big.NewInt(1 << 7)
+	mcpEndpointFieldCollection   = big.NewInt(1 << 8)
+	mcpEndpointFieldFilterJSON   = big.NewInt(1 << 9)
+	mcpEndpointFieldPipelineJSON = big.NewInt(1 << 10)
+	mcpEndpointFieldRedisCommand = big.NewInt(1 << 11)
+	mcpEndpointFieldRedisArgs    = big.NewInt(1 << 12)
+)
+
+type McpEndpoint struct {
+	// GET | POST | PUT | PATCH | DELETE (REST)
+	Method       *string             `json:"method,omitempty" url:"method,omitempty"`
+	Path         *string             `json:"path,omitempty" url:"path,omitempty"`
+	Name         *string             `json:"name,omitempty" url:"name,omitempty"`
+	Description  *string             `json:"description,omitempty" url:"description,omitempty"`
+	Params       []*McpEndpointParam `json:"params,omitempty" url:"params,omitempty"`
+	BodySchema   *string             `json:"body_schema,omitempty" url:"body_schema,omitempty"`
+	SQLTemplate  *string             `json:"sql_template,omitempty" url:"sql_template,omitempty"`
+	MongoOp      *McpEndpointMongoOp `json:"mongo_op,omitempty" url:"mongo_op,omitempty"`
+	Collection   *string             `json:"collection,omitempty" url:"collection,omitempty"`
+	FilterJSON   *string             `json:"filter_json,omitempty" url:"filter_json,omitempty"`
+	PipelineJSON *string             `json:"pipeline_json,omitempty" url:"pipeline_json,omitempty"`
+	RedisCommand *string             `json:"redis_command,omitempty" url:"redis_command,omitempty"`
+	// JSON array template, e.g. ["user:{id}"]
+	RedisArgs *string `json:"redis_args,omitempty" url:"redis_args,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *McpEndpoint) GetMethod() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Method
+}
+
+func (m *McpEndpoint) GetPath() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Path
+}
+
+func (m *McpEndpoint) GetName() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Name
+}
+
+func (m *McpEndpoint) GetDescription() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Description
+}
+
+func (m *McpEndpoint) GetParams() []*McpEndpointParam {
+	if m == nil {
+		return nil
+	}
+	return m.Params
+}
+
+func (m *McpEndpoint) GetBodySchema() *string {
+	if m == nil {
+		return nil
+	}
+	return m.BodySchema
+}
+
+func (m *McpEndpoint) GetSQLTemplate() *string {
+	if m == nil {
+		return nil
+	}
+	return m.SQLTemplate
+}
+
+func (m *McpEndpoint) GetMongoOp() *McpEndpointMongoOp {
+	if m == nil {
+		return nil
+	}
+	return m.MongoOp
+}
+
+func (m *McpEndpoint) GetCollection() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Collection
+}
+
+func (m *McpEndpoint) GetFilterJSON() *string {
+	if m == nil {
+		return nil
+	}
+	return m.FilterJSON
+}
+
+func (m *McpEndpoint) GetPipelineJSON() *string {
+	if m == nil {
+		return nil
+	}
+	return m.PipelineJSON
+}
+
+func (m *McpEndpoint) GetRedisCommand() *string {
+	if m == nil {
+		return nil
+	}
+	return m.RedisCommand
+}
+
+func (m *McpEndpoint) GetRedisArgs() *string {
+	if m == nil {
+		return nil
+	}
+	return m.RedisArgs
+}
+
+func (m *McpEndpoint) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *McpEndpoint) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetMethod(method *string) {
+	m.Method = method
+	m.require(mcpEndpointFieldMethod)
+}
+
+// SetPath sets the Path field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetPath(path *string) {
+	m.Path = path
+	m.require(mcpEndpointFieldPath)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetName(name *string) {
+	m.Name = name
+	m.require(mcpEndpointFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetDescription(description *string) {
+	m.Description = description
+	m.require(mcpEndpointFieldDescription)
+}
+
+// SetParams sets the Params field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetParams(params []*McpEndpointParam) {
+	m.Params = params
+	m.require(mcpEndpointFieldParams)
+}
+
+// SetBodySchema sets the BodySchema field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetBodySchema(bodySchema *string) {
+	m.BodySchema = bodySchema
+	m.require(mcpEndpointFieldBodySchema)
+}
+
+// SetSQLTemplate sets the SQLTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetSQLTemplate(sqlTemplate *string) {
+	m.SQLTemplate = sqlTemplate
+	m.require(mcpEndpointFieldSQLTemplate)
+}
+
+// SetMongoOp sets the MongoOp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetMongoOp(mongoOp *McpEndpointMongoOp) {
+	m.MongoOp = mongoOp
+	m.require(mcpEndpointFieldMongoOp)
+}
+
+// SetCollection sets the Collection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetCollection(collection *string) {
+	m.Collection = collection
+	m.require(mcpEndpointFieldCollection)
+}
+
+// SetFilterJSON sets the FilterJSON field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetFilterJSON(filterJSON *string) {
+	m.FilterJSON = filterJSON
+	m.require(mcpEndpointFieldFilterJSON)
+}
+
+// SetPipelineJSON sets the PipelineJSON field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetPipelineJSON(pipelineJSON *string) {
+	m.PipelineJSON = pipelineJSON
+	m.require(mcpEndpointFieldPipelineJSON)
+}
+
+// SetRedisCommand sets the RedisCommand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetRedisCommand(redisCommand *string) {
+	m.RedisCommand = redisCommand
+	m.require(mcpEndpointFieldRedisCommand)
+}
+
+// SetRedisArgs sets the RedisArgs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpoint) SetRedisArgs(redisArgs *string) {
+	m.RedisArgs = redisArgs
+	m.require(mcpEndpointFieldRedisArgs)
+}
+
+func (m *McpEndpoint) UnmarshalJSON(data []byte) error {
+	type unmarshaler McpEndpoint
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = McpEndpoint(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *McpEndpoint) MarshalJSON() ([]byte, error) {
+	type embed McpEndpoint
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *McpEndpoint) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+type McpEndpointMongoOp string
+
+const (
+	McpEndpointMongoOpFind      McpEndpointMongoOp = "find"
+	McpEndpointMongoOpFindOne   McpEndpointMongoOp = "findOne"
+	McpEndpointMongoOpAggregate McpEndpointMongoOp = "aggregate"
+	McpEndpointMongoOpInsertOne McpEndpointMongoOp = "insertOne"
+	McpEndpointMongoOpUpdateOne McpEndpointMongoOp = "updateOne"
+	McpEndpointMongoOpDeleteOne McpEndpointMongoOp = "deleteOne"
+)
+
+func NewMcpEndpointMongoOpFromString(s string) (McpEndpointMongoOp, error) {
+	switch s {
+	case "find":
+		return McpEndpointMongoOpFind, nil
+	case "findOne":
+		return McpEndpointMongoOpFindOne, nil
+	case "aggregate":
+		return McpEndpointMongoOpAggregate, nil
+	case "insertOne":
+		return McpEndpointMongoOpInsertOne, nil
+	case "updateOne":
+		return McpEndpointMongoOpUpdateOne, nil
+	case "deleteOne":
+		return McpEndpointMongoOpDeleteOne, nil
+	}
+	var t McpEndpointMongoOp
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m McpEndpointMongoOp) Ptr() *McpEndpointMongoOp {
+	return &m
+}
+
+var (
+	mcpEndpointParamFieldName     = big.NewInt(1 << 0)
+	mcpEndpointParamFieldType     = big.NewInt(1 << 1)
+	mcpEndpointParamFieldIn       = big.NewInt(1 << 2)
+	mcpEndpointParamFieldRequired = big.NewInt(1 << 3)
+)
+
+type McpEndpointParam struct {
+	Name     *string               `json:"name,omitempty" url:"name,omitempty"`
+	Type     *McpEndpointParamType `json:"type,omitempty" url:"type,omitempty"`
+	In       *McpEndpointParamIn   `json:"in,omitempty" url:"in,omitempty"`
+	Required *bool                 `json:"required,omitempty" url:"required,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *McpEndpointParam) GetName() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Name
+}
+
+func (m *McpEndpointParam) GetType() *McpEndpointParamType {
+	if m == nil {
+		return nil
+	}
+	return m.Type
+}
+
+func (m *McpEndpointParam) GetIn() *McpEndpointParamIn {
+	if m == nil {
+		return nil
+	}
+	return m.In
+}
+
+func (m *McpEndpointParam) GetRequired() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.Required
+}
+
+func (m *McpEndpointParam) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *McpEndpointParam) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpointParam) SetName(name *string) {
+	m.Name = name
+	m.require(mcpEndpointParamFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpointParam) SetType(type_ *McpEndpointParamType) {
+	m.Type = type_
+	m.require(mcpEndpointParamFieldType)
+}
+
+// SetIn sets the In field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpointParam) SetIn(in *McpEndpointParamIn) {
+	m.In = in
+	m.require(mcpEndpointParamFieldIn)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpEndpointParam) SetRequired(required *bool) {
+	m.Required = required
+	m.require(mcpEndpointParamFieldRequired)
+}
+
+func (m *McpEndpointParam) UnmarshalJSON(data []byte) error {
+	type unmarshaler McpEndpointParam
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = McpEndpointParam(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *McpEndpointParam) MarshalJSON() ([]byte, error) {
+	type embed McpEndpointParam
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *McpEndpointParam) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+type McpEndpointParamIn string
+
+const (
+	McpEndpointParamInQuery  McpEndpointParamIn = "query"
+	McpEndpointParamInPath   McpEndpointParamIn = "path"
+	McpEndpointParamInHeader McpEndpointParamIn = "header"
+	McpEndpointParamInBody   McpEndpointParamIn = "body"
+)
+
+func NewMcpEndpointParamInFromString(s string) (McpEndpointParamIn, error) {
+	switch s {
+	case "query":
+		return McpEndpointParamInQuery, nil
+	case "path":
+		return McpEndpointParamInPath, nil
+	case "header":
+		return McpEndpointParamInHeader, nil
+	case "body":
+		return McpEndpointParamInBody, nil
+	}
+	var t McpEndpointParamIn
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m McpEndpointParamIn) Ptr() *McpEndpointParamIn {
+	return &m
+}
+
+type McpEndpointParamType string
+
+const (
+	McpEndpointParamTypeString  McpEndpointParamType = "string"
+	McpEndpointParamTypeInteger McpEndpointParamType = "integer"
+	McpEndpointParamTypeBoolean McpEndpointParamType = "boolean"
+	McpEndpointParamTypeNumber  McpEndpointParamType = "number"
+)
+
+func NewMcpEndpointParamTypeFromString(s string) (McpEndpointParamType, error) {
+	switch s {
+	case "string":
+		return McpEndpointParamTypeString, nil
+	case "integer":
+		return McpEndpointParamTypeInteger, nil
+	case "boolean":
+		return McpEndpointParamTypeBoolean, nil
+	case "number":
+		return McpEndpointParamTypeNumber, nil
+	}
+	var t McpEndpointParamType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m McpEndpointParamType) Ptr() *McpEndpointParamType {
+	return &m
 }
 
 var (
@@ -325,39 +1298,43 @@ func (m *McpServer) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
+// Tool MCP (response sau create/list — auth_config đã redact).
 var (
-	mcpServerToolFieldID          = big.NewInt(1 << 0)
-	mcpServerToolFieldMcpServerID = big.NewInt(1 << 1)
-	mcpServerToolFieldKind        = big.NewInt(1 << 2)
-	mcpServerToolFieldSlug        = big.NewInt(1 << 3)
-	mcpServerToolFieldDisplayName = big.NewInt(1 << 4)
-	mcpServerToolFieldDescription = big.NewInt(1 << 5)
-	mcpServerToolFieldBaseURL     = big.NewInt(1 << 6)
-	mcpServerToolFieldAuthType    = big.NewInt(1 << 7)
-	mcpServerToolFieldAuthConfig  = big.NewInt(1 << 8)
-	mcpServerToolFieldEndpoints   = big.NewInt(1 << 9)
-	mcpServerToolFieldSortOrder   = big.NewInt(1 << 10)
-	mcpServerToolFieldIsActive    = big.NewInt(1 << 11)
-	mcpServerToolFieldCreatedAt   = big.NewInt(1 << 12)
-	mcpServerToolFieldUpdatedAt   = big.NewInt(1 << 13)
+	mcpServerToolFieldID               = big.NewInt(1 << 0)
+	mcpServerToolFieldMcpServerID      = big.NewInt(1 << 1)
+	mcpServerToolFieldKind             = big.NewInt(1 << 2)
+	mcpServerToolFieldSlug             = big.NewInt(1 << 3)
+	mcpServerToolFieldDisplayName      = big.NewInt(1 << 4)
+	mcpServerToolFieldDescription      = big.NewInt(1 << 5)
+	mcpServerToolFieldBaseURL          = big.NewInt(1 << 6)
+	mcpServerToolFieldRestResourcePath = big.NewInt(1 << 7)
+	mcpServerToolFieldAuthType         = big.NewInt(1 << 8)
+	mcpServerToolFieldAuthConfig       = big.NewInt(1 << 9)
+	mcpServerToolFieldEndpoints        = big.NewInt(1 << 10)
+	mcpServerToolFieldDefinition       = big.NewInt(1 << 11)
+	mcpServerToolFieldSortOrder        = big.NewInt(1 << 12)
+	mcpServerToolFieldIsActive         = big.NewInt(1 << 13)
+	mcpServerToolFieldCreatedAt        = big.NewInt(1 << 14)
+	mcpServerToolFieldUpdatedAt        = big.NewInt(1 << 15)
 )
 
 type McpServerTool struct {
-	ID          *string                `json:"id,omitempty" url:"id,omitempty"`
-	McpServerID *string                `json:"mcp_server_id,omitempty" url:"mcp_server_id,omitempty"`
-	Kind        *McpServerToolKind     `json:"kind,omitempty" url:"kind,omitempty"`
-	Slug        *string                `json:"slug,omitempty" url:"slug,omitempty"`
-	DisplayName *string                `json:"display_name,omitempty" url:"display_name,omitempty"`
-	Description *string                `json:"description,omitempty" url:"description,omitempty"`
-	BaseURL     *string                `json:"base_url,omitempty" url:"base_url,omitempty"`
-	AuthType    *McpServerToolAuthType `json:"auth_type,omitempty" url:"auth_type,omitempty"`
-	// Thông tin xác thực (có thể chứa secret — không phơi raw token ở list).
-	AuthConfig map[string]any   `json:"auth_config,omitempty" url:"auth_config,omitempty"`
-	Endpoints  []map[string]any `json:"endpoints,omitempty" url:"endpoints,omitempty"`
-	SortOrder  *int             `json:"sort_order,omitempty" url:"sort_order,omitempty"`
-	IsActive   *bool            `json:"is_active,omitempty" url:"is_active,omitempty"`
-	CreatedAt  *time.Time       `json:"created_at,omitempty" url:"created_at,omitempty"`
-	UpdatedAt  *time.Time       `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	ID               *string                `json:"id,omitempty" url:"id,omitempty"`
+	McpServerID      *string                `json:"mcp_server_id,omitempty" url:"mcp_server_id,omitempty"`
+	Kind             *McpServerToolKind     `json:"kind,omitempty" url:"kind,omitempty"`
+	Slug             *string                `json:"slug,omitempty" url:"slug,omitempty"`
+	DisplayName      *string                `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Description      *string                `json:"description,omitempty" url:"description,omitempty"`
+	BaseURL          *string                `json:"base_url,omitempty" url:"base_url,omitempty"`
+	RestResourcePath *string                `json:"rest_resource_path,omitempty" url:"rest_resource_path,omitempty"`
+	AuthType         *McpServerToolAuthType `json:"auth_type,omitempty" url:"auth_type,omitempty"`
+	AuthConfig       *McpAuthConfig         `json:"auth_config,omitempty" url:"auth_config,omitempty"`
+	Endpoints        []*McpEndpoint         `json:"endpoints,omitempty" url:"endpoints,omitempty"`
+	Definition       *McpToolDefinition     `json:"definition,omitempty" url:"definition,omitempty"`
+	SortOrder        *int                   `json:"sort_order,omitempty" url:"sort_order,omitempty"`
+	IsActive         *bool                  `json:"is_active,omitempty" url:"is_active,omitempty"`
+	CreatedAt        *time.Time             `json:"created_at,omitempty" url:"created_at,omitempty"`
+	UpdatedAt        *time.Time             `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -415,6 +1392,13 @@ func (m *McpServerTool) GetBaseURL() *string {
 	return m.BaseURL
 }
 
+func (m *McpServerTool) GetRestResourcePath() *string {
+	if m == nil {
+		return nil
+	}
+	return m.RestResourcePath
+}
+
 func (m *McpServerTool) GetAuthType() *McpServerToolAuthType {
 	if m == nil {
 		return nil
@@ -422,18 +1406,25 @@ func (m *McpServerTool) GetAuthType() *McpServerToolAuthType {
 	return m.AuthType
 }
 
-func (m *McpServerTool) GetAuthConfig() map[string]any {
+func (m *McpServerTool) GetAuthConfig() *McpAuthConfig {
 	if m == nil {
 		return nil
 	}
 	return m.AuthConfig
 }
 
-func (m *McpServerTool) GetEndpoints() []map[string]any {
+func (m *McpServerTool) GetEndpoints() []*McpEndpoint {
 	if m == nil {
 		return nil
 	}
 	return m.Endpoints
+}
+
+func (m *McpServerTool) GetDefinition() *McpToolDefinition {
+	if m == nil {
+		return nil
+	}
+	return m.Definition
 }
 
 func (m *McpServerTool) GetSortOrder() *int {
@@ -527,6 +1518,13 @@ func (m *McpServerTool) SetBaseURL(baseURL *string) {
 	m.require(mcpServerToolFieldBaseURL)
 }
 
+// SetRestResourcePath sets the RestResourcePath field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerTool) SetRestResourcePath(restResourcePath *string) {
+	m.RestResourcePath = restResourcePath
+	m.require(mcpServerToolFieldRestResourcePath)
+}
+
 // SetAuthType sets the AuthType field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (m *McpServerTool) SetAuthType(authType *McpServerToolAuthType) {
@@ -536,16 +1534,23 @@ func (m *McpServerTool) SetAuthType(authType *McpServerToolAuthType) {
 
 // SetAuthConfig sets the AuthConfig field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *McpServerTool) SetAuthConfig(authConfig map[string]any) {
+func (m *McpServerTool) SetAuthConfig(authConfig *McpAuthConfig) {
 	m.AuthConfig = authConfig
 	m.require(mcpServerToolFieldAuthConfig)
 }
 
 // SetEndpoints sets the Endpoints field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *McpServerTool) SetEndpoints(endpoints []map[string]any) {
+func (m *McpServerTool) SetEndpoints(endpoints []*McpEndpoint) {
 	m.Endpoints = endpoints
 	m.require(mcpServerToolFieldEndpoints)
+}
+
+// SetDefinition sets the Definition field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpServerTool) SetDefinition(definition *McpToolDefinition) {
+	m.Definition = definition
+	m.require(mcpServerToolFieldDefinition)
 }
 
 // SetSortOrder sets the SortOrder field and marks it as non-optional;
@@ -687,6 +1692,139 @@ func NewMcpServerToolKindFromString(s string) (McpServerToolKind, error) {
 
 func (m McpServerToolKind) Ptr() *McpServerToolKind {
 	return &m
+}
+
+// Ràng buộc bảo mật / kích thước cho REST tool.
+var (
+	mcpToolDefinitionFieldMaxTimeoutMs   = big.NewInt(1 << 0)
+	mcpToolDefinitionFieldMaxResponseKb  = big.NewInt(1 << 1)
+	mcpToolDefinitionFieldSchemaValidate = big.NewInt(1 << 2)
+	mcpToolDefinitionFieldAllowedHosts   = big.NewInt(1 << 3)
+)
+
+type McpToolDefinition struct {
+	MaxTimeoutMs   *int     `json:"max_timeout_ms,omitempty" url:"max_timeout_ms,omitempty"`
+	MaxResponseKb  *int     `json:"max_response_kb,omitempty" url:"max_response_kb,omitempty"`
+	SchemaValidate *bool    `json:"schema_validate,omitempty" url:"schema_validate,omitempty"`
+	AllowedHosts   []string `json:"allowed_hosts,omitempty" url:"allowed_hosts,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *McpToolDefinition) GetMaxTimeoutMs() *int {
+	if m == nil {
+		return nil
+	}
+	return m.MaxTimeoutMs
+}
+
+func (m *McpToolDefinition) GetMaxResponseKb() *int {
+	if m == nil {
+		return nil
+	}
+	return m.MaxResponseKb
+}
+
+func (m *McpToolDefinition) GetSchemaValidate() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.SchemaValidate
+}
+
+func (m *McpToolDefinition) GetAllowedHosts() []string {
+	if m == nil {
+		return nil
+	}
+	return m.AllowedHosts
+}
+
+func (m *McpToolDefinition) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *McpToolDefinition) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetMaxTimeoutMs sets the MaxTimeoutMs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpToolDefinition) SetMaxTimeoutMs(maxTimeoutMs *int) {
+	m.MaxTimeoutMs = maxTimeoutMs
+	m.require(mcpToolDefinitionFieldMaxTimeoutMs)
+}
+
+// SetMaxResponseKb sets the MaxResponseKb field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpToolDefinition) SetMaxResponseKb(maxResponseKb *int) {
+	m.MaxResponseKb = maxResponseKb
+	m.require(mcpToolDefinitionFieldMaxResponseKb)
+}
+
+// SetSchemaValidate sets the SchemaValidate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpToolDefinition) SetSchemaValidate(schemaValidate *bool) {
+	m.SchemaValidate = schemaValidate
+	m.require(mcpToolDefinitionFieldSchemaValidate)
+}
+
+// SetAllowedHosts sets the AllowedHosts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *McpToolDefinition) SetAllowedHosts(allowedHosts []string) {
+	m.AllowedHosts = allowedHosts
+	m.require(mcpToolDefinitionFieldAllowedHosts)
+}
+
+func (m *McpToolDefinition) UnmarshalJSON(data []byte) error {
+	type unmarshaler McpToolDefinition
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = McpToolDefinition(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *McpToolDefinition) MarshalJSON() ([]byte, error) {
+	type embed McpToolDefinition
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*m),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, m.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (m *McpToolDefinition) String() string {
+	if m == nil {
+		return "<nil>"
+	}
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 var (
@@ -1375,4 +2513,63 @@ func (l *ListMcpServersResponse) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type McpServerToolCreateRequestAuthType string
+
+const (
+	McpServerToolCreateRequestAuthTypeNone     McpServerToolCreateRequestAuthType = "none"
+	McpServerToolCreateRequestAuthTypeBearer   McpServerToolCreateRequestAuthType = "bearer"
+	McpServerToolCreateRequestAuthTypeAPIKey   McpServerToolCreateRequestAuthType = "api_key"
+	McpServerToolCreateRequestAuthTypeBasic    McpServerToolCreateRequestAuthType = "basic"
+	McpServerToolCreateRequestAuthTypeSQLQuery McpServerToolCreateRequestAuthType = "sql_query"
+)
+
+func NewMcpServerToolCreateRequestAuthTypeFromString(s string) (McpServerToolCreateRequestAuthType, error) {
+	switch s {
+	case "none":
+		return McpServerToolCreateRequestAuthTypeNone, nil
+	case "bearer":
+		return McpServerToolCreateRequestAuthTypeBearer, nil
+	case "api_key":
+		return McpServerToolCreateRequestAuthTypeAPIKey, nil
+	case "basic":
+		return McpServerToolCreateRequestAuthTypeBasic, nil
+	case "sql_query":
+		return McpServerToolCreateRequestAuthTypeSQLQuery, nil
+	}
+	var t McpServerToolCreateRequestAuthType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m McpServerToolCreateRequestAuthType) Ptr() *McpServerToolCreateRequestAuthType {
+	return &m
+}
+
+type McpServerToolCreateRequestKind string
+
+const (
+	McpServerToolCreateRequestKindRest  McpServerToolCreateRequestKind = "rest"
+	McpServerToolCreateRequestKindSQL   McpServerToolCreateRequestKind = "sql"
+	McpServerToolCreateRequestKindMongo McpServerToolCreateRequestKind = "mongo"
+	McpServerToolCreateRequestKindRedis McpServerToolCreateRequestKind = "redis"
+)
+
+func NewMcpServerToolCreateRequestKindFromString(s string) (McpServerToolCreateRequestKind, error) {
+	switch s {
+	case "rest":
+		return McpServerToolCreateRequestKindRest, nil
+	case "sql":
+		return McpServerToolCreateRequestKindSQL, nil
+	case "mongo":
+		return McpServerToolCreateRequestKindMongo, nil
+	case "redis":
+		return McpServerToolCreateRequestKindRedis, nil
+	}
+	var t McpServerToolCreateRequestKind
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m McpServerToolCreateRequestKind) Ptr() *McpServerToolCreateRequestKind {
+	return &m
 }

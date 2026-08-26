@@ -3,7 +3,39 @@
 package api
 
 import (
+	core "github.com/DTG-Corp/dtg-agent-sdk/core"
 	internal "github.com/DTG-Corp/dtg-agent-sdk/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+	401: func(apiError *core.APIError) error {
+		return &UnauthorizedError{
+			APIError: apiError,
+		}
+	},
+	403: func(apiError *core.APIError) error {
+		return &ForbiddenError{
+			APIError: apiError,
+		}
+	},
+	404: func(apiError *core.APIError) error {
+		return &NotFoundError{
+			APIError: apiError,
+		}
+	},
+	413: func(apiError *core.APIError) error {
+		return &ContentTooLargeError{
+			APIError: apiError,
+		}
+	},
+	429: func(apiError *core.APIError) error {
+		return &TooManyRequestsError{
+			APIError: apiError,
+		}
+	},
+	400: func(apiError *core.APIError) error {
+		return &BadRequestError{
+			APIError: apiError,
+		}
+	},
+}

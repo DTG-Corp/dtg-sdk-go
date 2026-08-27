@@ -19,8 +19,9 @@ var (
 	agentCreateRequestFieldLlmAPIKey            = big.NewInt(1 << 5)
 	agentCreateRequestFieldKnowledgeIDs         = big.NewInt(1 << 6)
 	agentCreateRequestFieldEnabledTools         = big.NewInt(1 << 7)
-	agentCreateRequestFieldMcpDynamicServerIDs  = big.NewInt(1 << 8)
-	agentCreateRequestFieldMcpDynamicToolFilter = big.NewInt(1 << 9)
+	agentCreateRequestFieldCameraToolIDs        = big.NewInt(1 << 8)
+	agentCreateRequestFieldMcpDynamicServerIDs  = big.NewInt(1 << 9)
+	agentCreateRequestFieldMcpDynamicToolFilter = big.NewInt(1 << 10)
 )
 
 type AgentCreateRequest struct {
@@ -35,6 +36,8 @@ type AgentCreateRequest struct {
 	KnowledgeIDs []string `json:"knowledge_ids,omitempty" url:"-"`
 	// ID tool từ catalog (dtg_enabled_tools), vd knowledge_rag.
 	EnabledTools []string `json:"enabled_tools,omitempty" url:"-"`
+	// UUID camera ORG được phép khi bật tool org_cameras (điền vào dtg_camera_tool_ids).
+	CameraToolIDs []string `json:"camera_tool_ids,omitempty" url:"-"`
 	// UUID MCP server động (apimcp) gắn agent.
 	McpDynamicServerIDs []string `json:"mcp_dynamic_server_ids,omitempty" url:"-"`
 	// Filter tool expose cho agent (Dai Agent) theo từng MCP server động (khóa = UUID server).
@@ -105,6 +108,13 @@ func (a *AgentCreateRequest) SetKnowledgeIDs(knowledgeIDs []string) {
 func (a *AgentCreateRequest) SetEnabledTools(enabledTools []string) {
 	a.EnabledTools = enabledTools
 	a.require(agentCreateRequestFieldEnabledTools)
+}
+
+// SetCameraToolIDs sets the CameraToolIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentCreateRequest) SetCameraToolIDs(cameraToolIDs []string) {
+	a.CameraToolIDs = cameraToolIDs
+	a.require(agentCreateRequestFieldCameraToolIDs)
 }
 
 // SetMcpDynamicServerIDs sets the McpDynamicServerIDs field and marks it as non-optional;
@@ -306,19 +316,22 @@ var (
 	agentFieldLlmBaseURL           = big.NewInt(1 << 5)
 	agentFieldKnowledgeIDs         = big.NewInt(1 << 6)
 	agentFieldEnabledTools         = big.NewInt(1 << 7)
-	agentFieldMcpDynamicServerIDs  = big.NewInt(1 << 8)
-	agentFieldMcpDynamicToolFilter = big.NewInt(1 << 9)
+	agentFieldCameraToolIDs        = big.NewInt(1 << 8)
+	agentFieldMcpDynamicServerIDs  = big.NewInt(1 << 9)
+	agentFieldMcpDynamicToolFilter = big.NewInt(1 << 10)
 )
 
 type Agent struct {
-	ID                   string         `json:"id" url:"id"`
-	DisplayName          string         `json:"display_name" url:"display_name"`
-	Status               AgentStatus    `json:"status" url:"status"`
-	LlmProvider          *string        `json:"llm_provider,omitempty" url:"llm_provider,omitempty"`
-	LlmModel             *string        `json:"llm_model,omitempty" url:"llm_model,omitempty"`
-	LlmBaseURL           *string        `json:"llm_base_url,omitempty" url:"llm_base_url,omitempty"`
-	KnowledgeIDs         []string       `json:"knowledge_ids,omitempty" url:"knowledge_ids,omitempty"`
-	EnabledTools         []string       `json:"enabled_tools,omitempty" url:"enabled_tools,omitempty"`
+	ID           string      `json:"id" url:"id"`
+	DisplayName  string      `json:"display_name" url:"display_name"`
+	Status       AgentStatus `json:"status" url:"status"`
+	LlmProvider  *string     `json:"llm_provider,omitempty" url:"llm_provider,omitempty"`
+	LlmModel     *string     `json:"llm_model,omitempty" url:"llm_model,omitempty"`
+	LlmBaseURL   *string     `json:"llm_base_url,omitempty" url:"llm_base_url,omitempty"`
+	KnowledgeIDs []string    `json:"knowledge_ids,omitempty" url:"knowledge_ids,omitempty"`
+	EnabledTools []string    `json:"enabled_tools,omitempty" url:"enabled_tools,omitempty"`
+	// UUID camera ORG được phép khi bật tool org_cameras (điền vào dtg_camera_tool_ids).
+	CameraToolIDs        []string       `json:"camera_tool_ids,omitempty" url:"camera_tool_ids,omitempty"`
 	McpDynamicServerIDs  []string       `json:"mcp_dynamic_server_ids,omitempty" url:"mcp_dynamic_server_ids,omitempty"`
 	McpDynamicToolFilter map[string]any `json:"mcp_dynamic_tool_filter,omitempty" url:"mcp_dynamic_tool_filter,omitempty"`
 
@@ -383,6 +396,13 @@ func (a *Agent) GetEnabledTools() []string {
 		return nil
 	}
 	return a.EnabledTools
+}
+
+func (a *Agent) GetCameraToolIDs() []string {
+	if a == nil {
+		return nil
+	}
+	return a.CameraToolIDs
 }
 
 func (a *Agent) GetMcpDynamicServerIDs() []string {
@@ -467,6 +487,13 @@ func (a *Agent) SetKnowledgeIDs(knowledgeIDs []string) {
 func (a *Agent) SetEnabledTools(enabledTools []string) {
 	a.EnabledTools = enabledTools
 	a.require(agentFieldEnabledTools)
+}
+
+// SetCameraToolIDs sets the CameraToolIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Agent) SetCameraToolIDs(cameraToolIDs []string) {
+	a.CameraToolIDs = cameraToolIDs
+	a.require(agentFieldCameraToolIDs)
 }
 
 // SetMcpDynamicServerIDs sets the McpDynamicServerIDs field and marks it as non-optional;
@@ -2296,8 +2323,9 @@ var (
 	agentUpdateRequestFieldLlmAPIKey            = big.NewInt(1 << 6)
 	agentUpdateRequestFieldKnowledgeIDs         = big.NewInt(1 << 7)
 	agentUpdateRequestFieldEnabledTools         = big.NewInt(1 << 8)
-	agentUpdateRequestFieldMcpDynamicServerIDs  = big.NewInt(1 << 9)
-	agentUpdateRequestFieldMcpDynamicToolFilter = big.NewInt(1 << 10)
+	agentUpdateRequestFieldCameraToolIDs        = big.NewInt(1 << 9)
+	agentUpdateRequestFieldMcpDynamicServerIDs  = big.NewInt(1 << 10)
+	agentUpdateRequestFieldMcpDynamicToolFilter = big.NewInt(1 << 11)
 )
 
 type AgentUpdateRequest struct {
@@ -2313,6 +2341,8 @@ type AgentUpdateRequest struct {
 	KnowledgeIDs []string `json:"knowledge_ids,omitempty" url:"-"`
 	// Omit/null = giữ nguyên; [] = xoá.
 	EnabledTools []string `json:"enabled_tools,omitempty" url:"-"`
+	// Omit/null = giữ nguyên; [] = xoá. Chỉ hiệu lực khi tool org_cameras được bật.
+	CameraToolIDs []string `json:"camera_tool_ids,omitempty" url:"-"`
 	// Omit/null = giữ nguyên; [] = xoá.
 	McpDynamicServerIDs []string `json:"mcp_dynamic_server_ids,omitempty" url:"-"`
 	// Omit/null = giữ nguyên; {} = xoá.
@@ -2390,6 +2420,13 @@ func (a *AgentUpdateRequest) SetKnowledgeIDs(knowledgeIDs []string) {
 func (a *AgentUpdateRequest) SetEnabledTools(enabledTools []string) {
 	a.EnabledTools = enabledTools
 	a.require(agentUpdateRequestFieldEnabledTools)
+}
+
+// SetCameraToolIDs sets the CameraToolIDs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AgentUpdateRequest) SetCameraToolIDs(cameraToolIDs []string) {
+	a.CameraToolIDs = cameraToolIDs
+	a.require(agentUpdateRequestFieldCameraToolIDs)
 }
 
 // SetMcpDynamicServerIDs sets the McpDynamicServerIDs field and marks it as non-optional;

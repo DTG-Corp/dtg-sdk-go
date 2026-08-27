@@ -345,6 +345,14 @@ client.Agents.CreateAgent(
 <dl>
 <dd>
 
+**cameraToolIDs:** `[]string` — UUID camera ORG được phép khi bật tool org_cameras (điền vào dtg_camera_tool_ids).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **mcpDynamicServerIDs:** `[]string` — UUID MCP server động (apimcp) gắn agent.
     
 </dd>
@@ -564,6 +572,14 @@ client.Agents.UpdateAgent(
 <dd>
 
 **enabledTools:** `[]string` — Omit/null = giữ nguyên; [] = xoá.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cameraToolIDs:** `[]string` — Omit/null = giữ nguyên; [] = xoá. Chỉ hiệu lực khi tool org_cameras được bật.
     
 </dd>
 </dl>
@@ -1259,6 +1275,364 @@ client.Knowledge.DeleteKnowledge(
 <dd>
 
 **idempotencyKey:** `*string` — Idempotency key cho mutation (tránh double-submit).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## cameras
+<details><summary><code>client.Cameras.ListCameras() -> *dtgsdkgo.ListCamerasResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Cameras.ListCameras(
+    context.TODO(),
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Cameras.CreateCamera(request) -> *dtgsdkgo.CreateCameraResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &dtgsdkgo.CameraCreateRequest{
+    DisplayName: "display_name",
+    Vendor: dtgsdkgo.CameraCreateRequestVendorGenericRtsp,
+    RtspURL: "rtsp_url",
+}
+client.Cameras.CreateCamera(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**idempotencyKey:** `*string` — Idempotency key cho mutation (tránh double-submit).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**displayName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vendor_:** `*dtgsdkgo.CameraCreateRequestVendor` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtspURL:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtspUsername:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtspPassword:** `*string` — Chỉ gửi khi tạo; không bao giờ trả về trong response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vendorConfig:** `map[string]any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Cameras.GetCamera(ID) -> *dtgsdkgo.GetCameraResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &dtgsdkgo.GetCameraRequest{
+    ID: "id",
+}
+client.Cameras.GetCamera(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Cameras.DeleteCamera(ID) -> *dtgsdkgo.DeleteCameraResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &dtgsdkgo.DeleteCameraRequest{
+    ID: "id",
+}
+client.Cameras.DeleteCamera(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyKey:** `*string` — Idempotency key cho mutation (tránh double-submit).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Cameras.UpdateCamera(ID, request) -> *dtgsdkgo.UpdateCameraResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &dtgsdkgo.CameraUpdateRequest{
+    ID: "id",
+}
+client.Cameras.UpdateCamera(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyKey:** `*string` — Idempotency key cho mutation (tránh double-submit).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**displayName:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vendor_:** `*dtgsdkgo.CameraUpdateRequestVendor` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtspURL:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtspUsername:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtspPassword:** `*string` — Rỗng/omit = giữ mật khẩu cũ; gửi giá trị mới = ghi đè.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vendorConfig:** `map[string]any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `*string` 
     
 </dd>
 </dl>

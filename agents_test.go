@@ -75,6 +75,14 @@ func TestSettersAgentCreateRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCameraToolIDs", func(t *testing.T) {
+		obj := &AgentCreateRequest{}
+		var fernTestValueCameraToolIDs []string
+		obj.SetCameraToolIDs(fernTestValueCameraToolIDs)
+		assert.Equal(t, fernTestValueCameraToolIDs, obj.CameraToolIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMcpDynamicServerIDs", func(t *testing.T) {
 		obj := &AgentCreateRequest{}
 		var fernTestValueMcpDynamicServerIDs []string
@@ -319,6 +327,37 @@ func TestSettersMarkExplicitAgentCreateRequest(t *testing.T) {
 
 		// Act
 		obj.SetEnabledTools(fernTestValueEnabledTools)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCameraToolIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentCreateRequest{}
+		var fernTestValueCameraToolIDs []string
+
+		// Act
+		obj.SetCameraToolIDs(fernTestValueCameraToolIDs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -813,6 +852,14 @@ func TestSettersAgent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCameraToolIDs", func(t *testing.T) {
+		obj := &Agent{}
+		var fernTestValueCameraToolIDs []string
+		obj.SetCameraToolIDs(fernTestValueCameraToolIDs)
+		assert.Equal(t, fernTestValueCameraToolIDs, obj.CameraToolIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMcpDynamicServerIDs", func(t *testing.T) {
 		obj := &Agent{}
 		var fernTestValueMcpDynamicServerIDs []string
@@ -1064,6 +1111,39 @@ func TestGettersAgent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnabledTools() // Should return zero value
+	})
+
+	t.Run("GetCameraToolIDs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var expected []string
+		obj.CameraToolIDs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCameraToolIDs(), "getter should return the property value")
+	})
+
+	t.Run("GetCameraToolIDs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		obj.CameraToolIDs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCameraToolIDs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCameraToolIDs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Agent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCameraToolIDs() // Should return zero value
 	})
 
 	t.Run("GetMcpDynamicServerIDs", func(t *testing.T) {
@@ -1360,6 +1440,37 @@ func TestSettersMarkExplicitAgent(t *testing.T) {
 
 		// Act
 		obj.SetEnabledTools(fernTestValueEnabledTools)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCameraToolIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Agent{}
+		var fernTestValueCameraToolIDs []string
+
+		// Act
+		obj.SetCameraToolIDs(fernTestValueCameraToolIDs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5182,6 +5293,14 @@ func TestSettersAgentUpdateRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCameraToolIDs", func(t *testing.T) {
+		obj := &AgentUpdateRequest{}
+		var fernTestValueCameraToolIDs []string
+		obj.SetCameraToolIDs(fernTestValueCameraToolIDs)
+		assert.Equal(t, fernTestValueCameraToolIDs, obj.CameraToolIDs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMcpDynamicServerIDs", func(t *testing.T) {
 		obj := &AgentUpdateRequest{}
 		var fernTestValueMcpDynamicServerIDs []string
@@ -5457,6 +5576,37 @@ func TestSettersMarkExplicitAgentUpdateRequest(t *testing.T) {
 
 		// Act
 		obj.SetEnabledTools(fernTestValueEnabledTools)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCameraToolIDs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AgentUpdateRequest{}
+		var fernTestValueCameraToolIDs []string
+
+		// Act
+		obj.SetCameraToolIDs(fernTestValueCameraToolIDs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

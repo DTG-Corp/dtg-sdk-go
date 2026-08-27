@@ -113,7 +113,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"display_name\": \"display_name\",\n      \"status\": \"created\",\n      \"llm_provider\": \"llm_provider\",\n      \"llm_model\": \"llm_model\",\n      \"llm_base_url\": \"llm_base_url\",\n      \"knowledge_ids\": [\n        \"knowledge_ids\"\n      ],\n      \"enabled_tools\": [\n        \"enabled_tools\"\n      ],\n      \"mcp_dynamic_server_ids\": [\n        \"mcp_dynamic_server_ids\"\n      ],\n      \"mcp_dynamic_tool_filter\": {\n        \"key\": \"value\"\n      }\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"display_name\": \"display_name\",\n      \"status\": \"created\",\n      \"llm_provider\": \"llm_provider\",\n      \"llm_model\": \"llm_model\",\n      \"llm_base_url\": \"llm_base_url\",\n      \"knowledge_ids\": [\n        \"knowledge_ids\"\n      ],\n      \"enabled_tools\": [\n        \"enabled_tools\"\n      ],\n      \"camera_tool_ids\": [\n        \"camera_tool_ids\"\n      ],\n      \"mcp_dynamic_server_ids\": [\n        \"mcp_dynamic_server_ids\"\n      ],\n      \"mcp_dynamic_tool_filter\": {\n        \"key\": \"value\"\n      }\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -145,7 +145,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"camera_tool_ids\": [\n      \"camera_tool_ids\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -181,7 +181,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"camera_tool_ids\": [\n      \"camera_tool_ids\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -253,7 +253,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"status\": \"created\",\n    \"llm_provider\": \"llm_provider\",\n    \"llm_model\": \"llm_model\",\n    \"llm_base_url\": \"llm_base_url\",\n    \"knowledge_ids\": [\n      \"knowledge_ids\"\n    ],\n    \"enabled_tools\": [\n      \"enabled_tools\"\n    ],\n    \"camera_tool_ids\": [\n      \"camera_tool_ids\"\n    ],\n    \"mcp_dynamic_server_ids\": [\n      \"mcp_dynamic_server_ids\"\n    ],\n    \"mcp_dynamic_tool_filter\": {\n      \"key\": \"value\"\n    }\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -753,6 +753,177 @@
       }
     },
     {
+      "id": "c05d68d5-f5b9-4f19-8fe5-34c765c489a4",
+      "name": "List cameras in the key's organization - default",
+      "request": {
+        "urlPathTemplate": "/api/v1/cameras",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": [\n    {\n      \"id\": \"id\",\n      \"display_name\": \"display_name\",\n      \"vendor\": \"generic_rtsp\",\n      \"vendor_label\": \"vendor_label\",\n      \"rtsp_url\": \"rtsp_url\",\n      \"rtsp_username\": \"rtsp_username\",\n      \"has_rtsp_password\": true,\n      \"vendor_config\": {\n        \"key\": \"value\"\n      },\n      \"enabled\": true,\n      \"notes\": \"notes\",\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c05d68d5-f5b9-4f19-8fe5-34c765c489a4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "637db5bb-5dee-4487-86a0-c02e8a50c81f",
+      "name": "Create a camera (RTSP) - default",
+      "request": {
+        "urlPathTemplate": "/api/v1/cameras",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"vendor\": \"generic_rtsp\",\n    \"vendor_label\": \"vendor_label\",\n    \"rtsp_url\": \"rtsp_url\",\n    \"rtsp_username\": \"rtsp_username\",\n    \"has_rtsp_password\": true,\n    \"vendor_config\": {\n      \"key\": \"value\"\n    },\n    \"enabled\": true,\n    \"notes\": \"notes\",\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "637db5bb-5dee-4487-86a0-c02e8a50c81f",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "dc025250-344b-4e84-8042-18e504a11517",
+      "name": "Get a camera - default",
+      "request": {
+        "urlPathTemplate": "/api/v1/cameras/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"vendor\": \"generic_rtsp\",\n    \"vendor_label\": \"vendor_label\",\n    \"rtsp_url\": \"rtsp_url\",\n    \"rtsp_username\": \"rtsp_username\",\n    \"has_rtsp_password\": true,\n    \"vendor_config\": {\n      \"key\": \"value\"\n    },\n    \"enabled\": true,\n    \"notes\": \"notes\",\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dc025250-344b-4e84-8042-18e504a11517",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "df3bf3a0-a841-4e42-af1a-f4e48817c211",
+      "name": "Delete a camera - default",
+      "request": {
+        "urlPathTemplate": "/api/v1/cameras/{id}",
+        "method": "DELETE",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"revoked\": true,\n    \"deleted\": true,\n    \"started\": true,\n    \"stopped\": true\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "df3bf3a0-a841-4e42-af1a-f4e48817c211",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1d7c399c-6361-43d9-bab2-88d2bb72ddf9",
+      "name": "Update a camera (partial; omitted fields keep current values) - default",
+      "request": {
+        "urlPathTemplate": "/api/v1/cameras/{id}",
+        "method": "PATCH",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"status\": \"ok\",\n  \"code\": \"code\",\n  \"message\": \"message\",\n  \"data\": {\n    \"id\": \"id\",\n    \"display_name\": \"display_name\",\n    \"vendor\": \"generic_rtsp\",\n    \"vendor_label\": \"vendor_label\",\n    \"rtsp_url\": \"rtsp_url\",\n    \"rtsp_username\": \"rtsp_username\",\n    \"has_rtsp_password\": true,\n    \"vendor_config\": {\n      \"key\": \"value\"\n    },\n    \"enabled\": true,\n    \"notes\": \"notes\",\n    \"created_at\": \"2024-01-15T09:30:00Z\",\n    \"updated_at\": \"2024-01-15T09:30:00Z\"\n  },\n  \"trace_id\": \"trace_id\",\n  \"timestamp\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1d7c399c-6361-43d9-bab2-88d2bb72ddf9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "04a09e46-5b59-4e53-9336-47143a7cd851",
       "name": "List MCP servers - default",
       "request": {
@@ -889,6 +1060,6 @@
     }
   ],
   "meta": {
-    "total": 26
+    "total": 31
   }
 }

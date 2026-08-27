@@ -5,6 +5,7 @@ package client
 import (
 	agents "github.com/DTG-Corp/dtg-sdk-go/agents"
 	apikeys "github.com/DTG-Corp/dtg-sdk-go/apikeys"
+	cameras "github.com/DTG-Corp/dtg-sdk-go/cameras"
 	core "github.com/DTG-Corp/dtg-sdk-go/core"
 	gateway "github.com/DTG-Corp/dtg-sdk-go/gateway"
 	internal "github.com/DTG-Corp/dtg-sdk-go/internal"
@@ -20,6 +21,7 @@ type Client struct {
 	APIKeys       *apikeys.Client
 	Organizations *organizations.Client
 	Knowledge     *knowledge.Client
+	Cameras       *cameras.Client
 	McpServers    *mcpservers.Client
 
 	options *core.RequestOptions
@@ -35,6 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 		APIKeys:       apikeys.NewClient(options),
 		Organizations: organizations.NewClient(options),
 		Knowledge:     knowledge.NewClient(options),
+		Cameras:       cameras.NewClient(options),
 		McpServers:    mcpservers.NewClient(options),
 		options:       options,
 		baseURL:       options.BaseURL,
